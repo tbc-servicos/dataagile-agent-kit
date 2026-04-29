@@ -1,0 +1,103 @@
+{
+  "name": "claude-skills-tbc",
+  "owner": {
+    "name": "TBC - Time de Desenvolvimento",
+    "email": "dev@tbc.com.br"
+  },
+  "metadata": {
+    "description": "Plugins Claude Code para desenvolvimento TOTVS (Fluig, Protheus, documentação MIT) e ferramentas de produtividade — TBC",
+    "pluginRoot": "."
+  },
+  "plugins": [
+    {
+      "name": "fluig",
+      "source": "./fluig",
+      "description": "Plugin para desenvolvimento TOTVS Fluig — ciclo completo: design (brainstorm), scaffolding (widget/dataset/form/workflow), revisão estática + testes (review) e deploy (verify).",
+      "version": "2.0.5",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "development",
+      "tags": ["fluig", "totvs", "bpm", "angular", "po-ui"]
+    },
+    {
+      "name": "protheus",
+      "source": "./protheus",
+      "description": "Plugin para desenvolvimento TOTVS Protheus — cadeia de subagentes: intake MIT044, brainstorm, writing-plans, subagent-dev (implementação → review → compilação → TIR E2E).",
+      "version": "2.0.8",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "development",
+      "tags": ["protheus", "totvs", "advpl", "tlpp", "tir"]
+    },
+    {
+      "name": "confluence",
+      "source": "./confluence",
+      "description": "Plugin para integração com Atlassian Confluence Cloud e extração de documentação técnica TOTVS (MIT010/MIT072). Inclui MCP Server para API Confluence, conversor Markdown para Storage Format e extrator de imagens de PDF.",
+      "version": "1.0.0",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "documentation",
+      "tags": ["confluence", "atlassian", "totvs", "mit010", "mit072", "documentation"]
+    },
+    {
+      "name": "playwright",
+      "source": "./playwright",
+      "description": "Plugin para testes E2E com Playwright CLI — setup, execução, test-agents (planner/generator/healer) e autenticação via storageState.",
+      "version": "1.0.0",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "testing",
+      "tags": ["playwright", "e2e", "testing", "test-agents", "automation"]
+    },
+    {
+      "name": "tae",
+      "source": "./TAE",
+      "description": "Plugin para TOTVS Assinatura Eletrônica (TAE) — gerenciamento de publicações, assinaturas digitais, anexos e destinatários via MCP remoto.",
+      "version": "1.0.1",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "integration",
+      "tags": ["tae", "totvs", "assinatura-eletronica", "totvs-sign", "mcp"]
+    },
+    {
+      "name": "mit-docs",
+      "source": "./mit-docs",
+      "description": "Plugin para geração de documentação de projeto TOTVS — MIT044 (Especificação de Personalização) via brainstorm colaborativo e MIT010 (Termo de Validação) a partir de resultados de QA. Independente de produto (Protheus, Fluig, misto). Templates e padrões via MCP Knowledge Base.",
+      "version": "1.0.1",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "documentation",
+      "tags": ["mit044", "mit010", "totvs", "documentacao", "especificacao", "validacao", "docx"]
+    },
+    {
+      "name": "jira-api",
+      "source": "./jira-api",
+      "description": "Plugin para Jira Cloud via REST API v3 — download/upload de attachments, leitura completa de issues com custom fields, comments, search JQL avançado. Complementa o MCP oficial da Atlassian. Auth via Basic Auth (email + API token).",
+      "version": "1.0.1",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "integration",
+      "tags": ["jira", "atlassian", "api", "attachments", "custom-fields", "rest"]
+    },
+    {
+      "name": "keepass",
+      "source": "./keepass",
+      "description": "Plugin para gerenciamento de bancos KeePass — busca, criação, edição e remoção de entradas em múltiplos bancos via keepassxc-cli. Autenticação segura via secret store do OS (Keychain no macOS, libsecret no Linux/WSL). Wizard /keepass-setup para configuração interativa. Suporte a macOS, Linux e Windows (WSL 2).",
+      "version": "1.0.0",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "security",
+      "tags": ["keepass", "passwords", "credentials", "security", "keychain", "libsecret", "cross-platform"]
+    },
+    {
+      "name": "discli",
+      "source": "./discli",
+      "description": "Plugin para gerenciamento de servidores Discord via CLI (@ibbybuilds/discli). Cria/edita canais, roles, permissões, mensagens, embeds, emojis, audit log. Suporta personalidade de bot via SOUL.md.",
+      "version": "1.0.0",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "productivity",
+      "tags": ["discord", "cli", "chat", "bot", "automation"]
+    },
+    {
+      "name": "tempo",
+      "source": "./tempo",
+      "description": "Plugin para sincronização bidirecional Google Calendar ↔ Tempo.io (Jira). Cria worklogs a partir de eventos com issue key [PROJ-NNN] no título, e o reverso. Projeto Jira default configurável via TEMPO_DEFAULT_JIRA_PROJECT.",
+      "version": "1.0.0",
+      "author": { "name": "TBC - Time de Desenvolvimento" },
+      "category": "productivity",
+      "tags": ["tempo", "jira", "google-calendar", "worklog", "time-tracking"]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "protheus",
+  "description": "Plugin Claude Code para desenvolvimento TOTVS Protheus — ciclo completo: brainstorm → plan → implement (teammates haiku/sonnet) → deploy (TDS-CLI) → qa (TIR E2E) → verify. Geração ADVPL/TLPP, SQL embarcado, migração TLPP, diagnóstico, compilação, revisão, testes TIR, Knowledge Base MCP, integração TDN e importação de projetos no Gerenciador de Projetos (importar-gerenciador-projeto).",
+  "version": "2.0.8",
+  "author": {
+    "name": "TBC - Time de Desenvolvimento"
+  },
+  "homepage": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "repository": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "mcpServers": "./.mcp.json"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "discli",
+  "description": "Plugin Claude Code para gerenciamento de servidores Discord via CLI (@ibbybuilds/discli). Cria/edita canais, roles, permissões, mensagens, embeds, emojis, audit log. Suporta personalidade de bot via SOUL.md.",
+  "version": "1.0.0",
+  "author": {
+    "name": "TBC - Time de Desenvolvimento"
+  },
+  "homepage": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "repository": "https://github.com/tbc-servicos/tbc-knowledge-plugins"
+}

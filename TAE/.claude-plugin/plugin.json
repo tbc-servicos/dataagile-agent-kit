@@ -1,0 +1,11 @@
+{
+  "name": "tae",
+  "description": "Plugin Claude Code para TOTVS Assinatura Eletrônica (TAE) — gerenciamento de publicações, assinaturas digitais, anexos e destinatários via MCP remoto.",
+  "version": "1.0.1",
+  "author": {
+    "name": "TBC - Time de Desenvolvimento"
+  },
+  "homepage": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "repository": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "mcpServers": "./.mcp.json"
+}

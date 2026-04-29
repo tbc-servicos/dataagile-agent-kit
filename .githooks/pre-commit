@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+# Auto-bump patch version em plugin.json quando arquivos do plugin sao staged.
+#
+sanitize_prompt_var() {
+  printf '%s' "$1" | tr -d '`$\\' | sed 's/"/'"'"'/g' | head -c 100
+}
+#
+# Regras:
+#   - Bumpa apenas se houver mudancas alem do proprio plugin.json
+#     (mudancas manuais de versao sao preservadas)
+#   - Cada plugin e processado uma unica vez por commit
+#   - Cross-platform: macOS, Linux, Windows (Git Bash)
+
+STAGED=$(git diff --cached --name-only 2>/dev/null)
+[ -z "$STAGED" ] && exit 0
+
+BUMPED=""
+
+while IFS= read -r file; do
+  plugin_dir=$(echo "$file" | cut -d/ -f1)
+
+  # Ja processou este plugin neste commit?
+  echo "$BUMPED" | grep -qF "|${plugin_dir}|" && continue
+
+  plugin_json="${plugin_dir}/.claude-plugin/plugin.json"
+  [ -f "$plugin_json" ] || continue
+
+  # Se a unica mudanca staged no plugin e o proprio plugin.json,
+  # o dev esta gerenciando a versao manualmente — nao interfere.
+  other_files=$(echo "$STAGED" | grep "^${plugin_dir}/" | grep -v "^${plugin_dir}/\\.claude-plugin/plugin\\.json$" || true)
+  [ -z "$other_files" ] && continue
+
+  # Ler versao atual
+  current=$(sed -n 's/.*"version" *: *"\([^"]*\)".*/\1/p' "$plugin_json" | head -1)
+  [ -z "$current" ] && continue
+
+  # Parsear semver e incrementar patch
+  major=$(echo "$current" | cut -d. -f1)
+  minor=$(echo "$current" | cut -d. -f2)
+  patch=$(echo "$current" | cut -d. -f3)
+  new_version="${major}.${minor}.$((patch + 1))"
+
+  # Atualizar plugin.json (via arquivo temporario — compativel com macOS e Linux)
+  TMP=$(mktemp)
+  sed "s/\"version\": \"${current}\"/\"version\": \"${new_version}\"/" "$plugin_json" > "$TMP"
+  mv "$TMP" "$plugin_json"
+
+  git add "$plugin_json"
+  echo "  [auto-version] ${plugin_dir}: ${current} → ${new_version}"
+
+  BUMPED="${BUMPED}|${plugin_dir}|"
+done <<< "$STAGED"
+
+# ── JIRA Integration ──────────────────────────────────────────────────────────
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "")
+JIRA_SESSION_SCRIPT="${REPO_ROOT}/scripts/jira-session.sh"
+
+if [ -f "$JIRA_SESSION_SCRIPT" ]; then
+  PLUGIN=$(bash "$JIRA_SESSION_SCRIPT" read plugin 2>/dev/null || echo "")
+  BRANCH=$(bash "$JIRA_SESSION_SCRIPT" read branch 2>/dev/null || echo "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)")
+  ISSUE_KEY=$(bash "$JIRA_SESSION_SCRIPT" read issue_key 2>/dev/null || echo "")
+
+  if [ -n "$ISSUE_KEY" ] && ! echo "$ISSUE_KEY" | grep -qE '^[A-Z]+-[0-9]+$'; then
+    echo "  [jira] aviso: issue_key inválido em .jira-session, ignorando" >&2
+    ISSUE_KEY=""
+  fi
+
+  PLUGIN_SAFE=$(sanitize_prompt_var "$PLUGIN")
+  BRANCH_SAFE=$(sanitize_prompt_var "$BRANCH")
+
+  # Se plugin não detectado ou null, pula integração JIRA
+  if [ -n "$PLUGIN" ] && [ "$PLUGIN" != "null" ]; then
+
+    # Verificar claude disponível
+    if ! command -v claude >/dev/null 2>&1; then
+      echo "  [jira] aviso: claude não encontrado no PATH, pulando integração JIRA" >&2
+    else
+
+      if [ -z "$ISSUE_KEY" ]; then
+        # Grupo 3: 1º commit da sessão — criar Story e Task
+        echo "  [jira] criando task para plugin '$PLUGIN'..."
+        TASK_DATE=$(date +%Y-%m-%d)
+        ISSUE_KEY_NEW=$(claude -p "
+Você tem acesso ao MCP Atlassian (mcp__atlassian-official__*).
+Faça o seguinte no JIRA (fabricadesoftwaretbc.atlassian.net):
+
+1. Busque stories com summary contendo '${PLUGIN_SAFE}' no Epic DAI-172 usando searchJiraIssuesUsingJql
+   JQL: project = DAI AND issuetype = Story AND parent = DAI-172 AND summary ~ \"${PLUGIN_SAFE}\"
+
+2. Se não encontrar nenhuma: crie uma Story com summary '${PLUGIN_SAFE}' vinculada ao Epic DAI-172 (parent = DAI-172)
+
+3. Crie uma Task com:
+   - summary: '[${PLUGIN_SAFE}] ${BRANCH_SAFE} — ${TASK_DATE}'
+   - parent: issue key da Story encontrada/criada
+
+4. Retorne APENAS o issue key da Task criada (ex: DAI-245), nada mais.
+" 2>/dev/null | tr -d '[:space:]')
+
+        if [ -n "$ISSUE_KEY_NEW" ] && echo "$ISSUE_KEY_NEW" | grep -qE '^[A-Z]+-[0-9]+$'; then
+          bash "$JIRA_SESSION_SCRIPT" set_issue_key "$ISSUE_KEY_NEW" 2>/dev/null || true
+          echo "  [jira] task criada: $ISSUE_KEY_NEW"
+        else
+          echo "  [jira] aviso: não foi possível obter issue key válido (retorno: '$ISSUE_KEY_NEW')" >&2
+        fi
+
+      else
+        # Grupo 4: commits subsequentes — adicionar comentário na Task
+        COMMIT_MSG=""
+        if [ -f ".git/COMMIT_EDITMSG" ]; then
+          COMMIT_MSG=$(head -1 ".git/COMMIT_EDITMSG" 2>/dev/null || echo "")
+        fi
+        [ -z "$COMMIT_MSG" ] && COMMIT_MSG="commit sem mensagem"
+        COMMIT_SAFE=$(sanitize_prompt_var "$COMMIT_MSG")
+
+        TIMESTAMP=$(date +%Y-%m-%d\ %H:%M:%S)
+        claude -p "
+Você tem acesso ao MCP Atlassian (mcp__atlassian-official__*).
+Adicione um comentário na issue ${ISSUE_KEY} no JIRA (fabricadesoftwaretbc.atlassian.net) com o seguinte texto:
+commit: ${COMMIT_SAFE} | branch: ${BRANCH_SAFE} | ${TIMESTAMP}
+
+Não retorne nada além de OK.
+" >/dev/null 2>&1 || true
+
+      fi
+    fi
+  fi
+fi
+# ── fim JIRA Integration ──────────────────────────────────────────────────────
+
+exit 0

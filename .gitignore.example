@@ -1,0 +1,48 @@
+# ============================================
+# .gitignore para Projetos de Clientes
+# ============================================
+#
+# IMPORTANTE: Adicione estas linhas ao .gitignore
+# do projeto do cliente para NÃO versionar as
+# skills junto com o código do cliente.
+#
+# As skills são gerenciadas separadamente no
+# repositório https://github.com/tbc-servicos/claude-skills.git
+#
+# ============================================
+
+# Claude Code Skills (gerenciadas separadamente)
+.claude/skills/
+
+# Manter apenas a estrutura de diretórios
+!.claude/skills/.gitkeep
+
+# ============================================
+# Arquivos de configuração locais do Claude
+# ============================================
+
+# Configuração local do desenvolvedor
+.claude/config.json
+
+# Histórico de sessões
+.claude/sessions/
+
+# Cache e temporários
+.claude/.cache/
+.claude/tmp/
+
+# ============================================
+# Projetos específicos podem precisar adicionar:
+# ============================================
+
+# Protheus/TIR
+venv_tir/
+config.json
+screenshots/
+reports/
+*.log
+
+# Fluig
+node_modules/
+dist/
+build/

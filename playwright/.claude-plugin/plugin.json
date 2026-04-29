@@ -1,0 +1,10 @@
+{
+  "name": "playwright",
+  "description": "Plugin Claude Code para testes E2E com Playwright CLI — setup, execução, test-agents (planner/generator/healer) e autenticação via storageState.",
+  "version": "1.0.0",
+  "author": {
+    "name": "TBC - Time de Desenvolvimento"
+  },
+  "homepage": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "repository": "https://github.com/tbc-servicos/tbc-knowledge-plugins"
+}

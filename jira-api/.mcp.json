@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "jira-rest": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/jira-rest/start.js"],
+      "env": {
+        "JIRA_SITE": "${JIRA_SITE}",
+        "JIRA_EMAIL": "${JIRA_EMAIL}",
+        "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
+      }
+    }
+  }
+}

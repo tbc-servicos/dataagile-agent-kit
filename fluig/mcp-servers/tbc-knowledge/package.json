@@ -1,0 +1,20 @@
+{
+  "name": "advpl-knowledge-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for encrypted ADVPL/TLPP knowledge base",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "parse": "node parse-fontes.js",
+    "parse:knowledge": "node parse-knowledge.js",
+    "parse:pdfs": "node parse-pdfs.js",
+    "encrypt": "node encrypt-db.js",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.0",
+    "better-sqlite3": "^11.8.2",
+    "pdf-parse": "^1.1.1"
+  }
+}

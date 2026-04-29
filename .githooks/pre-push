@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# pre-push hook — Grava resumo do diff na Task JIRA antes do push
+#
+sanitize_prompt_var() {
+  printf '%s' "$1" | tr -d '`$\\' | sed 's/"/'"'"'/g' | head -c 100
+}
+
+# Silencioso se não estiver em repo git
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+
+JIRA_SESSION_SCRIPT="${REPO_ROOT}/scripts/jira-session.sh"
+[ -f "$JIRA_SESSION_SCRIPT" ] || exit 0
+
+ISSUE_KEY=$(bash "$JIRA_SESSION_SCRIPT" read issue_key 2>/dev/null || echo "")
+[ -z "$ISSUE_KEY" ] && exit 0
+
+if ! echo "$ISSUE_KEY" | grep -qE '^[A-Z]+-[0-9]+$'; then
+  echo "  [jira] aviso: issue_key inválido em .jira-session, ignorando" >&2
+  exit 0
+fi
+
+# Verificar claude disponível
+command -v claude >/dev/null 2>&1 || exit 0
+
+# Coletar diff em relação ao main (ou master se main não existir)
+BASE_BRANCH="main"
+git rev-parse --verify "origin/main" >/dev/null 2>&1 || BASE_BRANCH="master"
+DIFF=$(git diff "origin/${BASE_BRANCH}...HEAD" --dirstat=files,cumulative 2>/dev/null | head -20)
+COMMITS=$(git log "origin/${BASE_BRANCH}...HEAD" --oneline 2>/dev/null | head -20)
+
+[ -z "$DIFF" ] && [ -z "$COMMITS" ] && exit 0
+
+ISSUE_KEY_SAFE=$(sanitize_prompt_var "$ISSUE_KEY")
+COMMITS_SAFE=$(printf '%s' "$COMMITS" | tr -d '`$\\' | head -c 2000)
+DIFF_SAFE=$(printf '%s' "$DIFF" | tr -d '`$\\' | head -c 2000)
+
+echo "  [jira] gravando resumo do diff na task ${ISSUE_KEY}..."
+
+claude -p "
+Você tem acesso ao MCP Atlassian (mcp__atlassian-official__*).
+
+Analise as seguintes mudanças de código e escreva um comentário em português para a issue ${ISSUE_KEY_SAFE}
+no JIRA (fabricadesoftwaretbc.atlassian.net) descrevendo o que foi feito em linguagem natural.
+
+Commits realizados:
+${COMMITS_SAFE}
+
+Arquivos modificados (resumo):
+${DIFF_SAFE}
+
+Escreva o comentário de forma clara e objetiva (máximo 5 linhas), focando no impacto e no que foi alterado.
+Não liste os commits, apenas descreva o trabalho realizado. Não retorne nada além de OK após postar.
+" >/dev/null 2>&1 || true
+
+exit 0

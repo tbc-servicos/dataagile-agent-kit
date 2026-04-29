@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# SessionStart hook: injeta contexto dos skills TBC disponiveis
+# Cross-platform: macOS, Linux, Windows (Git Bash/WSL)
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+TBC_MARKET="$(cd "${PLUGIN_ROOT}/.." 2>/dev/null && pwd)"
+
+# Coletar versoes de todos os plugins TBC
+versions=""
+if [ -d "$TBC_MARKET" ]; then
+  for d in "$TBC_MARKET"/*/; do
+    pf="$d.claude-plugin/plugin.json"
+    [ -f "$pf" ] || continue
+    name=$(basename "$d")
+    v=$(jq -r '.version // empty' "$pf" 2>/dev/null || true)
+    [ -n "$v" ] && versions="${versions}  - ${name} v${v}\n"
+  done
+fi
+
+context="Plugins TBC instalados:\n${versions}\nSkills Fluig disponiveis (use Skill tool para invocar):\n\
+  - /fluig:widget — Cria widget Angular 19 + PO-UI para Fluig\n\
+  - /fluig:dataset — Cria dataset JS (SQL, REST Protheus, dinamico)\n\
+  - /fluig:form — Cria formulario HTML com validacoes e mascaras\n\
+  - /fluig:workflow — Cria scripts de eventos BPM\n\
+  - /fluig:api-ref — Referencia APIs Fluig (DatasetFactory, CardAPI, WCMAPI)\n\
+  - /fluig:test — Testes unitarios (Jasmine+Karma) e E2E (Playwright)\n\
+  - /fluig:feedback — Registra correcao na base de conhecimento\n\n\
+MCP tools disponiveis: searchFluigPatterns, searchFluigApi, searchKnowledge (plugin fluig tbc-knowledge)\n\n\
+Regra de modelos TBC: haiku para implementacao, sonnet para review/QA, opus somente se o dev pedir."
+
+# Escape para JSON
+escape_for_json() {
+  local s="$1"
+  s="${s//\\/\\\\}"
+  s="${s//\"/\\\"}"
+  s="${s//$'\n'/\\n}"
+  s="${s//$'\r'/\\r}"
+  s="${s//$'\t'/\\t}"
+  printf '%s' "$s"
+}
+
+escaped=$(escape_for_json "$context")
+
+printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$escaped"
+exit 0

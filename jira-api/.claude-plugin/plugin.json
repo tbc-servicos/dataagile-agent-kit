@@ -1,0 +1,11 @@
+{
+  "name": "jira-api",
+  "description": "Plugin Claude Code para Jira Cloud via REST API v3 — download/upload de attachments, leitura completa de issues com custom fields, comments, search JQL avançado. Complementa o MCP oficial (que não suporta attachments). Auth via Basic Auth (email + API token).",
+  "version": "1.0.1",
+  "author": {
+    "name": "TBC - Time de Desenvolvimento"
+  },
+  "homepage": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "repository": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "mcpServers": "./.mcp.json"
+}

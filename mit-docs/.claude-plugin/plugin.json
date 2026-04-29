@@ -1,0 +1,11 @@
+{
+  "name": "mit-docs",
+  "description": "Plugin Claude Code para geração de documentação de projeto TOTVS — MIT044 (Especificação de Personalização) e MIT010 (Termo de Validação). Gera DOCX a partir de brainstorm colaborativo, salva no Google Drive. Independente de produto (Protheus, Fluig, misto). Knowledge Base via MCP.",
+  "version": "1.0.1",
+  "author": {
+    "name": "TBC - Time de Desenvolvimento"
+  },
+  "homepage": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "repository": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "mcpServers": "./.mcp.json"
+}

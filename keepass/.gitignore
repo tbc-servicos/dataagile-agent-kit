@@ -1,0 +1,46 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+
+# KeePass databases (never commit)
+*.kdbx
+*.kdbx.lock
+*.keyx
+*.key
+
+# KeePass config has real paths and credentials — use keepass-config.json.example as template
+keepass-config.json
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Logs
+*.log
+
+# Node (if using any)
+node_modules/
+npm-debug.log
+
+# Python (if using any)
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Temporary
+.tmp/
+temp/

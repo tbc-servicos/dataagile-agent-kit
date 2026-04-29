@@ -1,0 +1,28 @@
+{
+  "databases": [
+    {
+      "alias": "pessoal",
+      "path": "/Users/SEU_USUARIO/My Drive/Personal/Chaves/Personal.kdbx",
+      "keychain_service": "keepassxc-cli",
+      "keychain_account": "keepass-pessoal",
+      "keyfile": null,
+      "description": "Database pessoal (Google Drive pessoal)"
+    },
+    {
+      "alias": "trabalho",
+      "path": "/Users/SEU_USUARIO/Library/CloudStorage/GoogleDrive-SEU_EMAIL/Shared drives/NOME_DRIVE/KeePass/Passwords.kdbx",
+      "keychain_service": "keepassxc-cli",
+      "keychain_account": "keepass-trabalho",
+      "keyfile": null,
+      "description": "Banco de dados do trabalho"
+    },
+    {
+      "alias": "compartilhado",
+      "path": "/Users/SEU_USUARIO/Library/CloudStorage/GoogleDrive-SEU_EMAIL/Shared drives/NOME_DRIVE/KeePass/Keychain.kdbx",
+      "keychain_service": "keepassxc-cli",
+      "keychain_account": "keepass-compartilhado",
+      "keyfile": "/Users/SEU_USUARIO/Library/CloudStorage/GoogleDrive-SEU_EMAIL/Shared drives/NOME_DRIVE/KeePass/chave.keyx",
+      "description": "Database compartilhada (com arquivo .keyx)"
+    }
+  ]
+}

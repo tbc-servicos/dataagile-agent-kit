@@ -1,0 +1,13 @@
+{
+  "name": "totvs-sign-mcp",
+  "version": "1.0.0",
+  "description": "MCP proxy for TOTVS Assinatura Eletrônica (TAE) via remote SSE",
+  "main": "connect-remote.js",
+  "type": "module",
+  "scripts": {
+    "start": "node connect-remote.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.0"
+  }
+}

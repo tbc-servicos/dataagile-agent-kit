@@ -1,0 +1,10 @@
+{
+  "name": "fluig",
+  "description": "Plugin Claude Code para desenvolvimento TOTVS Fluig — ciclo completo: brainstorm, planejamento, implementação com teammates (TDD), deploy, QA (E2E Playwright), verificação. Scaffolding de formulários, datasets, widgets Angular 19 + PO-UI, workflows BPM.",
+  "version": "2.0.5",
+  "author": {
+    "name": "TBC - Time de Desenvolvimento"
+  },
+  "homepage": "https://github.com/tbc-servicos/tbc-knowledge-plugins",
+  "repository": "https://github.com/tbc-servicos/tbc-knowledge-plugins"
+}

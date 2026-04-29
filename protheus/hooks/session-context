@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# SessionStart hook: injeta contexto dos skills TBC disponiveis
+# Cross-platform: macOS, Linux, Windows (Git Bash/WSL)
+#
+# IMPORTANTE: ao adicionar/remover skill, atualizar TAMBEM:
+#   - protheus/CLAUDE.md (secao "Skills Protheus disponiveis")
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+TBC_MARKET="$(cd "${PLUGIN_ROOT}/.." 2>/dev/null && pwd)"
+
+# Coletar versoes de todos os plugins TBC
+versions=""
+if [ -d "$TBC_MARKET" ]; then
+  for d in "$TBC_MARKET"/*/; do
+    pf="$d.claude-plugin/plugin.json"
+    [ -f "$pf" ] || continue
+    name=$(basename "$d")
+    v=$(jq -r '.version // empty' "$pf" 2>/dev/null || true)
+    [ -n "$v" ] && versions="${versions}  - ${name} v${v}\n"
+  done
+fi
+
+context="Plugins TBC instalados:\n${versions}\nSkills Protheus disponiveis (use Skill tool para invocar):\n\
+  - /protheus:brainstorm — Planejamento ADVPL/TLPP — intake MIT044, perguntas, design aprovado antes do codigo\n\
+  - /protheus:patterns — Referencia de padroes ADVPL/TLPP (nomenclatura, notacao hungara, MVC)\n\
+  - /protheus:writer — Gera codigo ADVPL/TLPP seguindo convencoes TOTVS\n\
+  - /protheus:specialist — Consulta fontes padrao + TDN + padroes TBC\n\
+  - /protheus:sql — SQL embarcado em ADVPL (BeginSQL/EndSQL, macros)\n\
+  - /protheus:reviewer — Revisa codigo ADVPL/TLPP com checklist TOTVS\n\
+  - /protheus:diagnose — Diagnostica erros de compilacao, runtime, performance\n\
+  - /protheus:migrate — Migra ADVPL procedural para TLPP orientado a objetos\n\
+  - /protheus:test-web — Testes E2E Protheus via Playwright\n\
+  - /protheus:feedback — Registra correcao na base de conhecimento\n\
+  - /protheus:importar-gerenciador-projeto — Monta JSON para importacao de projetos no Gerenciador de Projetos (UTBCA012)\n\n\
+MCP tools disponiveis: searchKnowledge, searchFunction, findExecAuto, findMvcPattern, searchByTable (plugin protheus tbc-knowledge)\n\n\
+Regra de modelos TBC: haiku para implementacao, sonnet para review/QA, opus somente se o dev pedir."
+
+# Escape para JSON
+escape_for_json() {
+  local s="$1"
+  s="${s//\\/\\\\}"
+  s="${s//\"/\\\"}"
+  s="${s//$'\n'/\\n}"
+  s="${s//$'\r'/\\r}"
+  s="${s//$'\t'/\\t}"
+  printf '%s' "$s"
+}
+
+escaped=$(escape_for_json "$context")
+
+printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$escaped"
+exit 0
