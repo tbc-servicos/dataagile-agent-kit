@@ -1,0 +1,40 @@
+# tbc-agent-kit
+
+> Plugin Claude Code para desenvolvimento ADVPL/TLPP e suporte técnico Protheus. Conecta o Claude a base técnica curada com funções, pontos de entrada e padrões TOTVS. Inclui MCP PO-UI para desenvolvimento de fronts Angular.
+
+## Plugin Protheus
+
+- [README Protheus](./protheus/README.md): Skills de desenvolvimento ADVPL/TLPP — brainstorm, plano, implementação, compilação, testes TIR, suporte técnico
+- [CLAUDE.md Protheus](./protheus/CLAUDE.md): Convenções obrigatórias, regra de modelos, fluxo de desenvolvimento
+- [Skills disponíveis](./protheus/skills/): /protheus:brainstorm, /protheus:plan, /protheus:implement, /protheus:writer, /protheus:specialist, /protheus:reviewer, /protheus:diagnose, /protheus:deploy, /protheus:qa, /protheus:sql, /protheus:migrate, /protheus:suporte
+
+## Plugin Playwright
+
+- [README Playwright](./playwright/README.md): Agentes de teste E2E — planner, generator, healer com --loop=claude
+
+## MCP Servers
+
+- [tbc-knowledge](./protheus/mcp-servers/): Base ADVPL com 9 tools — searchFunction, findEndpoint, findSmartView, findExecAuto, findMvcPattern, listModules, searchByTable, searchKnowledge, searchDocuments
+- [local-knowledge-external](./protheus/mcp-servers/local-knowledge-external/): Base anonimizada de tickets e docs TOTVS
+- [po-ui](https://po-ui.io/llms.txt): MCP oficial PO-UI — componentes Angular TOTVS, inputs, outputs, exemplos
+
+## Referência PO-UI
+
+- [llms.txt PO-UI](https://po-ui.io/llms.txt): Índice compacto de todos os componentes PO-UI
+- [llms-full.txt PO-UI](https://po-ui.io/llms-full.txt): Documentação expandida com assinaturas completas
+- [Contexto local PO-UI](./.claude/context/po-ui.md): Regras de uso em projetos Protheus
+
+## Configuração e contexto
+
+- [Contexto de desenvolvimento](./.claude/context/dev.md): Estrutura de plugins, convenções, build
+- [Contexto PO-UI](./.claude/context/po-ui.md): Biblioteca Angular padrão para fronts Protheus
+
+## Instalação
+
+- [README principal](./README.md): Guia de instalação, configuração da API key e primeiros passos
+- [ONBOARDING](./ONBOARDING.md): Configuração detalhada, troubleshooting, Claude Desktop
+
+## Optional
+
+- [CHANGELOG](./CHANGELOG.md): Histórico de versões
+- [Scripts](./scripts/): setup-tbc.sh, check-plugins.sh, session-start.sh

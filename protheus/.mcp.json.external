@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "tbc-knowledge": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/dist/tbc-mcp-proxy.mjs"]
+    },
+    "local-knowledge-external": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/local-knowledge-external/proxy.js"]
+    },
+    "po-ui": {
+      "command": "npx",
+      "args": ["-y", "@po-ui/mcp"]
+    }
+  }
+}

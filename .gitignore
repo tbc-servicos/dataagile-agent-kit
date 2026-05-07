@@ -1,0 +1,62 @@
+# Node
+node_modules/
+
+# Compiled
+*.class
+*.py[cod]
+*.jar
+*.log
+
+# Maven
+target/
+
+# IDE
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Media
+*.mp4
+*.tiff
+*.avi
+*.flv
+*.mov
+*.wmv
+
+# Git worktrees
+.worktrees/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# MCP dependencies
+protheus/mcp-servers/*/node_modules/
+
+# Python virtualenvs
+.venv/
+
+# Plaintext DB (only .enc goes in repo)
+protheus/mcp-servers/local-knowledge-external/data/*.db
+!protheus/mcp-servers/local-knowledge-external/data/*.db.enc
+!protheus/mcp-servers/local-knowledge-external/data/.gitkeep
+
+docs/plans/material_treinamento/*.pdf
+
+# Block any root-level directory not explicitly listed below
+/*
+
+# Public plugins
+!/protheus/
+!/playwright/
+
+# Repo metadata
+!/.claude-plugin/
+!/README.md
+!/CHANGELOG.md
+!/ONBOARDING.md
+!/LICENSE
+!/.gitignore

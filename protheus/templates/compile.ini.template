@@ -1,0 +1,65 @@
+; =============================================================================
+; TDS-CLI Script Template — compile + patchGen
+; Encoding: ANSI (CP1252) — converter com: iconv -f UTF-8 -t CP1252
+; Uso: advpls cli compile.ini --log-file compile.log
+; =============================================================================
+; Variaveis a substituir:
+;   {{SERVER}}      - IP/hostname do AppServer
+;   {{PORT}}        - Porta do AppServer
+;   {{ENV}}         - Nome do ambiente (ex: P12PROD)
+;   {{USER}}        - Usuario de autenticacao
+;   {{PSW}}         - Senha (pode ficar vazia)
+;   {{AUTH_TOKEN}}  - Token de compilacao Harpia (ou deixar secao [authorization] com skip=true)
+;   {{INCLUDES}}    - Caminho absoluto do diretorio de includes
+;   {{SOURCES}}     - Caminhos absolutos dos fontes separados por virgula
+;   {{RESOURCES}}   - Nomes dos fontes para o patch (sem path), ex: RFATA001.prw,RFATA002.prw
+;   {{PATCH_NAME}}  - Nome do patch (sem extensao), ex: RFATA_v1
+;   {{PATCH_DIR}}   - Diretorio absoluto onde o patch sera salvo
+; =============================================================================
+
+showConsoleOutput=true
+
+[user]
+INCLUDE_DIR={{INCLUDES}}
+
+; ----------------------------------------------------------------------------
+; 1. Autenticacao no AppServer
+; ----------------------------------------------------------------------------
+[authentication]
+action=authentication
+server={{SERVER}}
+port={{PORT}}
+secure=0
+build=AUTO
+environment={{ENV}}
+user={{USER}}
+psw={{PSW}}
+
+; ----------------------------------------------------------------------------
+; 2. Token de compilacao (Harpia)
+;    - Se tiver token: remover skip=true e descomentar authtoken
+;    - Se nao tiver token: manter skip=true
+; ----------------------------------------------------------------------------
+[authorization]
+action=authorization
+skip=true
+;authtoken={{AUTH_TOKEN}}
+
+; ----------------------------------------------------------------------------
+; 3. Compilacao dos fontes
+; ----------------------------------------------------------------------------
+[compile]
+action=compile
+program={{SOURCES}}
+recompile=T
+includes=${INCLUDE_DIR}
+
+; ----------------------------------------------------------------------------
+; 4. Geracao de patch (remover esta secao se nao precisar de patch)
+; ----------------------------------------------------------------------------
+[patchGen]
+action=patchGen
+fileResource={{RESOURCES}}
+patchType=PTM
+patchName={{PATCH_NAME}}
+saveLocal={{PATCH_DIR}}/

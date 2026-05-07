@@ -1,0 +1,108 @@
+# tbc-agent-kit
+
+> Plugin Claude Code para desenvolvimento ADVPL/TLPP e suporte técnico Protheus. Conecta o Claude a base técnica curada com funções, pontos de entrada e padrões TOTVS. Inclui MCP PO-UI para desenvolvimento de fronts Angular.
+
+## Instalação
+
+**Pré-requisito:** API key em https://tbc-agent-kit.totvstbc.com.br
+
+```bash
+# 1. Instalar Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# 2. Configurar API key
+mkdir -p ~/.config/tbc
+echo '{ "api_key": "tbc_live_SUA_CHAVE_AQUI" }' > ~/.config/tbc/dev-config.json
+
+# 3. Adicionar marketplace
+claude plugin marketplace add https://github.com/tbc-servicos/tbc-agent-kit.git
+
+# 4. Instalar plugin
+claude plugin install protheus@claude-skills-tbc
+```
+
+## Plugin Protheus
+
+Skills ADVPL/TLPP com prefixo `/protheus:`:
+
+| Skill | Função |
+|-------|--------|
+| `/protheus:brainstorm` | Intake técnico, design aprovado antes do código |
+| `/protheus:plan` | Decomposição em tasks ADVPL tipadas |
+| `/protheus:implement` | Agent Team: implementer (haiku) → spec-reviewer (sonnet) → reviewer (sonnet) |
+| `/protheus:writer` | Geração ADVPL/TLPP com notação húngara, MVC, FWMBrowse |
+| `/protheus:specialist` | Consulta base de conhecimento via MCP |
+| `/protheus:reviewer` | Revisão CRÍTICO/AVISO/SUGESTÃO |
+| `/protheus:diagnose` | Diagnóstico de erros de compilação, runtime, performance |
+| `/protheus:deploy` | Lint + compilação AppServer + patch .ptm via TDS-CLI |
+| `/protheus:qa` | Testes TIR E2E no ambiente compilado |
+| `/protheus:verify` | Checklist TOTVS antes de produção |
+| `/protheus:sql` | SQL embarcado (BeginSQL/EndSQL, macros) |
+| `/protheus:migrate` | ADVPL procedural → TLPP orientado a objetos |
+| `/protheus:suporte` | Triagem de chamado: classifica, causa raiz, resolução estruturada |
+| `/protheus:test-web` | Testes E2E via MCP Playwright com screenshots |
+| `/protheus:feedback` | Registra aprendizado na base de conhecimento via MCP |
+
+Convenções obrigatórias:
+- Notação húngara: `c`=char · `n`=numérico · `l`=lógico · `d`=data · `a`=array · `b`=bloco · `o`=objeto
+- Escopo explícito declarado no topo: `Local` / `Static` / `Private` / `Public`
+- Extensões: `.prw` programa · `.tlpp` TLPP moderno
+- Nunca `BEGIN SEQUENCE` — usar programação defensiva com guard clauses
+
+MCP Tools (tbc-knowledge): `searchFunction`, `findEndpoint`, `findSmartView`, `findExecAuto`, `findMvcPattern`, `listModules`, `searchByTable`, `searchKnowledge`, `searchDocuments`
+MCP Tools (local-knowledge-external): `searchKnowledge`, `getKnowledgeStats`
+
+## Plugin Playwright
+
+Agentes de teste E2E: planner → generator → healer com `--loop=claude`.
+Autenticação via `storageState`. CLI via `npx playwright`.
+
+## MCP Servers
+
+### tbc-knowledge (remoto)
+
+Proxy stdio ↔ Streamable HTTP para https://mcp.totvstbc.com.br/mcp.
+Requer API key configurada em `~/.config/tbc/dev-config.json`.
+
+### local-knowledge-external
+
+Base offline SQLite anonimizada de tickets de suporte TOTVS e docs técnicos. Sem PII.
+Tools: `searchKnowledge`, `getKnowledgeStats`.
+
+### po-ui (oficial PO-UI)
+
+```json
+{ "po-ui": { "command": "npx", "args": ["-y", "@po-ui/mcp"] } }
+```
+
+Biblioteca Angular padrão para fronts Protheus. MCP expõe componentes, inputs, outputs e exemplos.
+Docs LLM: https://po-ui.io/llms.txt · https://po-ui.io/llms-full.txt
+
+## PO-UI — Biblioteca Angular para fronts Protheus
+
+PO-UI é a biblioteca de componentes Angular padrão para desenvolvimento de telas Protheus/Fluig.
+
+Instalação em projeto Angular:
+```bash
+ng add @po-ui/ng-components
+```
+
+Regras:
+- Nunca Angular Material puro — sempre PO-UI
+- Notificações: `PoNotificationService`
+- Tabelas: `po-table` com `p-columns` tipadas
+- Formulários: `po-dynamic-form` ou campos PO individuais
+- Ícones: prefixo `po-icon-*`
+
+Docs LLM: https://po-ui.io/llms.txt (índice compacto) · https://po-ui.io/llms-full.txt (expandido)
+
+## Fluxo recomendado
+
+```
+/protheus:brainstorm → /protheus:plan → /protheus:implement → /protheus:deploy → /protheus:qa → /protheus:verify
+```
+
+Suporte técnico:
+```
+/protheus:suporte → /protheus:diagnose → /protheus:specialist
+```

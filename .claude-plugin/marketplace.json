@@ -1,0 +1,47 @@
+{
+  "name": "claude-skills-tbc",
+  "owner": {
+    "name": "TBC - Time de Desenvolvimento",
+    "email": "dev@tbc.com.br"
+  },
+  "metadata": {
+    "description": "Plugins Claude Code para desenvolvimento TOTVS (Fluig, Protheus, documentação MIT) e ferramentas de produtividade — TBC",
+    "pluginRoot": "."
+  },
+  "plugins": [
+    {
+      "name": "protheus",
+      "source": "./protheus",
+      "description": "Plugin para desenvolvimento TOTVS Protheus — cadeia de subagentes: intake MIT044, brainstorm, writing-plans, subagent-dev (implementação → review → compilação → TIR E2E).",
+      "version": "2.0.8",
+      "author": {
+        "name": "TBC - Time de Desenvolvimento"
+      },
+      "category": "development",
+      "tags": [
+        "protheus",
+        "totvs",
+        "advpl",
+        "tlpp",
+        "tir"
+      ]
+    },
+    {
+      "name": "playwright",
+      "source": "./playwright",
+      "description": "Plugin para testes E2E com Playwright CLI — setup, execução, test-agents (planner/generator/healer) e autenticação via storageState.",
+      "version": "1.0.0",
+      "author": {
+        "name": "TBC - Time de Desenvolvimento"
+      },
+      "category": "testing",
+      "tags": [
+        "playwright",
+        "e2e",
+        "testing",
+        "test-agents",
+        "automation"
+      ]
+    }
+  ]
+}
