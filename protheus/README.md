@@ -216,18 +216,31 @@ Reinicie o Claude Desktop depois de salvar.
 
 ## MCP — Ferramentas da Knowledge Base
 
-O servidor MCP expõe 9 ferramentas de busca na Knowledge Base ADVPL/TLPP:
+O MCP remoto bifurca por **tier** do usuário (definido pelo email cadastrado em `TBC_USER_EMAIL`):
+
+### Tier `trial` / `standard` (external — 4 tools)
+
+Acesso a referência pública ADVPL/TLPP filtrada por organização (row-level via `org_id`).
 
 | Tool | Descrição |
 |------|-----------|
-| `searchFunction` | Busca funcoes ADVPL/TLPP por nome, modulo, tipo |
-| `findEndpoint` | Encontra endpoints REST por path, metodo |
+| `searchFunction` | Busca funções ADVPL/TLPP por nome, módulo, tipo |
+| `findEndpoint` | Encontra endpoints REST por path, método |
 | `findSmartView` | Busca SmartView por keyword ou equipe |
+| `listModules` | Lista módulos com contagem de funções |
+
+> Campos `source`, `implementation`, `code` (IP proprietário TOTVS) são removidos das respostas para tier external.
+
+### Tier `internal` (TBC — 9 tools)
+
+Inclui as 4 do external + 5 internas adicionais:
+
+| Tool | Descrição |
+|------|-----------|
 | `findExecAuto` | Localiza chamadas ExecAuto por rotina ou tabela |
-| `findMvcPattern` | Busca padroes MVC por model_id ou tabela |
-| `listModules` | Lista modulos com contagem de funcoes |
+| `findMvcPattern` | Busca padrões MVC por model_id ou tabela |
 | `searchByTable` | Cross-search por alias de tabela |
-| `searchKnowledge` | Busca padroes, templates e convencoes |
+| `searchKnowledge` | Busca padrões, templates e convenções |
 | `searchDocuments` | Busca nos documentos PDF de treinamento |
 
 ## Deploy via TDS-CLI
