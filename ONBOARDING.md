@@ -82,7 +82,7 @@ O comando de inicialização entrevista e gera um `CLAUDE.md` com as configuraç
 ### Protheus — Suporte Técnico
 
 ```
-/protheus:suporte     → triagem de chamado: classifica, identifica causa raiz, gera resolução estruturada
+/protheus:suporte     → diagnóstico de erro ERP: classifica, identifica causa raiz, gera resolução estruturada
 /protheus:diagnose    → diagnóstico técnico detalhado com causa raiz
 /protheus:specialist  → consulta base para identificar função, PE ou parâmetro
 ```

@@ -52,7 +52,7 @@ Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada
 | Perfil | O que ganha |
 |--------|-------------|
 | **Dev ADVPL/TLPP** | Brainstorm → plano → implementação via Agent Team → compilação → testes TIR, tudo no terminal |
-| **Suporte técnico** | Triagem de chamados por categoria, causa raiz identificada, resolução estruturada |
+| **Suporte técnico** | Diagnóstico de erro ERP por categoria, causa raiz identificada, resolução estruturada |
 | **Dev front Protheus** | MCP PO-UI nativo — componentes Angular com assinaturas corretas, sem consultar docs manualmente |
 
 ---
@@ -94,7 +94,7 @@ claude plugin install protheus@claude-skills-tbc
 cd ~/seu-projeto-protheus
 claude
 # /protheus:brainstorm   → nova feature
-# /protheus:suporte      → triar chamado
+# /protheus:suporte      → diagnosticar erro ERP
 ```
 
 > Guia detalhado com troubleshooting e Claude Desktop: [ONBOARDING.md](./ONBOARDING.md)
@@ -128,7 +128,7 @@ claude
 ### Suporte técnico
 
 ```
-/protheus:suporte     → triagem de chamado com causa raiz e resolução
+/protheus:suporte     → diagnóstico de erro ERP com causa raiz e resolução
 /protheus:diagnose    → diagnóstico técnico detalhado
 /protheus:specialist  → identifica função, PE ou parâmetro exato
 ```
@@ -140,7 +140,7 @@ claude
 | Server | Função |
 |--------|--------|
 | `tbc-knowledge` | Base ADVPL remota — `searchFunction`, `findEndpoint`, `findSmartView`, `findExecAuto`, `findMvcPattern` e mais 4 tools |
-| `local-knowledge-external` | Base offline anonimizada de tickets de suporte e docs TOTVS |
+| `local-knowledge-external` | Base offline de conhecimento técnico ADVPL/TLPP curado e docs TOTVS |
 | `po-ui` | MCP oficial PO-UI — componentes Angular para fronts Protheus, inputs, outputs e exemplos |
 
 ---
