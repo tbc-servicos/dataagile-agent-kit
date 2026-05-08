@@ -12,7 +12,9 @@ Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP
 
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) **v2.1.32+** instalado
 - Node.js 18+
-- Email cadastrado na TBC (trial 30 dias automático no primeiro acesso)
+- **Uma** das credenciais abaixo (basta uma):
+  - **API key do portal** (`tbc_live_*`) — usuários externos pagos. Gere em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br) (trial 30 dias automático).
+  - **Email cadastrado** — usuários internos TBC, com email registrado no auth-server.
 
 ### Passo 1 — Registrar o marketplace e instalar
 
@@ -21,9 +23,39 @@ claude plugin marketplace add https://github.com/tbc-servicos/tbc-knowledge-plug
 claude plugin install protheus@claude-skills-tbc
 ```
 
-### Passo 2 — Configurar o email (obrigatório)
+### Passo 2 — Configurar a credencial
 
-O MCP autentica pelo email cadastrado na TBC. **Sem este passo, o MCP não conecta.**
+Escolha **A** ou **B** conforme o seu perfil. Se ambas estiverem configuradas, a API key tem precedência.
+
+#### A) API key do portal (usuários externos — padrão recomendado)
+
+A API key autentica direto contra o portal de assinaturas. Email/tier/orgId são resolvidos pelo servidor — você **não** precisa configurar email.
+
+**macOS / Linux (arquivo de configuração):**
+```bash
+mkdir -p ~/.config/tbc
+echo '{ "api_key": "tbc_live_SUA_CHAVE_AQUI" }' > ~/.config/tbc/dev-config.json
+```
+
+**Windows (PowerShell):**
+```powershell
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.config\tbc" | Out-Null
+'{ "api_key": "tbc_live_SUA_CHAVE_AQUI" }' | Set-Content "$env:USERPROFILE\.config\tbc\dev-config.json"
+```
+
+**Alternativa — variável de ambiente (qualquer SO):**
+```bash
+export TBC_API_KEY=tbc_live_SUA_CHAVE_AQUI       # macOS/Linux — adicione ao ~/.zshrc ou ~/.bashrc
+```
+```powershell
+[Environment]::SetEnvironmentVariable("TBC_API_KEY", "tbc_live_SUA_CHAVE_AQUI", "User")
+```
+
+> Gere ou rotacione a key em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br). Nunca compartilhe a chave.
+
+#### B) Email cadastrado (uso interno TBC — legado)
+
+Usado apenas por contas TBC internas, cujos emails estão pré-registrados no auth-server. Para externos, use a opção A.
 
 **macOS (zsh):**
 ```bash
@@ -43,7 +75,7 @@ source ~/.bashrc
 ```
 > Reinicie o terminal depois de configurar.
 
-**Alternativa — arquivo de configuração (funciona em qualquer SO):**
+**Alternativa — arquivo de configuração:**
 ```bash
 # macOS/Linux
 mkdir -p ~/.config/tbc
@@ -55,7 +87,7 @@ mkdir -Force "$env:USERPROFILE\.config\tbc"
 '{ "email": "seu.nome@empresa.com.br" }' | Out-File "$env:USERPROFILE\.config\tbc\dev-config.json" -Encoding utf8
 ```
 
-> O email precisa estar cadastrado na TBC. Faça auto-registro com trial 30d ou contrate em https://mcp.totvstbc.com.br/payment.
+> O email precisa estar cadastrado no auth-server interno. Para usuários externos sem cadastro interno, use a opção A (API key do portal).
 
 ### Passo 3 — Habilitar Agent Teams (recomendado)
 
@@ -99,6 +131,22 @@ O MCP também funciona no **Claude Desktop** (app). Adicione ao arquivo de confi
 | Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
 | Linux | `~/.config/Claude/claude_desktop_config.json` |
 
+**Externo (API key — recomendado):**
+```json
+{
+  "mcpServers": {
+    "tbc-knowledge": {
+      "command": "node",
+      "args": ["<HOME>/.claude/plugins/marketplaces/claude-skills-tbc/protheus/dist/tbc-mcp-proxy.mjs"],
+      "env": {
+        "TBC_API_KEY": "tbc_live_SUA_CHAVE_AQUI"
+      }
+    }
+  }
+}
+```
+
+**Interno (email):**
 ```json
 {
   "mcpServers": {
@@ -216,7 +264,10 @@ Reinicie o Claude Desktop depois de salvar.
 
 ## MCP — Ferramentas da Knowledge Base
 
-O MCP remoto bifurca por **tier** do usuário (definido pelo email cadastrado em `TBC_USER_EMAIL`):
+O MCP remoto bifurca por **tier** do usuário, resolvido server-side a partir da credencial:
+
+- **API key do portal** (`tbc_live_*`): tier vem do plano da assinatura (`starter` → `trial`, `pro` → `standard`).
+- **Email cadastrado** (`TBC_USER_EMAIL`): tier vem do registro no auth-server (`internal` para contas TBC, `trial`/`standard` para externos pré-cadastrados).
 
 ### Tier `trial` / `standard` (external — 4 tools)
 
@@ -269,8 +320,10 @@ saveLocal=/patches/
 
 | Problema | Solução |
 |----------|---------|
-| "email nao configurado" | Configure `TBC_USER_EMAIL` no shell ou `~/.config/tbc/dev-config.json` |
-| "Acesso negado" / 401 | Email nao cadastrado — solicite ao administrador |
+| "Nenhuma credencial configurada" | Configure **uma** das opções: `TBC_API_KEY` (externos) **ou** `TBC_USER_EMAIL` (internos). Veja [Passo 2](#passo-2--configurar-a-credencial). |
+| "Acesso negado" / 401 (externo) | API key inválida ou inativa — gere/rotacione em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br) |
+| "Acesso negado" / 401 (interno) | Email não cadastrado no auth-server — solicite ao administrador |
+| Trial expirado / 402 | Renove a assinatura em [mcp.totvstbc.com.br/payment](https://mcp.totvstbc.com.br/payment) |
 | MCP nao conecta | Verifique Node.js 18+ e conexao com internet |
 | Dependencias faltando | Delete `node_modules` e reinicie (start.sh reinstala) |
 | Claude Desktop nao mostra tools | Reinicie o app apos editar o config |
