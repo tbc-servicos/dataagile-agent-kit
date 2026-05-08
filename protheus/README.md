@@ -13,13 +13,13 @@ Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) **v2.1.32+** instalado
 - Node.js 18+
 - **Uma** das credenciais abaixo (basta uma):
-  - **API key do portal** (`tbc_live_*`) — usuários externos pagos. Gere em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br) (trial 30 dias automático).
+  - **API key do portal** (`tbc_live_*`) — usuários externos pagos. Gere em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br) após assinar um plano (`starter` ou `pro`).
   - **Email cadastrado** — usuários internos TBC, com email registrado no auth-server.
 
 ### Passo 1 — Registrar o marketplace e instalar
 
 ```bash
-claude plugin marketplace add https://github.com/tbc-servicos/tbc-knowledge-plugins.git
+claude plugin marketplace add https://github.com/tbc-servicos/tbc-agent-kit.git
 claude plugin install protheus@claude-skills-tbc
 ```
 
@@ -119,7 +119,7 @@ Claude Code CLI
             └─ https://mcp.totvstbc.com.br/mcp
 ```
 
-Para verificar se conectou, as 9 ferramentas do knowledge base aparecerão disponíveis no Claude Code.
+Para verificar se conectou, as ferramentas do knowledge base aparecerão disponíveis no Claude Code. O número de tools depende do tier do usuário — **4** para tier `trial`/`standard` (externos), **9** para tier `internal` (TBC). Veja [MCP — Ferramentas da Knowledge Base](#mcp--ferramentas-da-knowledge-base) para o catálogo completo.
 
 ## Uso no Claude Desktop
 
@@ -164,7 +164,7 @@ Reinicie o Claude Desktop depois de salvar.
 
 > **Atenção — conflito com o plugin:** Se você usa o plugin `protheus@claude-skills-tbc` no Claude Code, **não adicione** o MCP manualmente nem pelo `claude_desktop_config.json` nem pelas Integrations do claude.ai. O plugin já registra o MCP automaticamente. Ter os dois ativos duplica cada chamada MCP, causando lentidão e respostas redundantes.
 
-## Arquitetura v2.0.1
+## Arquitetura v2.0.8
 
 ### Agent Teams + Worktree Isolation
 
