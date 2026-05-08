@@ -39,7 +39,7 @@ Skills ADVPL/TLPP com prefixo `/protheus:`:
 | `/protheus:verify` | Checklist TOTVS antes de produção |
 | `/protheus:sql` | SQL embarcado (BeginSQL/EndSQL, macros) |
 | `/protheus:migrate` | ADVPL procedural → TLPP orientado a objetos |
-| `/protheus:suporte` | Triagem de chamado: classifica, causa raiz, resolução estruturada |
+| `/protheus:suporte` | Diagnóstico de erro ERP: classifica por categoria, identifica causa raiz, propõe resolução estruturada |
 | `/protheus:test-web` | Testes E2E via MCP Playwright com screenshots |
 | `/protheus:feedback` | Registra aprendizado na base de conhecimento via MCP |
 
@@ -66,7 +66,7 @@ Requer API key configurada em `~/.config/tbc/dev-config.json`.
 
 ### local-knowledge-external
 
-Base offline SQLite anonimizada de tickets de suporte TOTVS e docs técnicos. Sem PII.
+Base offline SQLite com conhecimento técnico ADVPL/TLPP curado e docs TOTVS. Sem PII.
 Tools: `searchKnowledge`, `getKnowledgeStats`.
 
 ### po-ui (oficial PO-UI)

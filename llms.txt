@@ -1,10 +1,10 @@
 # tbc-agent-kit
 
-> Plugin Claude Code para desenvolvimento ADVPL/TLPP e suporte técnico Protheus. Conecta o Claude a base técnica curada com funções, pontos de entrada e padrões TOTVS. Inclui MCP PO-UI para desenvolvimento de fronts Angular.
+> Plugin Claude Code para desenvolvimento ADVPL/TLPP e diagnóstico técnico Protheus. Conecta o Claude a base técnica curada com funções, pontos de entrada e padrões TOTVS. Inclui MCP PO-UI para desenvolvimento de fronts Angular.
 
 ## Plugin Protheus
 
-- [README Protheus](./protheus/README.md): Skills de desenvolvimento ADVPL/TLPP — brainstorm, plano, implementação, compilação, testes TIR, suporte técnico
+- [README Protheus](./protheus/README.md): Skills de desenvolvimento ADVPL/TLPP — brainstorm, plano, implementação, compilação, testes TIR, diagnóstico técnico
 - [CLAUDE.md Protheus](./protheus/CLAUDE.md): Convenções obrigatórias, regra de modelos, fluxo de desenvolvimento
 - [Skills disponíveis](./protheus/skills/): /protheus:brainstorm, /protheus:plan, /protheus:implement, /protheus:writer, /protheus:specialist, /protheus:reviewer, /protheus:diagnose, /protheus:deploy, /protheus:qa, /protheus:sql, /protheus:migrate, /protheus:suporte
 
@@ -15,7 +15,7 @@
 ## MCP Servers
 
 - [tbc-knowledge](./protheus/mcp-servers/): Base ADVPL com 9 tools — searchFunction, findEndpoint, findSmartView, findExecAuto, findMvcPattern, listModules, searchByTable, searchKnowledge, searchDocuments
-- [local-knowledge-external](./protheus/mcp-servers/local-knowledge-external/): Base anonimizada de tickets e docs TOTVS
+- [local-knowledge-external](./protheus/mcp-servers/local-knowledge-external/): Base offline de conhecimento técnico ADVPL/TLPP curado
 - [po-ui](https://po-ui.io/llms.txt): MCP oficial PO-UI — componentes Angular TOTVS, inputs, outputs, exemplos
 
 ## Referência PO-UI

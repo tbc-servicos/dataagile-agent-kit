@@ -7,7 +7,7 @@ Histórico das versões públicas do `tbc-agent-kit`.
 ## [2.1.0] — 2026-05-05
 
 ### Adicionado
-- `/protheus:suporte` — triagem de chamados de suporte técnico ERP: classifica por categoria (parametrização, integridade de dados, runtime, performance, ambiente), identifica causa raiz e gera resposta estruturada
+- `/protheus:suporte` — diagnóstico de erro ERP por categoria (parametrização, integridade de dados, runtime, performance, ambiente), identifica causa raiz e gera resposta estruturada
 
 ---
 
