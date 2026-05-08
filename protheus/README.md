@@ -269,9 +269,9 @@ O MCP remoto bifurca por **tier** do usuário, resolvido server-side a partir da
 - **API key do portal** (`tbc_live_*`): tier vem do plano da assinatura (`starter` → `trial`, `pro` → `standard`).
 - **Email cadastrado** (`TBC_USER_EMAIL`): tier vem do registro no auth-server (`internal` para contas TBC, `trial`/`standard` para externos pré-cadastrados).
 
-### Tier `trial` / `standard` (external — 4 tools)
+### Tier `trial` / `standard` (external — 6 tools)
 
-Acesso a referência pública ADVPL/TLPP filtrada por organização (row-level via `org_id`).
+Acesso a referência pública ADVPL/TLPP filtrada por organização (row-level via `org_id`) **e** busca vetorial sobre tickets resolvidos + docs TOTVS anonimizados.
 
 | Tool | Descrição |
 |------|-----------|
@@ -279,8 +279,10 @@ Acesso a referência pública ADVPL/TLPP filtrada por organização (row-level v
 | `findEndpoint` | Encontra endpoints REST por path, método |
 | `findSmartView` | Busca SmartView por keyword ou equipe |
 | `listModules` | Lista módulos com contagem de funções |
+| `ragSearchKnowledge` | Busca vetorial (embedding 1536-dim) sobre conhecimento anonimizado de tickets de suporte |
+| `ragSearchDocs` | Busca vetorial sobre documentação técnica TOTVS (TDN), retorna `title`+`source_url`+`product_id` |
 
-> Campos `source`, `implementation`, `code` (IP proprietário TOTVS) são removidos das respostas para tier external.
+> Campos `source`, `implementation`, `code` (IP proprietário TOTVS) são removidos das respostas para tier external. RAG opera sobre dados anonimizados (sem PII de clientes/usuários).
 
 ### Tier `internal` (TBC — 9 tools)
 
