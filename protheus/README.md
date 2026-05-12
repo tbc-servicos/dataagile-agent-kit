@@ -1,10 +1,10 @@
 # Protheus Plugin — Claude Code
 
-Plugin Claude Code para desenvolvimento **TOTVS Protheus** (ADVPL/TLPP).
+Plugin Claude Code para desenvolvimento **Protheus** (ADVPL/TLPP).
 
 Ciclo completo: brainstorm → plan → implement (Agent Team haiku/sonnet, worktree) → deploy (TDS-CLI) → qa (TIR E2E) → verify.
 
-Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP da TBC.
+Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP da DataAgile.
 
 ## Instalação
 
@@ -14,7 +14,7 @@ Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP
 - Node.js 18+
 - **Uma** das credenciais abaixo (basta uma):
   - **API key do portal** (`dataagile_*`) — usuários externos pagos. Gere em [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br) após assinar um plano (`starter` ou `pro`).
-  - **Email cadastrado** — usuários internos TBC, com email registrado no auth-server.
+  - **Email cadastrado** — usuários internos, com email registrado no auth-server.
 
 ### Passo 1 — Registrar o marketplace e instalar
 
@@ -53,9 +53,9 @@ export DATAAGILE_API_KEY=dataagile_SUA_CHAVE_AQUI       # macOS/Linux — adicio
 
 > Gere ou rotacione a key em [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br). Nunca compartilhe a chave.
 
-#### B) Email cadastrado (uso interno TBC — legado)
+#### B) Email cadastrado (uso interno — legado)
 
-Usado apenas por contas TBC internas, cujos emails estão pré-registrados no auth-server. Para externos, use a opção A.
+Usado apenas por usuários internos, cujos emails estão pré-registrados no auth-server. Para externos, use a opção A.
 
 **macOS (zsh):**
 ```bash
@@ -119,7 +119,7 @@ Claude Code CLI
             └─ https://mcp.totvstbc.com.br/mcp
 ```
 
-Para verificar se conectou, as ferramentas do knowledge base aparecerão disponíveis no Claude Code. O número de tools depende do tier do usuário — **4** para tier `trial`/`standard` (externos), **9** para tier `internal` (TBC). Veja [MCP — Ferramentas da Knowledge Base](#mcp--ferramentas-da-knowledge-base) para o catálogo completo.
+Para verificar se conectou, as ferramentas do knowledge base aparecerão disponíveis no Claude Code. O número de tools depende do tier do usuário — **4** para tier `trial`/`standard` (externos), **9** para tier `internal`. Veja [MCP — Ferramentas da Knowledge Base](#mcp--ferramentas-da-knowledge-base) para o catálogo completo.
 
 ## Uso no Claude Desktop
 
@@ -213,7 +213,7 @@ Reinicie o Claude Desktop depois de salvar.
    └── lint gate (advpls appre)          → validação local antes de deploy
 /protheus:deploy        → lint + compilação AppServer + patch .ptm
 /protheus:qa            → testes TIR E2E + análise de qualidade
-/protheus:verify        → checklist TOTVS (MIT043, Code Analysis) + produção
+/protheus:verify        → checklist Protheus (MIT043, Code Analysis) + produção
 ```
 
 ## Regra de Modelos (OBRIGATÓRIA)
@@ -236,13 +236,13 @@ Reinicie o Claude Desktop depois de salvar.
 | `/protheus:implement` | Agent Team: impl → spec-review → code-review → lint |
 | `/protheus:deploy` | Lint + compilação AppServer + patch .ptm |
 | `/protheus:qa` | Testes TIR E2E + análise de qualidade |
-| `/protheus:verify` | Checklist TOTVS + gate final para produção |
+| `/protheus:verify` | Checklist Protheus + gate final para produção |
 
 ### Atalhos e Utilitários
 
 | Comando | Descrição |
 |---------|-----------|
-| `/protheus:writer` | Geração de código ADVPL/TLPP com padrões TBC |
+| `/protheus:writer` | Geração de código ADVPL/TLPP com padrões ADVPL |
 | `/protheus:specialist` | Especialista ADVPL: consulta a Knowledge Base + TDN |
 | `/protheus:patterns` | Referência de padrões: nomenclatura, húngara, MVC, PE |
 | `/protheus:sql` | SQL embarcado: BeginSQL, macros, TCSqlExec |
@@ -267,7 +267,7 @@ Reinicie o Claude Desktop depois de salvar.
 O MCP remoto bifurca por **tier** do usuário, resolvido server-side a partir da credencial:
 
 - **API key do portal** (`dataagile_*`): tier vem do plano da assinatura (`starter` → `trial`, `pro` → `standard`).
-- **Email cadastrado** (`DATAAGILE_USER_EMAIL`): tier vem do registro no auth-server (`internal` para contas TBC, `trial`/`standard` para externos pré-cadastrados).
+- **Email cadastrado** (`DATAAGILE_USER_EMAIL`): tier vem do registro no auth-server (`internal` para usuários internos, `trial`/`standard` para externos pré-cadastrados).
 
 ### Tier `trial` / `standard` (external — 6 tools)
 
@@ -280,11 +280,11 @@ Acesso a referência pública ADVPL/TLPP filtrada por organização (row-level v
 | `findSmartView` | Busca SmartView por keyword ou equipe |
 | `listModules` | Lista módulos com contagem de funções |
 | `ragSearchKnowledge` | Busca vetorial (embedding 1536-dim) sobre uma base de conhecimento técnico ADVPL/TLPP |
-| `ragSearchDocs` | Busca vetorial sobre documentação técnica TOTVS (TDN), retorna `title`+`source_url`+`product_id` |
+| `ragSearchDocs` | Busca vetorial sobre documentação técnica Protheus (TDN), retorna `title`+`source_url`+`product_id` |
 
-> Campos `source`, `implementation`, `code` (IP proprietário TOTVS) são removidos das respostas para tier external. A base RAG é uma curadoria técnica sem PII.
+> Campos `source`, `implementation`, `code` são removidos das respostas para tier external. A base RAG é uma curadoria técnica sem PII.
 
-### Tier `internal` (TBC — 9 tools)
+### Tier `internal` (9 tools)
 
 Inclui as 4 do external + 5 internas adicionais:
 
