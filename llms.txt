@@ -1,4 +1,4 @@
-# tbc-agent-kit
+# dataagile-agent-kit
 
 > Plugin Claude Code para desenvolvimento ADVPL/TLPP e diagnóstico técnico Protheus. Conecta o Claude a base técnica curada com funções, pontos de entrada e padrões TOTVS. Inclui MCP PO-UI para desenvolvimento de fronts Angular.
 

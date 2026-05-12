@@ -13,7 +13,7 @@
 
 **Agent Kit**
 
-[![Versão](https://img.shields.io/badge/versão-2.1.0-003CA6?style=flat-square&logoColor=white)](https://github.com/tbc-servicos/tbc-agent-kit/releases)
+[![Versão](https://img.shields.io/badge/versão-2.1.0-003CA6?style=flat-square&logoColor=white)](https://github.com/tbc-servicos/dataagile-agent-kit/releases)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-CC785C?style=flat-square&logoColor=white)](https://claude.ai/code)
 [![TOTVS](https://img.shields.io/badge/TOTVS-Protheus-003CA6?style=flat-square&logoColor=white)](https://www.totvs.com)
 [![PO--UI MCP](https://img.shields.io/badge/PO--UI-MCP-22C55E?style=flat-square&logoColor=white)](https://po-ui.io)
@@ -27,7 +27,7 @@
 
 <br/>
 
-[**Assinar →**](https://tbc-agent-kit.totvstbc.com.br) &nbsp;&nbsp;·&nbsp;&nbsp; [Onboarding](./ONBOARDING.md) &nbsp;&nbsp;·&nbsp;&nbsp; [devkit@totvstbc.com.br](mailto:devkit@totvstbc.com.br)
+[**Assinar →**](https://knowledge.dataagile.com.br) &nbsp;&nbsp;·&nbsp;&nbsp; [Onboarding](./ONBOARDING.md) &nbsp;&nbsp;·&nbsp;&nbsp; [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
 
 </div>
 
@@ -43,7 +43,7 @@ Function 'ExecBlock' not found at line 47.
 
 Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada do seu módulo, nem os parâmetros da sua versão do Protheus.
 
-**O tbc-agent-kit resolve isso.** O Claude passa a consultar uma base técnica curada com 155k+ registros TOTVS — e cita a referência certa, com a assinatura correta.
+**O dataagile-agent-kit resolve isso.** O Claude passa a consultar uma base técnica curada com 155k+ registros TOTVS — e cita a referência certa, com a assinatura correta.
 
 ---
 
@@ -59,7 +59,7 @@ Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada
 
 ## Instalação rápida
 
-**Pré-requisito:** API key em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br)
+**Pré-requisito:** API key em [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br)
 
 **1 — Instalar o Claude Code**
 
@@ -71,21 +71,21 @@ npm install -g @anthropic-ai/claude-code
 
 ```bash
 # macOS / Linux
-mkdir -p ~/.config/tbc
-echo '{ "api_key": "tbc_live_SUA_CHAVE_AQUI" }' > ~/.config/tbc/dev-config.json
+mkdir -p ~/.config/dataagile
+echo '{ "api_key": "dataagile_SUA_CHAVE_AQUI" }' > ~/.config/dataagile/dev-config.json
 ```
 
 ```powershell
 # Windows (PowerShell)
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.config\tbc" | Out-Null
-'{ "api_key": "tbc_live_SUA_CHAVE_AQUI" }' | Set-Content "$env:USERPROFILE\.config\tbc\dev-config.json"
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.config\dataagile" | Out-Null
+'{ "api_key": "dataagile_SUA_CHAVE_AQUI" }' | Set-Content "$env:USERPROFILE\.config\dataagile\dev-config.json"
 ```
 
 **3 — Instalar o plugin**
 
 ```bash
-claude plugin marketplace add https://github.com/tbc-servicos/tbc-agent-kit.git
-claude plugin install protheus@claude-skills-tbc
+claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin install protheus@claude-skills-dataagile
 ```
 
 **4 — Usar**
@@ -167,8 +167,8 @@ claude
 
 **TBC — Fábrica de Software & Inovação TOTVS Brasil Central**
 
-[![Assinar um plano](https://img.shields.io/badge/Assinar_um_plano-003CA6?style=for-the-badge&logoColor=white)](https://tbc-agent-kit.totvstbc.com.br)
+[![Assinar um plano](https://img.shields.io/badge/Assinar_um_plano-003CA6?style=for-the-badge&logoColor=white)](https://knowledge.dataagile.com.br)
 [![Documentação](https://img.shields.io/badge/Documentação-475569?style=for-the-badge&logoColor=white)](./ONBOARDING.md)
-[![Contato](https://img.shields.io/badge/devkit@totvstbc.com.br-1E293B?style=for-the-badge&logoColor=white)](mailto:devkit@totvstbc.com.br)
+[![Contato](https://img.shields.io/badge/dev@dataagile.com.br-1E293B?style=for-the-badge&logoColor=white)](mailto:dev@dataagile.com.br)
 
 </div>

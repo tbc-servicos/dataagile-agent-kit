@@ -65,13 +65,13 @@ O MCP `tbc-knowledge` autentica via `x-user-email`. Configure o email do desenvo
 **Opção A — variável de ambiente (recomendada):**
 ```bash
 # Adicionar ao ~/.bashrc ou ~/.zshrc:
-export TBC_USER_EMAIL=seu.email@empresa.com.br
+export DATAAGILE_USER_EMAIL=seu.email@empresa.com.br
 ```
 
 **Opção B — arquivo de config:**
 ```bash
-mkdir -p ~/.config/tbc
-echo '{"email":"seu.email@empresa.com.br"}' > ~/.config/tbc/dev-config.json
+mkdir -p ~/.config/dataagile
+echo '{"email":"seu.email@empresa.com.br"}' > ~/.config/dataagile/dev-config.json
 ```
 
 > Trial 30d automático no primeiro acesso. Para contratar, acesse https://mcp.totvstbc.com.br/payment

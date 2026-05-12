@@ -1,24 +1,24 @@
-# tbc-agent-kit
+# dataagile-agent-kit
 
 > Plugin Claude Code para desenvolvimento ADVPL/TLPP e suporte técnico Protheus. Conecta o Claude a base técnica curada com funções, pontos de entrada e padrões TOTVS. Inclui MCP PO-UI para desenvolvimento de fronts Angular.
 
 ## Instalação
 
-**Pré-requisito:** API key em https://tbc-agent-kit.totvstbc.com.br
+**Pré-requisito:** API key em https://dataagile-agent-kit.totvstbc.com.br
 
 ```bash
 # 1. Instalar Claude Code
 npm install -g @anthropic-ai/claude-code
 
 # 2. Configurar API key
-mkdir -p ~/.config/tbc
-echo '{ "api_key": "tbc_live_SUA_CHAVE_AQUI" }' > ~/.config/tbc/dev-config.json
+mkdir -p ~/.config/dataagile
+echo '{ "api_key": "dataagile_SUA_CHAVE_AQUI" }' > ~/.config/dataagile/dev-config.json
 
 # 3. Adicionar marketplace
-claude plugin marketplace add https://github.com/tbc-servicos/tbc-agent-kit.git
+claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
 
 # 4. Instalar plugin
-claude plugin install protheus@claude-skills-tbc
+claude plugin install protheus@claude-skills-dataagile
 ```
 
 ## Plugin Protheus
@@ -62,7 +62,7 @@ Autenticação via `storageState`. CLI via `npx playwright`.
 ### tbc-knowledge (remoto)
 
 Proxy stdio ↔ Streamable HTTP para https://mcp.totvstbc.com.br/mcp.
-Requer API key configurada em `~/.config/tbc/dev-config.json`.
+Requer API key configurada em `~/.config/dataagile/dev-config.json`.
 
 ### local-knowledge-external
 

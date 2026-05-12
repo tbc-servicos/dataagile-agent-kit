@@ -1,6 +1,6 @@
 # Changelog
 
-Histórico das versões públicas do `tbc-agent-kit`.
+Histórico das versões públicas do `dataagile-agent-kit`.
 
 ---
 
@@ -36,8 +36,8 @@ Semver por plugin (`MAJOR.MINOR.PATCH`):
 
 ## Suporte
 
-devkit@totvstbc.com.br
+dev@dataagile.com.br
 
-[tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br)
+[knowledge.dataagile.com.br](https://knowledge.dataagile.com.br)
 
-[Issues no GitHub](https://github.com/tbc-servicos/tbc-agent-kit/issues)
+[Issues no GitHub](https://github.com/tbc-servicos/dataagile-agent-kit/issues)

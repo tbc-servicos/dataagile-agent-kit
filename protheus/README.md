@@ -13,14 +13,14 @@ Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) **v2.1.32+** instalado
 - Node.js 18+
 - **Uma** das credenciais abaixo (basta uma):
-  - **API key do portal** (`tbc_live_*`) — usuários externos pagos. Gere em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br) após assinar um plano (`starter` ou `pro`).
+  - **API key do portal** (`dataagile_*`) — usuários externos pagos. Gere em [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br) após assinar um plano (`starter` ou `pro`).
   - **Email cadastrado** — usuários internos TBC, com email registrado no auth-server.
 
 ### Passo 1 — Registrar o marketplace e instalar
 
 ```bash
-claude plugin marketplace add https://github.com/tbc-servicos/tbc-agent-kit.git
-claude plugin install protheus@claude-skills-tbc
+claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin install protheus@claude-skills-dataagile
 ```
 
 ### Passo 2 — Configurar a credencial
@@ -33,25 +33,25 @@ A API key autentica direto contra o portal de assinaturas. Email/tier/orgId são
 
 **macOS / Linux (arquivo de configuração):**
 ```bash
-mkdir -p ~/.config/tbc
-echo '{ "api_key": "tbc_live_SUA_CHAVE_AQUI" }' > ~/.config/tbc/dev-config.json
+mkdir -p ~/.config/dataagile
+echo '{ "api_key": "dataagile_SUA_CHAVE_AQUI" }' > ~/.config/dataagile/dev-config.json
 ```
 
 **Windows (PowerShell):**
 ```powershell
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.config\tbc" | Out-Null
-'{ "api_key": "tbc_live_SUA_CHAVE_AQUI" }' | Set-Content "$env:USERPROFILE\.config\tbc\dev-config.json"
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.config\dataagile" | Out-Null
+'{ "api_key": "dataagile_SUA_CHAVE_AQUI" }' | Set-Content "$env:USERPROFILE\.config\dataagile\dev-config.json"
 ```
 
 **Alternativa — variável de ambiente (qualquer SO):**
 ```bash
-export TBC_API_KEY=tbc_live_SUA_CHAVE_AQUI       # macOS/Linux — adicione ao ~/.zshrc ou ~/.bashrc
+export DATAAGILE_API_KEY=dataagile_SUA_CHAVE_AQUI       # macOS/Linux — adicione ao ~/.zshrc ou ~/.bashrc
 ```
 ```powershell
-[Environment]::SetEnvironmentVariable("TBC_API_KEY", "tbc_live_SUA_CHAVE_AQUI", "User")
+[Environment]::SetEnvironmentVariable("DATAAGILE_API_KEY", "dataagile_SUA_CHAVE_AQUI", "User")
 ```
 
-> Gere ou rotacione a key em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br). Nunca compartilhe a chave.
+> Gere ou rotacione a key em [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br). Nunca compartilhe a chave.
 
 #### B) Email cadastrado (uso interno TBC — legado)
 
@@ -59,32 +59,32 @@ Usado apenas por contas TBC internas, cujos emails estão pré-registrados no au
 
 **macOS (zsh):**
 ```bash
-echo 'export TBC_USER_EMAIL=seu.nome@empresa.com.br' >> ~/.zshrc
+echo 'export DATAAGILE_USER_EMAIL=seu.nome@empresa.com.br' >> ~/.zshrc
 source ~/.zshrc
 ```
 
 **Linux (bash):**
 ```bash
-echo 'export TBC_USER_EMAIL=seu.nome@empresa.com.br' >> ~/.bashrc
+echo 'export DATAAGILE_USER_EMAIL=seu.nome@empresa.com.br' >> ~/.bashrc
 source ~/.bashrc
 ```
 
 **Windows (PowerShell):**
 ```powershell
-[Environment]::SetEnvironmentVariable("TBC_USER_EMAIL", "seu.nome@empresa.com.br", "User")
+[Environment]::SetEnvironmentVariable("DATAAGILE_USER_EMAIL", "seu.nome@empresa.com.br", "User")
 ```
 > Reinicie o terminal depois de configurar.
 
 **Alternativa — arquivo de configuração:**
 ```bash
 # macOS/Linux
-mkdir -p ~/.config/tbc
-echo '{ "email": "seu.nome@empresa.com.br" }' > ~/.config/tbc/dev-config.json
+mkdir -p ~/.config/dataagile
+echo '{ "email": "seu.nome@empresa.com.br" }' > ~/.config/dataagile/dev-config.json
 ```
 ```powershell
 # Windows
-mkdir -Force "$env:USERPROFILE\.config\tbc"
-'{ "email": "seu.nome@empresa.com.br" }' | Out-File "$env:USERPROFILE\.config\tbc\dev-config.json" -Encoding utf8
+mkdir -Force "$env:USERPROFILE\.config\dataagile"
+'{ "email": "seu.nome@empresa.com.br" }' | Out-File "$env:USERPROFILE\.config\dataagile\dev-config.json" -Encoding utf8
 ```
 
 > O email precisa estar cadastrado no auth-server interno. Para usuários externos sem cadastro interno, use a opção A (API key do portal).
@@ -137,9 +137,9 @@ O MCP também funciona no **Claude Desktop** (app). Adicione ao arquivo de confi
   "mcpServers": {
     "tbc-knowledge": {
       "command": "node",
-      "args": ["<HOME>/.claude/plugins/marketplaces/claude-skills-tbc/protheus/dist/tbc-mcp-proxy.mjs"],
+      "args": ["<HOME>/.claude/plugins/marketplaces/claude-skills-dataagile/protheus/dist/tbc-mcp-proxy.mjs"],
       "env": {
-        "TBC_API_KEY": "tbc_live_SUA_CHAVE_AQUI"
+        "DATAAGILE_API_KEY": "dataagile_SUA_CHAVE_AQUI"
       }
     }
   }
@@ -153,7 +153,7 @@ O MCP também funciona no **Claude Desktop** (app). Adicione ao arquivo de confi
     "tbc-knowledge": {
       "command": "bash",
       "env": {
-        "TBC_USER_EMAIL": "seu.nome@empresa.com.br"
+        "DATAAGILE_USER_EMAIL": "seu.nome@empresa.com.br"
       }
     }
   }
@@ -162,7 +162,7 @@ O MCP também funciona no **Claude Desktop** (app). Adicione ao arquivo de confi
 
 Reinicie o Claude Desktop depois de salvar.
 
-> **Atenção — conflito com o plugin:** Se você usa o plugin `protheus@claude-skills-tbc` no Claude Code, **não adicione** o MCP manualmente nem pelo `claude_desktop_config.json` nem pelas Integrations do claude.ai. O plugin já registra o MCP automaticamente. Ter os dois ativos duplica cada chamada MCP, causando lentidão e respostas redundantes.
+> **Atenção — conflito com o plugin:** Se você usa o plugin `protheus@claude-skills-dataagile` no Claude Code, **não adicione** o MCP manualmente nem pelo `claude_desktop_config.json` nem pelas Integrations do claude.ai. O plugin já registra o MCP automaticamente. Ter os dois ativos duplica cada chamada MCP, causando lentidão e respostas redundantes.
 
 ## Arquitetura v2.0.8
 
@@ -266,8 +266,8 @@ Reinicie o Claude Desktop depois de salvar.
 
 O MCP remoto bifurca por **tier** do usuário, resolvido server-side a partir da credencial:
 
-- **API key do portal** (`tbc_live_*`): tier vem do plano da assinatura (`starter` → `trial`, `pro` → `standard`).
-- **Email cadastrado** (`TBC_USER_EMAIL`): tier vem do registro no auth-server (`internal` para contas TBC, `trial`/`standard` para externos pré-cadastrados).
+- **API key do portal** (`dataagile_*`): tier vem do plano da assinatura (`starter` → `trial`, `pro` → `standard`).
+- **Email cadastrado** (`DATAAGILE_USER_EMAIL`): tier vem do registro no auth-server (`internal` para contas TBC, `trial`/`standard` para externos pré-cadastrados).
 
 ### Tier `trial` / `standard` (external — 6 tools)
 
@@ -322,8 +322,8 @@ saveLocal=/patches/
 
 | Problema | Solução |
 |----------|---------|
-| "Nenhuma credencial configurada" | Configure **uma** das opções: `TBC_API_KEY` (externos) **ou** `TBC_USER_EMAIL` (internos). Veja [Passo 2](#passo-2--configurar-a-credencial). |
-| "Acesso negado" / 401 (externo) | API key inválida ou inativa — gere/rotacione em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br) |
+| "Nenhuma credencial configurada" | Configure **uma** das opções: `DATAAGILE_API_KEY` (externos) **ou** `DATAAGILE_USER_EMAIL` (internos). Veja [Passo 2](#passo-2--configurar-a-credencial). |
+| "Acesso negado" / 401 (externo) | API key inválida ou inativa — gere/rotacione em [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br) |
 | "Acesso negado" / 401 (interno) | Email não cadastrado no auth-server — solicite ao administrador |
 | Trial expirado / 402 | Renove a assinatura em [mcp.totvstbc.com.br/payment](https://mcp.totvstbc.com.br/payment) |
 | MCP nao conecta | Verifique Node.js 18+ e conexao com internet |
@@ -377,5 +377,5 @@ protheus/
 ## Atualização
 
 ```bash
-claude plugin update protheus@claude-skills-tbc
+claude plugin update protheus@claude-skills-dataagile
 ```
