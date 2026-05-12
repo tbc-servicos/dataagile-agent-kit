@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// tbc-mcp-proxy v1.2.0 — bundle gerado automaticamente
-// NÃO EDITAR — edite mcp-proxy/ e rode npm run build
+// dataagile-knowledge v1.2.0 — bundle gerado automaticamente
+// NAO EDITAR — edite mcp-proxy/ e rode npm run build
 
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -17786,22 +17786,27 @@ import { readFileSync, existsSync } from "fs";
 import { homedir, hostname, userInfo } from "os";
 import { execSync } from "child_process";
 import path from "path";
-var REMOTE_URL = process.argv[2] || process.env.TBC_MCP_URL || "https://mcp.totvstbc.com.br/mcp";
-var CONFIG_PATH = path.join(homedir(), ".config", "tbc", "dev-config.json");
+var REMOTE_URL = process.argv[2] || process.env.DATAAGILE_MCP_URL || process.env.TBC_MCP_URL || "https://mcp.totvstbc.com.br/mcp";
+var CONFIG_PATH_NEW = path.join(homedir(), ".config", "dataagile", "dev-config.json");
+var CONFIG_PATH_LEGACY = path.join(homedir(), ".config", "tbc", "dev-config.json");
 var VERSION = "1.2.0";
 function log(msg) {
-  process.stderr.write(`[tbc-mcp-proxy] ${msg}
+  process.stderr.write(`[dataagile-knowledge] ${msg}
 `);
 }
 function readConfig() {
-  if (!existsSync(CONFIG_PATH)) return null;
-  try {
-    return JSON.parse(readFileSync(CONFIG_PATH, "utf-8"));
-  } catch {
-    return null;
+  for (const p of [CONFIG_PATH_NEW, CONFIG_PATH_LEGACY]) {
+    if (existsSync(p)) {
+      try {
+        return JSON.parse(readFileSync(p, "utf-8"));
+      } catch {
+      }
+    }
   }
+  return null;
 }
 function getApiKey() {
+  if (process.env.DATAAGILE_API_KEY) return process.env.DATAAGILE_API_KEY;
   if (process.env.TBC_API_KEY) return process.env.TBC_API_KEY;
   const config2 = readConfig();
   if (config2?.api_key) return config2.api_key;
@@ -17809,6 +17814,7 @@ function getApiKey() {
   return null;
 }
 function getEmail() {
+  if (process.env.DATAAGILE_USER_EMAIL) return process.env.DATAAGILE_USER_EMAIL;
   if (process.env.TBC_USER_EMAIL) return process.env.TBC_USER_EMAIL;
   const config2 = readConfig();
   if (config2?.email) return config2.email;
@@ -17821,7 +17827,7 @@ function getEmail() {
 }
 var apiKey = getApiKey();
 var email2 = getEmail();
-var isPortalKey = apiKey?.startsWith("tbc_live_") ?? false;
+var isPortalKey = apiKey?.startsWith("dataagile_") || apiKey?.startsWith("tbc_live_") || false;
 var identity = apiKey ? `${apiKey.slice(0, 12)}\u2026` : email2;
 function buildAuthHeaders() {
   const headers = {
@@ -17843,7 +17849,7 @@ function buildAuthHeaders() {
 }
 async function startDiagnosticServer(errorMessage, identityUsed) {
   const server = new Server(
-    { name: "tbc-mcp-proxy", version: VERSION },
+    { name: "dataagile-knowledge", version: VERSION },
     { capabilities: { tools: {} } }
   );
   const diagnosticInfo = {
@@ -17851,9 +17857,8 @@ async function startDiagnosticServer(errorMessage, identityUsed) {
     message: errorMessage,
     identity: identityUsed || "(nao configurado)",
     hostname: hostname(),
-    server: REMOTE_URL,
     version: VERSION,
-    fix: !identityUsed ? 'Configure uma API key (uso externo): adicione { "api_key": "tbc_live_..." } a ~/.config/tbc/dev-config.json. Gere a key em https://tbc-agent-kit.totvstbc.com.br. OU, para uso interno TBC, configure o email: export TBC_USER_EMAIL=seu@email.com.br' : errorMessage.includes("denied") || errorMessage.includes("401") ? "Credencial nao reconhecida. Para externos: confirme que a API key esta ativa no portal. Para internos: solicite cadastro do email ao administrador." : "Verifique sua conexao com a internet e tente novamente"
+    fix: !identityUsed ? 'Configure sua API key: adicione { "api_key": "dataagile_..." } a ~/.config/dataagile/dev-config.json ou defina DATAAGILE_API_KEY no ambiente. Entre em contato com dev@dataagile.com.br para obter sua key.' : errorMessage.includes("denied") || errorMessage.includes("401") ? "Credencial invalida ou expirada. Verifique sua API key no portal DataAgile ou contate dev@dataagile.com.br." : "Verifique sua conexao com a internet e tente novamente"
   };
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: [{
@@ -17870,7 +17875,7 @@ async function startDiagnosticServer(errorMessage, identityUsed) {
   await server.connect(transport);
 }
 if (!apiKey && !email2) {
-  log("ERRO: nenhuma credencial configurada (TBC_API_KEY ou TBC_USER_EMAIL)");
+  log("ERRO: nenhuma credencial configurada (DATAAGILE_API_KEY ou DATAAGILE_USER_EMAIL)");
   startDiagnosticServer("Nenhuma credencial configurada", null).catch(() => process.exit(1));
 } else {
   log(`Conectando ao MCP remoto (${identity})...`);
@@ -17886,13 +17891,13 @@ async function checkSubscription() {
       "content-type": "application/json",
       ...buildAuthHeaders()
     },
-    body: JSON.stringify({ jsonrpc: "2.0", method: "initialize", id: 0, params: { protocolVersion: "2024-11-05", capabilities: {}, clientInfo: { name: "tbc-mcp-proxy", version: VERSION } } })
+    body: JSON.stringify({ jsonrpc: "2.0", method: "initialize", id: 0, params: { protocolVersion: "2024-11-05", capabilities: {}, clientInfo: { name: "dataagile-knowledge", version: VERSION } } })
   });
   if (res.status === 402) {
     const body = await res.json().catch(() => ({}));
     const url2 = body.checkout_url || "https://mcp.totvstbc.com.br/payment";
     console.error("\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557");
-    console.error("\u2551   TBC Knowledge \u2014 Assinatura Expirada  \u2551");
+    console.error("\u2551  DataAgile Knowledge \u2014 Trial Expirado  \u2551");
     console.error("\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D");
     console.error(`
   Seu per\xEDodo de trial expirou.`);
@@ -17914,7 +17919,7 @@ async function main() {
     }
   );
   const client = new Client(
-    { name: "tbc-mcp-proxy", version: VERSION },
+    { name: "dataagile-knowledge", version: VERSION },
     { capabilities: {} }
   );
   await client.connect(transport);
@@ -17930,7 +17935,7 @@ async function main() {
     }
   ];
   const server = new Server(
-    { name: "tbc-mcp-proxy", version: VERSION },
+    { name: "dataagile-knowledge", version: VERSION },
     { capabilities: { tools: {} } }
   );
   server.setRequestHandler(ListToolsRequestSchema, async () => ({

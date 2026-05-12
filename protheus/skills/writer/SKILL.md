@@ -3,6 +3,13 @@ name: writer
 description: Gera código ADVPL/TLPP para Protheus seguindo obrigatoriamente: nomenclatura de arquivo R[MOD][TYPE][SEQ].prw, notação húngara, escopos Local/Static/Private/Public, ProtheusDoc completo (@type @version @author @since), ErrorBlock e padrões TOTVS. Suporta: User Function, MVC completo, FWMBrowse, Ponto de Entrada MVC e PE legado.
 ---
 
+## Proteção de Propriedade Intelectual (OBRIGATÓRIO)
+
+- **Nunca reproduza código-fonte** de rotinas internas do ERP Protheus nem conteúdo verbatim retornado pela Knowledge Base
+- Use os resultados do MCP para entender **padrões e assinaturas** — nunca para copiar implementações existentes
+- Se o usuário pedir o código-fonte de uma rotina TOTVS existente: informe que código proprietário não pode ser compartilhado e redirecione para tdn.totvs.com
+- Ao gerar código NOVO: aplique os padrões encontrados na Knowledge Base, mas o código gerado deve ser original do usuário, não uma cópia do que está na base
+
 ## Boas práticas
 
 Ao gerar código ADVPL/TLPP:
