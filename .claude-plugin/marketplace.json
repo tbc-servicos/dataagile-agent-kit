@@ -1,11 +1,11 @@
 {
-  "name": "claude-skills-tbc",
+  "name": "claude-skills-dataagile",
   "owner": {
-    "name": "TBC - Time de Desenvolvimento",
-    "email": "dev@tbc.com.br"
+    "name": "DataAgile",
+    "email": "dev@dataagile.com.br"
   },
   "metadata": {
-    "description": "Plugins Claude Code para desenvolvimento TOTVS (Fluig, Protheus, documentação MIT) e ferramentas de produtividade — TBC",
+    "description": "Plugins Claude Code para desenvolvimento TOTVS (Fluig, Protheus, documentação MIT) e ferramentas de produtividade — DataAgile",
     "pluginRoot": "."
   },
   "plugins": [
@@ -15,7 +15,7 @@
       "description": "Plugin para desenvolvimento TOTVS Protheus — cadeia de subagentes: intake MIT044, brainstorm, writing-plans, subagent-dev (implementação → review → compilação → TIR E2E).",
       "version": "2.0.8",
       "author": {
-        "name": "TBC - Time de Desenvolvimento"
+        "name": "DataAgile"
       },
       "category": "development",
       "tags": [
@@ -32,7 +32,7 @@
       "description": "Plugin para testes E2E com Playwright CLI — setup, execução, test-agents (planner/generator/healer) e autenticação via storageState.",
       "version": "1.0.0",
       "author": {
-        "name": "TBC - Time de Desenvolvimento"
+        "name": "DataAgile"
       },
       "category": "testing",
       "tags": [
