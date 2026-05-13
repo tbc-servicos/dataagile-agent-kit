@@ -7,7 +7,7 @@ Guia para configurar o ambiente pela primeira vez.
 ## Pré-requisitos
 
 - [ ] **Claude Code** instalado: `npm install -g @anthropic-ai/claude-code`
-- [ ] **API key TBC** — obtida ao assinar um plano em [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br)
+- [ ] **API key TBC** — obtida ao assinar um plano em [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br)
 
 ---
 
@@ -153,7 +153,7 @@ cat ~/.config/dataagile/dev-config.json
 # Deve conter: { "api_key": "dataagile_..." }
 ```
 
-Chave inválida ou expirada: acesse [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br) para gerar uma nova.
+Chave inválida ou expirada: acesse [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br) para gerar uma nova.
 
 **Erro "installed in managed scope":**
 
