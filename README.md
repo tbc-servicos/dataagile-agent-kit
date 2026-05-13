@@ -6,7 +6,7 @@
 
 [![Versão](https://img.shields.io/badge/versão-2.1.0-1a4d5c?style=flat-square&logoColor=white)](https://github.com/tbc-servicos/dataagile-agent-kit/releases)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-CC785C?style=flat-square&logoColor=white)](https://claude.ai/code)
-[![Protheus](https://img.shields.io/badge/Protheus-ADVPL%2FTLPP-1a4d5c?style=flat-square&logoColor=white)](https://knowledge.dataagile.com.br)
+[![Protheus](https://img.shields.io/badge/Protheus-ADVPL%2FTLPP-1a4d5c?style=flat-square&logoColor=white)](https://dataagile-agent-kit.dataagile.com.br)
 [![PO--UI MCP](https://img.shields.io/badge/PO--UI-MCP-22C55E?style=flat-square&logoColor=white)](https://po-ui.io)
 [![Licença](https://img.shields.io/badge/licença-MIT-475569?style=flat-square)](./LICENSE)
 
@@ -18,7 +18,7 @@
 
 <br/>
 
-[**Assinar →**](https://knowledge.dataagile.com.br) &nbsp;&nbsp;·&nbsp;&nbsp; [Onboarding](./ONBOARDING.md) &nbsp;&nbsp;·&nbsp;&nbsp; [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
+[**Assinar →**](https://dataagile-agent-kit.dataagile.com.br) &nbsp;&nbsp;·&nbsp;&nbsp; [Onboarding](./ONBOARDING.md) &nbsp;&nbsp;·&nbsp;&nbsp; [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
 
 </div>
 
@@ -50,7 +50,7 @@ Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada
 
 ## Instalação rápida
 
-**Pré-requisito:** API key em [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br)
+**Pré-requisito:** API key em [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br)
 
 **1 — Instalar o Claude Code**
 
@@ -158,7 +158,7 @@ claude
 
 **DataAgile**
 
-[![Assinar um plano](https://img.shields.io/badge/Assinar_um_plano-003CA6?style=for-the-badge&logoColor=white)](https://knowledge.dataagile.com.br)
+[![Assinar um plano](https://img.shields.io/badge/Assinar_um_plano-003CA6?style=for-the-badge&logoColor=white)](https://dataagile-agent-kit.dataagile.com.br)
 [![Documentação](https://img.shields.io/badge/Documentação-475569?style=for-the-badge&logoColor=white)](./ONBOARDING.md)
 [![Contato](https://img.shields.io/badge/dev@dataagile.com.br-1E293B?style=for-the-badge&logoColor=white)](mailto:dev@dataagile.com.br)
 
