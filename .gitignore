@@ -52,6 +52,7 @@ docs/plans/material_treinamento/*.pdf
 # Public plugins
 !/protheus/
 !/playwright/
+!/fluig/
 
 # Repo metadata
 !/.claude-plugin/
