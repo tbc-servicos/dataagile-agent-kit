@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "po-ui": {
+      "command": "npx",
+      "args": ["-y", "@po-ui/mcp"]
+    }
+  }
+}

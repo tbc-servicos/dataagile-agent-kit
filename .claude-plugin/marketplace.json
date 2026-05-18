@@ -44,6 +44,23 @@
       ]
     },
     {
+      "name": "po-ui",
+      "source": "./po-ui",
+      "description": "Plugin para desenvolvimento com PO-UI (TOTVS Angular components). Expõe MCP server @po-ui/mcp com 4 tools (list_components, get_component_docs, search_docs, get_guide) + skill com convenções de uso.",
+      "version": "1.0.0",
+      "author": {
+        "name": "TBC - Time de Desenvolvimento"
+      },
+      "category": "development",
+      "tags": [
+        "po-ui",
+        "totvs",
+        "angular",
+        "components",
+        "ui"
+      ]
+    },
+    {
       "name": "playwright",
       "source": "./playwright",
       "description": "Plugin para testes E2E com Playwright CLI — setup, execução, test-agents (planner/generator/healer) e autenticação via storageState.",
