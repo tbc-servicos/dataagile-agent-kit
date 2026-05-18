@@ -20,4 +20,4 @@ claude --plugin-dir /home/jv/developments/tbc/claude_skills/playwright
 
 ## Distribuição
 
-`https://github.com/tbc-servicos/tbc-agent-kit.git` · marketplace `claude-skills-tbc`
+`https://github.com/tbc-servicos/dataagile-agent-kit.git` · marketplace `claude-skills-dataagile`

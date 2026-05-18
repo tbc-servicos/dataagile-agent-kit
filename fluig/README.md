@@ -1,4 +1,4 @@
-# Fluig Plugin v2.0.1 — Claude Code
+# Fluig Plugin v2.0.5 — Claude Code
 
 Plugin Claude Code para desenvolvimento na plataforma **TOTVS Fluig** com ciclo completo guiado por skills e execução via Agent Teams.
 
@@ -22,10 +22,10 @@ claude --plugin-dir /path/to/fluig-plugin
 ### Opção 2: Marketplace público (GitHub)
 ```bash
 # Adicionar marketplace
-/plugin marketplace add https://github.com/tbc-servicos/tbc-agent-kit.git
+/plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
 
 # Instalar o plugin
-/plugin install fluig@claude-skills-tbc
+/plugin install fluig@claude-skills-dataagile
 ```
 
 ### Habilitar Agent Teams (recomendado)
@@ -97,23 +97,36 @@ Cada skill termina com **"Próximo passo:"** guiando o dev para a etapa seguinte
 
 ## Skills Disponíveis
 
+### Fluxo principal (sequencial)
+
 | Comando | Descrição |
 |---------|-----------|
-| `/fluig:brainstorm` | Gate de design — entrevista, mapeia integrações, gera spec |
-| `/fluig:plan` | Plano de implementação com tasks TDD e file mapping |
-| `/fluig:implement` | Agent Team para executar o plano (worktree + bidirecional) |
-| `/fluig:deploy` | Deploy no servidor de teste |
-| `/fluig:qa` | Testes E2E + análise de qualidade no servidor |
-| `/fluig:verify` | Checklist final + deploy em produção |
-| `/fluig:review` | Atalho: pipeline completo (review → deploy → qa) |
-| `/fluig:debug` | Debugging sistemático (logs Docker, Playwright, Karma) |
-| `/fluig:widget` | Scaffolding de widget Angular 19 + PO-UI |
-| `/fluig:dataset` | Scaffolding de dataset JavaScript |
-| `/fluig:form` | Scaffolding de formulário HTML + events/ |
-| `/fluig:workflow` | Scaffolding de script BPM/evento |
-| `/fluig:test` | Geração e execução de testes (unit + E2E) |
-| `/fluig:api-ref` | Referência das APIs Fluig |
-| `/fluig:init-project` | Inicializa projeto — gera CLAUDE.md do cliente |
+| `/fluig:init-project` | Inicializa projeto — entrevista o dev e gera CLAUDE.md com contexto do cliente (URL servidor, prefixos, integração Protheus) |
+| `/fluig:brainstorm` | Gate de design — entrevista, mapeia integrações, gera spec aprovada antes de qualquer scaffolding |
+| `/fluig:plan` | Plano de implementação com tasks TDD e file mapping, salvo em `docs/fluig/plans/` |
+| `/fluig:implement` | Agent Team executando o plano (fluig-implementer em worktree + fluig-spec-reviewer + fluig-reviewer, comunicação bidirecional) |
+| `/fluig:deploy` | Deploy de artefatos no servidor Fluig de teste via fluig-deployer + verificação de logs |
+| `/fluig:qa` | Testes de integração + E2E Playwright contra servidor deployado |
+| `/fluig:verify` | Gate final pré-produção — checklist adaptativo (HML vs servidor único) |
+
+### Scaffolding (acionados pelo /fluig:plan ou /fluig:implement)
+
+| Comando | Descrição |
+|---------|-----------|
+| `/fluig:widget` | Widget Angular 19 + PO-UI 19.36 — components, pages, services, Jasmine/Karma. Prefixo `wg_` |
+| `/fluig:dataset` | Dataset JavaScript com `defineStructure()`, `createDataset()`, try/catch e logging. SQL, REST Protheus, anti-injection |
+| `/fluig:form` | Formulário HTML com events/, máscaras CPF/CNPJ/CEP, validações, SweetAlert2 |
+| `/fluig:workflow` | Scripts BPM: `afterStateEntry`, `beforeStateEntry`, `afterProcessCreate`, `subProcessCreated` com log e integração dataset |
+
+### Apoio
+
+| Comando | Descrição |
+|---------|-----------|
+| `/fluig:review` | Atalho: pipeline completo (revisão estática → testes → deploy → qa) — alternativa rápida ao fluxo guiado |
+| `/fluig:test` | Gera e executa testes unitários (Jasmine/Karma) + E2E (Playwright) |
+| `/fluig:debug` | Debugging sistemático em 4 fases (reproduzir → investigar → hipótese → corrigir) com logs Docker, Playwright traces, Karma |
+| `/fluig:api-ref` | Referência rápida das APIs Fluig: `DatasetFactory`, `DatasetBuilder`, `CardAPI`, `WCMAPI`, `fluigc`, `WFMovementDTO`, `getValue/setValue` |
+| `/fluig:feedback` | Registra aprendizado quando Claude erra e o dev corrige — alimenta a base de conhecimento Fluig |
 
 ## Teammates
 
@@ -167,7 +180,8 @@ fluig/
 │   ├── workflow/       # Scaffolding workflow
 │   ├── test/           # Testes unit + E2E
 │   ├── api-ref/        # Referência APIs
-│   └── init-project/   # Setup projeto cliente
+│   ├── init-project/   # Setup projeto cliente
+│   └── feedback/       # Registra aprendizado pós-correção
 ├── agents/             # 5 teammates (Agent Teams)
 │   ├── fluig-implementer.md   # Dev (haiku, worktree)
 │   ├── fluig-spec-reviewer.md # Spec review (sonnet)

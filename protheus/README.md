@@ -19,8 +19,8 @@ Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP
 ### Passo 1 — Registrar o marketplace e instalar
 
 ```bash
-claude plugin marketplace add https://github.com/tbc-servicos/tbc-agent-kit.git
-claude plugin install protheus@claude-skills-tbc
+claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin install protheus@claude-skills-dataagile
 ```
 
 ### Passo 2 — Configurar a credencial
@@ -137,7 +137,7 @@ O MCP também funciona no **Claude Desktop** (app). Adicione ao arquivo de confi
   "mcpServers": {
     "tbc-knowledge": {
       "command": "node",
-      "args": ["<HOME>/.claude/plugins/marketplaces/claude-skills-tbc/protheus/dist/tbc-mcp-proxy.mjs"],
+      "args": ["<HOME>/.claude/plugins/marketplaces/claude-skills-dataagile/protheus/dist/tbc-mcp-proxy.mjs"],
       "env": {
         "TBC_API_KEY": "tbc_live_SUA_CHAVE_AQUI"
       }
@@ -162,7 +162,7 @@ O MCP também funciona no **Claude Desktop** (app). Adicione ao arquivo de confi
 
 Reinicie o Claude Desktop depois de salvar.
 
-> **Atenção — conflito com o plugin:** Se você usa o plugin `protheus@claude-skills-tbc` no Claude Code, **não adicione** o MCP manualmente nem pelo `claude_desktop_config.json` nem pelas Integrations do claude.ai. O plugin já registra o MCP automaticamente. Ter os dois ativos duplica cada chamada MCP, causando lentidão e respostas redundantes.
+> **Atenção — conflito com o plugin:** Se você usa o plugin `protheus@claude-skills-dataagile` no Claude Code, **não adicione** o MCP manualmente nem pelo `claude_desktop_config.json` nem pelas Integrations do claude.ai. O plugin já registra o MCP automaticamente. Ter os dois ativos duplica cada chamada MCP, causando lentidão e respostas redundantes.
 
 ## Arquitetura v2.0.8
 
@@ -377,5 +377,5 @@ protheus/
 ## Atualização
 
 ```bash
-claude plugin update protheus@claude-skills-tbc
+claude plugin update protheus@claude-skills-dataagile
 ```

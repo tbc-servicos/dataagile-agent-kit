@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Plugin Claude Code para desenvolvimento **TOTVS Fluig** v2.0.1.
+Plugin Claude Code para desenvolvimento **TOTVS Fluig** v2.0.5.
 
 ## Namespace
 
@@ -30,7 +30,7 @@ claude --plugin-dir /home/jv/developments/tbc/claude_skills/fluig
 
 **O plugin NUNCA deve escalar para opus por conta própria. Sempre perguntar.**
 
-## Agent Teams (v2.0.1)
+## Agent Teams (v2.0.5)
 
 O ciclo de implementação usa **Agent Teams** para comunicação bidirecional entre teammates.
 
@@ -121,4 +121,4 @@ Quando precisar de referência de componente PO-UI, use as tools do MCP `po-ui` 
 
 ## Distribuição
 
-`https://github.com/tbc-servicos/tbc-agent-kit.git` · marketplace `claude-skills-tbc`
+`https://github.com/tbc-servicos/dataagile-agent-kit.git` · marketplace `claude-skills-dataagile`

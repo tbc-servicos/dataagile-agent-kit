@@ -25,7 +25,7 @@ echo "$REMOTE_URL"
 |-----------|----------|
 | Diretório não é um repositório git | **Não é git** — bloquear |
 | Nenhum remote configurado | **Sem remote** — bloquear |
-| URL contém `github.com/tbc-servicos/tbc-agent-kit` | **Modo TBC** |
+| URL contém `github.com/tbc-servicos/dataagile-agent-kit` | **Modo TBC** |
 | Qualquer outro remote | **Modo Cliente** |
 
 ### Se não é repositório git ou sem remote
@@ -41,7 +41,7 @@ Bloquear e orientar:
 
 Confirme o setup antes de continuar.
 
-### Modo TBC (github.com/tbc-servicos/tbc-agent-kit)
+### Modo TBC (github.com/tbc-servicos/dataagile-agent-kit)
 
 **Após o Passo 3 (CLAUDE.md gerado)**, commitar os artefatos:
 
@@ -125,7 +125,7 @@ Prefixo do cliente: `[PREFIXO]` — usado em `wg_[PREFIXO]_`, `ds_[PREFIXO]_`, `
 `/fluig:review` → executa pipeline completo (review → deploy → qa)
 
 ```bash
-claude plugin update fluig@claude-skills-tbc
+claude plugin update fluig@claude-skills-dataagile
 ```
 ```
 
