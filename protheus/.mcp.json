@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "dataagile-knowledge": {
+    "tbc-knowledge": {
       "type": "stdio",
       "command": "node",
       "args": ["${CLAUDE_PLUGIN_ROOT}/dist/tbc-mcp-proxy.mjs"]

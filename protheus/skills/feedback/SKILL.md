@@ -71,11 +71,8 @@ submitFeedback({
 
 ## Passo 5 — Confirmar resultado
 
-**Usuário interno — sucesso:**
+**Sucesso:**
 > "✅ Aprendizado #<ID> registrado e disponível para todos os devs agora via searchKnowledge."
-
-**Usuário externo — sucesso:**
-> "✅ Feedback #<ID> enviado para revisão. Ficará disponível na base de conhecimento após aprovação pela equipe DataAgile."
 
 **Falha (isError: true ou exception):**
 > "⚠️ Não foi possível registrar o feedback: <motivo>.
