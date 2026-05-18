@@ -41,7 +41,7 @@ source ~/.zshrc
 - Agent Teams habilita comunicação bidirecional entre teammates
 - `AUTOCOMPACT_PCT_OVERRIDE=50` reduz perda de contexto em compactações
 
-## Arquitetura v2.0.1
+## Arquitetura v2.0.5
 
 ### Agent Teams + Worktree Isolation
 
