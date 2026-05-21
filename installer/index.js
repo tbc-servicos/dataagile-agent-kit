@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// DataAgile CLI installer — registers the DataAgile MCP server in Codex, Gemini CLI, or prints
-// manual install instructions for Claude Code.
+// DataAgile CLI installer — installs DataAgile plugins/MCP server in Claude Code, Codex CLI,
+// or Gemini CLI. Falls back to manual instructions on failure.
 //
 // Usage:
 //   node installer/index.js [--dry-run]
@@ -14,6 +14,9 @@ import readline from 'readline';
 
 const MCP_SERVER_NAME = 'dataagile';
 const MCP_SERVER_URL = 'https://mcp.totvstbc.com.br/mcp';
+const MARKETPLACE_URL = 'https://github.com/tbc-servicos/dataagile-agent-kit.git';
+const PLUGINS = ['protheus', 'fluig', 'playwright', 'po-ui'];
+const MARKETPLACE_ALIAS = 'claude-skills-dataagile';
 const DRY_RUN = process.argv.includes('--dry-run');
 
 // ---------------------------------------------------------------------------
@@ -140,27 +143,112 @@ function installCodex(apiKey) {
 }
 
 // ---------------------------------------------------------------------------
-// Manual instructions fallback
+// Claude Code — install via native plugin system
+// ---------------------------------------------------------------------------
+
+function claudeApiKeyConfigPath() {
+  return path.join(os.homedir(), '.config', 'dataagile', 'dev-config.json');
+}
+
+function saveClaudeApiKey(apiKey) {
+  const configPath = claudeApiKeyConfigPath();
+  const configDir = path.dirname(configPath);
+  if (!fs.existsSync(configDir)) fs.mkdirSync(configDir, { recursive: true });
+  const existing = fs.existsSync(configPath)
+    ? (() => { try { return JSON.parse(fs.readFileSync(configPath, 'utf-8')); } catch { return {}; } })()
+    : {};
+  fs.writeFileSync(configPath, JSON.stringify({ ...existing, api_key: apiKey }, null, 2) + '\n', 'utf-8');
+}
+
+function runCommand(cmd) {
+  try {
+    execSync(cmd, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] });
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: (err.stderr || err.message || '').trim() };
+  }
+}
+
+function installClaude(apiKey) {
+  if (DRY_RUN) {
+    console.log(`  [dry-run] Would run: claude plugin marketplace add ${MARKETPLACE_URL}`);
+    PLUGINS.forEach(p => console.log(`  [dry-run] Would run: claude plugin install ${p}@${MARKETPLACE_ALIAS}`));
+    if (apiKey) console.log(`  [dry-run] Would write API key to ${claudeApiKeyConfigPath()}`);
+    return { ok: true, dry: true };
+  }
+
+  const results = [];
+
+  // Step 1 — configure API key
+  if (apiKey) {
+    try {
+      saveClaudeApiKey(apiKey);
+      console.log(`  ✓ API key saved to ${claudeApiKeyConfigPath()}`);
+    } catch (err) {
+      console.log(`  ⚠ Could not save API key: ${err.message}`);
+      console.log(`    Set manually: export DATAAGILE_API_KEY=${apiKey}`);
+    }
+  }
+
+  // Step 2 — add marketplace
+  console.log(`  → Adding marketplace...`);
+  const mktResult = runCommand(`claude plugin marketplace add ${MARKETPLACE_URL}`);
+  if (!mktResult.ok) {
+    console.log(`  ✗ Failed to add marketplace: ${mktResult.error}`);
+    printClaudeManualInstructions(apiKey);
+    return { ok: false, reason: 'marketplace add failed' };
+  }
+  console.log(`  ✓ Marketplace added`);
+
+  // Step 3 — install each plugin
+  for (const plugin of PLUGINS) {
+    console.log(`  → Installing ${plugin}...`);
+    const r = runCommand(`claude plugin install ${plugin}@${MARKETPLACE_ALIAS}`);
+    if (r.ok) {
+      console.log(`  ✓ ${plugin} installed`);
+      results.push({ plugin, ok: true });
+    } else {
+      console.log(`  ✗ ${plugin} failed: ${r.error}`);
+      console.log(`    Retry manually: claude plugin install ${plugin}@${MARKETPLACE_ALIAS}`);
+      results.push({ plugin, ok: false, error: r.error });
+    }
+  }
+
+  const allOk = results.every(r => r.ok);
+  return { ok: allOk, results };
+}
+
+function printClaudeManualInstructions(apiKey) {
+  const keyDisplay = apiKey ?? 'SUA_API_KEY';
+  console.log(`
+  ── Fallback — execute manualmente: ─────────────────────────────
+  claude plugin marketplace add ${MARKETPLACE_URL}
+${PLUGINS.map(p => `  claude plugin install ${p}@${MARKETPLACE_ALIAS}`).join('\n')}
+
+  Configurar API key:
+  mkdir -p ~/.config/dataagile
+  echo '{"api_key":"${keyDisplay}"}' > ~/.config/dataagile/dev-config.json
+  `);
+}
+
+// ---------------------------------------------------------------------------
+// Manual instructions fallback (all CLIs)
 // ---------------------------------------------------------------------------
 
 function printManualInstructions(apiKey) {
-  const keyDisplay = apiKey ? apiKey : 'YOUR_API_KEY';
+  const keyDisplay = apiKey ?? 'SUA_API_KEY';
   console.log(`
 ╔══════════════════════════════════════════════════════════════╗
-║           DataAgile MCP — Manual Install Instructions        ║
+║           DataAgile — Instruções de instalação manual        ║
 ╚══════════════════════════════════════════════════════════════╝
 
 ── Claude Code ──────────────────────────────────────────────────
-  claude plugin install protheus@dataagile-agent-kit
+  claude plugin marketplace add ${MARKETPLACE_URL}
+${PLUGINS.map(p => `  claude plugin install ${p}@${MARKETPLACE_ALIAS}`).join('\n')}
 
-  or add to ~/.claude/settings.json → mcpServers:
-  {
-    "${MCP_SERVER_NAME}": {
-      "command": "node",
-      "args": ["dist/tbc-mcp-proxy.mjs"],
-      "env": { "API_KEY": "${keyDisplay}" }
-    }
-  }
+  Configurar API key:
+  mkdir -p ~/.config/dataagile
+  echo '{"api_key":"${keyDisplay}"}' > ~/.config/dataagile/dev-config.json
 
 ── Gemini CLI ───────────────────────────────────────────────────
   gemini mcp add ${MCP_SERVER_NAME} ${MCP_SERVER_URL} \\
@@ -168,7 +256,7 @@ function printManualInstructions(apiKey) {
     --header "x-api-key: ${keyDisplay}" \\
     --scope user
 
-  or edit ~/.gemini/settings.json → mcpServers:
+  ou edite ~/.gemini/settings.json → mcpServers:
   {
     "${MCP_SERVER_NAME}": {
       "url": "${MCP_SERVER_URL}",
@@ -178,7 +266,7 @@ function printManualInstructions(apiKey) {
   }
 
 ── Codex CLI ────────────────────────────────────────────────────
-  Edit ~/.codex/config.yaml → mcpServers:
+  Edite ~/.codex/config.yaml → mcpServers:
 
   mcpServers:
     ${MCP_SERVER_NAME}:
@@ -187,17 +275,15 @@ function printManualInstructions(apiKey) {
       headers:
         x-api-key: "${keyDisplay}"
 
-── Using get_skill in non-Claude sessions ───────────────────────
-  After install, call get_skill to load a skill into your context:
+── Usando get_skill (Codex / Gemini) ───────────────────────────
+  get_skill({ name: "protheus:specialist" })
+  get_skill({ name: "fluig:brainstorm" })
 
-    get_skill({ name: "protheus:specialist" })
-    get_skill({ name: "fluig:brainstorm" })
+  Cole o conteúdo retornado no system prompt para ativar o skill.
 
-  Paste the returned content into your system prompt.
-
-── Get an API key ───────────────────────────────────────────────
-  https://mcp.totvstbc.com.br/payment
-  Or contact: dev@dataagile.com.br
+── Obter API key ────────────────────────────────────────────────
+  https://dataagile-agent-kit.dataagile.com.br
+  Contato: dev@dataagile.com.br
 `);
 }
 
@@ -253,11 +339,8 @@ async function main() {
 
   if (detected.claude) {
     console.log('\n── Claude Code ──────────────────────────────────────────────────');
-    console.log('  Claude Code uses the native plugin system.');
-    console.log('  Run this command to install the Protheus plugin:');
-    console.log('    claude plugin install protheus@dataagile-agent-kit');
-    console.log('  (no automatic config write needed — plugin system handles it)');
-    results.push({ cli: 'claude', ok: true, manual: true });
+    const r = installClaude(apiKey);
+    results.push({ cli: 'claude', ...r });
   }
 
   if (detected.gemini) {
@@ -296,14 +379,21 @@ async function main() {
     results.push({ cli: 'codex', ...r });
   }
 
-  console.log('\n── Next steps ───────────────────────────────────────────────────');
+  console.log('\n── Próximos passos ──────────────────────────────────────────────');
   if (!apiKey && !DRY_RUN) {
-    console.log('  Get an API key: https://mcp.totvstbc.com.br/payment');
-    console.log('  Or contact: dev@dataagile.com.br');
+    console.log('  Obter API key: https://dataagile-agent-kit.dataagile.com.br');
+    console.log('  Contato: dev@dataagile.com.br');
   }
-  console.log('  After install, in Codex or Gemini:');
-  console.log('    get_skill({ name: "protheus:specialist" })');
-  console.log('  Paste the returned content into your system prompt to activate the skill.\n');
+  if (detected.claude) {
+    console.log('  Claude Code: abra seu projeto e use /protheus:brainstorm ou /fluig:widget');
+  }
+  if (detected.gemini || detected.codex) {
+    console.log('  Codex / Gemini — carregar uma skill:');
+    console.log('    get_skill({ name: "protheus:specialist" })');
+    console.log('    get_skill({ name: "fluig:brainstorm" })');
+    console.log('  Cole o conteúdo retornado no system prompt.');
+  }
+  console.log('  Guia completo: https://github.com/tbc-servicos/dataagile-agent-kit/blob/main/INSTALL.md\n');
 
   if (DRY_RUN) {
     console.log('[dry-run] No files were modified.\n');

@@ -10,9 +10,9 @@ Install the DataAgile MCP server and skills in **Claude Code**, **Codex CLI**, o
 |-------------|---------|-------------|
 | Node.js | 18+ | `node --version` |
 | An AI CLI | any below | see sections |
-| DataAgile API key | required for paid features | [Get key →](https://mcp.totvstbc.com.br/payment) |
+| DataAgile API key | required for paid features | [Get key →](https://dataagile-agent-kit.dataagile.com.br) |
 
-> **Free trial:** 30-day trial activates automatically on your first MCP request. No credit card needed.
+> **Free trial:** 7-day trial activates automatically on your first MCP request. No credit card needed.
 
 ---
 
@@ -27,8 +27,9 @@ npx github:tbc-servicos/dataagile-agent-kit              # apply
 
 The installer will:
 1. Detect which CLIs are installed (`claude`, `gemini`, `codex`)
-2. Register `mcp.totvstbc.com.br` in each CLI's config
-3. Print manual instructions for CLIs it can't configure automatically
+2. **Claude Code** — add the marketplace and install all 4 plugins (protheus, fluig, playwright, po-ui)
+3. **Gemini / Codex** — register `mcp.totvstbc.com.br` in each CLI's config
+4. If any step fails, print the exact manual commands to run
 
 If you prefer to configure manually, follow the sections below.
 
@@ -38,26 +39,30 @@ If you prefer to configure manually, follow the sections below.
 
 Claude Code uses a native plugin system — no manual JSON config needed.
 
-**Install the Protheus plugin:**
+**Install all plugins (automated — same as running the npx installer):**
 ```bash
-claude plugin install protheus@dataagile-agent-kit
+claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin install protheus@claude-skills-dataagile
+claude plugin install fluig@claude-skills-dataagile
+claude plugin install playwright@claude-skills-dataagile
+claude plugin install po-ui@claude-skills-dataagile
 ```
 
-**Or install all plugins (Protheus + Fluig + MIT Docs):**
+**Configure API key:**
 ```bash
-claude plugin install protheus@dataagile-agent-kit
-claude plugin install fluig@dataagile-agent-kit
-claude plugin install mit-docs@dataagile-agent-kit
+mkdir -p ~/.config/dataagile
+echo '{"api_key":"SUA_API_KEY"}' > ~/.config/dataagile/dev-config.json
+# or: export DATAAGILE_API_KEY=SUA_API_KEY
 ```
 
 **Verify:**
 ```bash
 claude plugin list
-# Should show: protheus@dataagile-agent-kit
+# Should show: protheus, fluig, playwright, po-ui
 ```
 
 **Activate a skill in a session:**
-Type `/protheus:specialist` in the Claude Code prompt.
+Type `/protheus:brainstorm`, `/fluig:widget`, etc. in the Claude Code prompt.
 
 ---
 
@@ -161,7 +166,7 @@ get_skill({ name: "protheus:specialist" })
 
 **`get_skill` returns "not available for your current plan"**
 - You are trying to access a premium skill (`mit-docs:*`) with a trial/standard plan
-- Upgrade at: https://mcp.totvstbc.com.br/payment
+- Upgrade at: https://dataagile-agent-kit.dataagile.com.br
 
 **Gemini CLI — auth error on `gemini mcp add`**
 - Set your Gemini API key first: `export GEMINI_API_KEY=your_key`
@@ -187,8 +192,10 @@ get_skill({ name: "protheus:specialist" })
 
 **Claude Code:**
 ```bash
-claude plugin uninstall protheus@dataagile-agent-kit
-claude plugin uninstall fluig@dataagile-agent-kit
+claude plugin uninstall protheus@claude-skills-dataagile
+claude plugin uninstall fluig@claude-skills-dataagile
+claude plugin uninstall playwright@claude-skills-dataagile
+claude plugin uninstall po-ui@claude-skills-dataagile
 ```
 
 **Gemini CLI:**
@@ -205,4 +212,4 @@ Remove the `dataagile:` block from `~/.codex/config.yaml`.
 
 - Email: [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
 - GitHub Issues: [tbc-servicos/dataagile-agent-kit/issues](https://github.com/tbc-servicos/dataagile-agent-kit/issues)
-- Plans and pricing: [mcp.totvstbc.com.br/payment](https://mcp.totvstbc.com.br/payment)
+- Plans and pricing: [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br)
