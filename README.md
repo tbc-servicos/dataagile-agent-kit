@@ -18,7 +18,7 @@
 
 <br/>
 
-[**Assinar →**](https://dataagile-agent-kit.dataagile.com.br) &nbsp;&nbsp;·&nbsp;&nbsp; [Onboarding](./ONBOARDING.md) &nbsp;&nbsp;·&nbsp;&nbsp; [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
+[**Assinar →**](https://dataagile-agent-kit.dataagile.com.br) &nbsp;&nbsp;·&nbsp;&nbsp; [Instalação](./INSTALL.md) &nbsp;&nbsp;·&nbsp;&nbsp; [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
 
 </div>
 
@@ -52,43 +52,44 @@ Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada
 
 **Pré-requisito:** API key em [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br)
 
-**1 — Instalar o Claude Code**
+### Claude Code
 
 ```bash
+# 1 — Instalar o Claude Code
 npm install -g @anthropic-ai/claude-code
-```
 
-**2 — Configurar a API key**
-
-```bash
-# macOS / Linux
+# 2 — Configurar a API key
 mkdir -p ~/.config/dataagile
-echo '{ "api_key": "dataagile_SUA_CHAVE_AQUI" }' > ~/.config/dataagile/dev-config.json
-```
+echo '{ "api_key": "SUA_CHAVE_AQUI" }' > ~/.config/dataagile/dev-config.json
 
-```powershell
-# Windows (PowerShell)
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.config\dataagile" | Out-Null
-'{ "api_key": "dataagile_SUA_CHAVE_AQUI" }' | Set-Content "$env:USERPROFILE\.config\dataagile\dev-config.json"
-```
-
-**3 — Instalar o plugin**
-
-```bash
+# 3 — Instalar o plugin
 claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
 claude plugin install protheus@claude-skills-dataagile
-```
 
-**4 — Usar**
-
-```bash
+# 4 — Usar
 cd ~/seu-projeto-protheus
 claude
 # /protheus:brainstorm   → nova feature
 # /protheus:suporte      → diagnosticar erro ERP
 ```
 
-> Guia detalhado com troubleshooting e Claude Desktop: [ONBOARDING.md](./ONBOARDING.md)
+### Codex CLI / Gemini CLI
+
+```bash
+# Instalador automático — detecta os CLIs instalados,
+# pede a API key e configura tudo em um comando.
+npx github:tbc-servicos/dataagile-agent-kit
+```
+
+O instalador irá perguntar sua API key durante a execução. Após instalar, carregue uma skill na sessão:
+
+```
+get_skill({ name: "protheus:specialist" })
+```
+
+Cole o conteúdo retornado no seu system prompt para ativar o skill.
+
+> Guia completo com todos os CLIs, troubleshooting e desinstalação: [INSTALL.md](./INSTALL.md)
 
 ---
 
@@ -159,7 +160,7 @@ claude
 **DataAgile**
 
 [![Assinar um plano](https://img.shields.io/badge/Assinar_um_plano-003CA6?style=for-the-badge&logoColor=white)](https://dataagile-agent-kit.dataagile.com.br)
-[![Documentação](https://img.shields.io/badge/Documentação-475569?style=for-the-badge&logoColor=white)](./ONBOARDING.md)
+[![Documentação](https://img.shields.io/badge/Documentação-475569?style=for-the-badge&logoColor=white)](./INSTALL.md)
 [![Contato](https://img.shields.io/badge/dev@dataagile.com.br-1E293B?style=for-the-badge&logoColor=white)](mailto:dev@dataagile.com.br)
 
 </div>
