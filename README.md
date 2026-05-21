@@ -56,7 +56,7 @@ Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada
 npx github:tbc-servicos/dataagile-agent-kit
 ```
 
-Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**. O instalador detecta o CLI instalado, pede a API key e configura tudo automaticamente.
+Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**. O instalador detecta o CLI instalado, pede a API key e configura tudo automaticamente — instala todos os plugins disponíveis (protheus, fluig, playwright, po-ui). Se algum passo falhar, exibe os comandos exatos para executar manualmente.
 
 > Guia completo por CLI, troubleshooting e desinstalação: [INSTALL.md](./INSTALL.md)
 
