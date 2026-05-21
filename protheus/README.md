@@ -1,12 +1,18 @@
-# Protheus Plugin — Claude Code
+# Protheus Plugin — Claude Code / Codex / Gemini
 
-Plugin Claude Code para desenvolvimento **TOTVS Protheus** (ADVPL/TLPP).
+Plugin para desenvolvimento **TOTVS Protheus** (ADVPL/TLPP). Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**.
 
 Ciclo completo: brainstorm → plan → implement (Agent Team haiku/sonnet, worktree) → deploy (TDS-CLI) → qa (TIR E2E) → verify.
 
-Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP da TBC.
+Conecta ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP DataAgile.
 
-## Instalação
+> **Instalação em um comando (todos os CLIs):**
+> ```bash
+> npx github:tbc-servicos/dataagile-agent-kit
+> ```
+> Guia completo: [INSTALL.md](../INSTALL.md)
+
+## Instalação (Claude Code)
 
 ### Pré-requisitos
 
