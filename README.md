@@ -52,44 +52,13 @@ Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada
 
 **Pré-requisito:** API key em [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br)
 
-### Claude Code
-
 ```bash
-# 1 — Instalar o Claude Code
-npm install -g @anthropic-ai/claude-code
-
-# 2 — Configurar a API key
-mkdir -p ~/.config/dataagile
-echo '{ "api_key": "SUA_CHAVE_AQUI" }' > ~/.config/dataagile/dev-config.json
-
-# 3 — Instalar o plugin
-claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
-claude plugin install protheus@claude-skills-dataagile
-
-# 4 — Usar
-cd ~/seu-projeto-protheus
-claude
-# /protheus:brainstorm   → nova feature
-# /protheus:suporte      → diagnosticar erro ERP
-```
-
-### Codex CLI / Gemini CLI
-
-```bash
-# Instalador automático — detecta os CLIs instalados,
-# pede a API key e configura tudo em um comando.
 npx github:tbc-servicos/dataagile-agent-kit
 ```
 
-O instalador irá perguntar sua API key durante a execução. Após instalar, carregue uma skill na sessão:
+Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**. O instalador detecta o CLI instalado, pede a API key e configura tudo automaticamente.
 
-```
-get_skill({ name: "protheus:specialist" })
-```
-
-Cole o conteúdo retornado no seu system prompt para ativar o skill.
-
-> Guia completo com todos os CLIs, troubleshooting e desinstalação: [INSTALL.md](./INSTALL.md)
+> Guia completo por CLI, troubleshooting e desinstalação: [INSTALL.md](./INSTALL.md)
 
 ---
 
