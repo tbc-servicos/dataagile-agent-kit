@@ -62,3 +62,8 @@ docs/plans/material_treinamento/*.pdf
 !/ONBOARDING.md
 !/LICENSE
 !/.gitignore
+
+# Installer and npm package
+!/INSTALL.md
+!/package.json
+!/installer/

@@ -1,0 +1,23 @@
+{
+  "name": "@dataagile/kit",
+  "version": "1.0.0",
+  "description": "DataAgile Agent Kit — Protheus/ADVPL skills and MCP installer for Claude Code, Codex CLI, and Gemini CLI",
+  "type": "module",
+  "bin": {
+    "dataagile-kit": "installer/index.js"
+  },
+  "scripts": {
+    "install-mcp": "node installer/index.js",
+    "install-mcp:dry": "node installer/index.js --dry-run"
+  },
+  "keywords": ["totvs", "protheus", "advpl", "mcp", "claude-code", "codex", "gemini"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tbc-servicos/dataagile-agent-kit.git"
+  },
+  "homepage": "https://dataagile-agent-kit.dataagile.com.br",
+  "engines": {
+    "node": ">=18"
+  }
+}
