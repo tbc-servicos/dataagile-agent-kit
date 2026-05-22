@@ -199,13 +199,17 @@ function installClaude(apiKey) {
     }
   }
 
-  // Step 2 — add marketplace (or detect existing one)
-  console.log(`  → Adding marketplace...`);
+  // Step 2 — remove any stale marketplace registrations under old names, then re-add cleanly
+  console.log(`  → Checking for stale marketplace registrations...`);
+  const LEGACY_ALIASES = ['claude-skills-tbc'];
+  for (const stale of LEGACY_ALIASES) {
+    const rm = runCommand(`claude plugin marketplace remove ${stale}`);
+    if (rm.ok) console.log(`  ✓ Removed stale marketplace '${stale}'`);
+  }
+
+  console.log(`  → Adding marketplace as '${MARKETPLACE_ALIAS}'...`);
   const mktResult = runCommand(`claude plugin marketplace add ${MARKETPLACE_URL}`);
   const mktOutput = (mktResult.stdout || '') + (mktResult.error || '');
-
-  // Detect the actual registered alias from CLI output — may differ from MARKETPLACE_ALIAS
-  // if the user already had the marketplace cached under a different name.
   const detectedAlias = extractMarketplaceAlias(mktOutput) || MARKETPLACE_ALIAS;
 
   if (!mktResult.ok && !mktOutput.includes('already on disk')) {
@@ -213,13 +217,7 @@ function installClaude(apiKey) {
     printClaudeManualInstructions(apiKey);
     return { ok: false, reason: 'marketplace add failed' };
   }
-
-  if (detectedAlias !== MARKETPLACE_ALIAS) {
-    console.log(`  ⚠ Marketplace registered as '${detectedAlias}' (expected '${MARKETPLACE_ALIAS}')`);
-    console.log(`    This means a previous version was cached locally. Using detected alias.`);
-  } else {
-    console.log(`  ✓ Marketplace added as '${detectedAlias}'`);
-  }
+  console.log(`  ✓ Marketplace ready as '${detectedAlias}'`);
 
   // Step 3 — install each plugin using the actual registered alias
   for (const plugin of PLUGINS) {
