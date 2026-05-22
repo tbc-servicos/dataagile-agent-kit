@@ -162,11 +162,20 @@ function saveClaudeApiKey(apiKey) {
 
 function runCommand(cmd) {
   try {
-    execSync(cmd, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] });
-    return { ok: true };
+    const stdout = execSync(cmd, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] });
+    return { ok: true, stdout: stdout || '' };
   } catch (err) {
-    return { ok: false, error: (err.stderr || err.message || '').trim() };
+    return { ok: false, error: (err.stderr || err.message || '').trim(), stdout: (err.stdout || '') };
   }
+}
+
+// Extract the actual registered marketplace alias from `claude plugin marketplace add` output.
+// Output examples:
+//   "√ Marketplace 'claude-skills-tbc' already on disk — declared in user settings"
+//   "✓ Marketplace 'claude-skills-dataagile' added"
+function extractMarketplaceAlias(output) {
+  const match = output.match(/Marketplace\s+'([^']+)'/);
+  return match ? match[1] : null;
 }
 
 function installClaude(apiKey) {
@@ -190,26 +199,47 @@ function installClaude(apiKey) {
     }
   }
 
-  // Step 2 — add marketplace
+  // Step 2 — add marketplace (or detect existing one)
   console.log(`  → Adding marketplace...`);
   const mktResult = runCommand(`claude plugin marketplace add ${MARKETPLACE_URL}`);
-  if (!mktResult.ok) {
+  const mktOutput = (mktResult.stdout || '') + (mktResult.error || '');
+
+  // Detect the actual registered alias from CLI output — may differ from MARKETPLACE_ALIAS
+  // if the user already had the marketplace cached under a different name.
+  const detectedAlias = extractMarketplaceAlias(mktOutput) || MARKETPLACE_ALIAS;
+
+  if (!mktResult.ok && !mktOutput.includes('already on disk')) {
     console.log(`  ✗ Failed to add marketplace: ${mktResult.error}`);
     printClaudeManualInstructions(apiKey);
     return { ok: false, reason: 'marketplace add failed' };
   }
-  console.log(`  ✓ Marketplace added`);
 
-  // Step 3 — install each plugin
+  if (detectedAlias !== MARKETPLACE_ALIAS) {
+    console.log(`  ⚠ Marketplace registered as '${detectedAlias}' (expected '${MARKETPLACE_ALIAS}')`);
+    console.log(`    This means a previous version was cached locally. Using detected alias.`);
+  } else {
+    console.log(`  ✓ Marketplace added as '${detectedAlias}'`);
+  }
+
+  // Step 3 — install each plugin using the actual registered alias
   for (const plugin of PLUGINS) {
     console.log(`  → Installing ${plugin}...`);
-    const r = runCommand(`claude plugin install ${plugin}@${MARKETPLACE_ALIAS}`);
+    const r = runCommand(`claude plugin install ${plugin}@${detectedAlias}`);
     if (r.ok) {
       console.log(`  ✓ ${plugin} installed`);
       results.push({ plugin, ok: true });
     } else {
+      // If detected alias differs from expected, also try the expected one
+      if (detectedAlias !== MARKETPLACE_ALIAS) {
+        const r2 = runCommand(`claude plugin install ${plugin}@${MARKETPLACE_ALIAS}`);
+        if (r2.ok) {
+          console.log(`  ✓ ${plugin} installed (via ${MARKETPLACE_ALIAS})`);
+          results.push({ plugin, ok: true });
+          continue;
+        }
+      }
       console.log(`  ✗ ${plugin} failed: ${r.error}`);
-      console.log(`    Retry manually: claude plugin install ${plugin}@${MARKETPLACE_ALIAS}`);
+      console.log(`    Retry manually: claude plugin install ${plugin}@${detectedAlias}`);
       results.push({ plugin, ok: false, error: r.error });
     }
   }
@@ -218,12 +248,16 @@ function installClaude(apiKey) {
   return { ok: allOk, results };
 }
 
-function printClaudeManualInstructions(apiKey) {
+function printClaudeManualInstructions(apiKey, detectedAlias) {
   const keyDisplay = apiKey ?? 'SUA_API_KEY';
+  const alias = detectedAlias || MARKETPLACE_ALIAS;
+  const needsRemove = detectedAlias && detectedAlias !== MARKETPLACE_ALIAS;
+  const removeStep = needsRemove
+    ? `  # Se o marketplace já estava como '${detectedAlias}', remova e re-adicione:\n  claude plugin marketplace remove ${detectedAlias}\n  claude plugin marketplace add ${MARKETPLACE_URL}\n`
+    : `  claude plugin marketplace add ${MARKETPLACE_URL}\n`;
   console.log(`
   ── Fallback — execute manualmente: ─────────────────────────────
-  claude plugin marketplace add ${MARKETPLACE_URL}
-${PLUGINS.map(p => `  claude plugin install ${p}@${MARKETPLACE_ALIAS}`).join('\n')}
+${removeStep}${PLUGINS.map(p => `  claude plugin install ${p}@${MARKETPLACE_ALIAS}`).join('\n')}
 
   Configurar API key:
   mkdir -p ~/.config/dataagile
