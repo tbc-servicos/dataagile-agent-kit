@@ -31,7 +31,7 @@ claude --plugin-dir /path/to/fluig-plugin
 /plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
 
 # Instalar o plugin
-/plugin install fluig@claude-skills-tbc
+/plugin install fluig@claude-skills-dataagile
 ```
 
 ### Codex CLI / Gemini CLI

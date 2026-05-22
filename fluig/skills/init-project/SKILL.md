@@ -125,7 +125,7 @@ Prefixo do cliente: `[PREFIXO]` — usado em `wg_[PREFIXO]_`, `ds_[PREFIXO]_`, `
 `/fluig:review` → executa pipeline completo (review → deploy → qa)
 
 ```bash
-claude plugin update fluig@claude-skills-tbc
+claude plugin update fluig@claude-skills-dataagile
 ```
 ```
 

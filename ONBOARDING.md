@@ -15,7 +15,7 @@ npx github:tbc-servicos/dataagile-agent-kit
 
 # Claude Code — plugin direto
 claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
-claude plugin install protheus@claude-skills-tbc
+claude plugin install protheus@claude-skills-dataagile
 ```
 
 Guia completo, troubleshooting e desinstalação: [INSTALL.md](./INSTALL.md)

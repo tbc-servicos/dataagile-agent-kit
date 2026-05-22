@@ -16,7 +16,7 @@ Plugin Claude Code para desenvolvimento com **PO-UI** — biblioteca oficial de 
 
 ```bash
 /plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
-/plugin install po-ui@claude-skills-tbc
+/plugin install po-ui@claude-skills-dataagile
 ```
 
 ### Opção 2: `--plugin-dir` (local)

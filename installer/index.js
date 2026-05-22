@@ -16,7 +16,7 @@ const MCP_SERVER_NAME = 'dataagile';
 const MCP_SERVER_URL = 'https://mcp.totvstbc.com.br/mcp';
 const MARKETPLACE_URL = 'https://github.com/tbc-servicos/dataagile-agent-kit.git';
 const PLUGINS = ['protheus', 'fluig', 'playwright', 'po-ui'];
-const MARKETPLACE_ALIAS = 'claude-skills-tbc';
+const MARKETPLACE_ALIAS = 'claude-skills-dataagile';
 const DRY_RUN = process.argv.includes('--dry-run');
 
 // ---------------------------------------------------------------------------
