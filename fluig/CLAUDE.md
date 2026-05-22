@@ -121,4 +121,4 @@ Quando precisar de referência de componente PO-UI, use as tools do MCP `po-ui` 
 
 ## Distribuição
 
-`https://github.com/tbc-servicos/dataagile-agent-kit.git` · marketplace `claude-skills-dataagile`
+`https://github.com/tbc-servicos/dataagile-agent-kit.git` · marketplace `claude-skills-tbc`

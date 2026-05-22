@@ -42,10 +42,10 @@ Claude Code uses a native plugin system — no manual JSON config needed.
 **Install all plugins (automated — same as running the npx installer):**
 ```bash
 claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
-claude plugin install protheus@claude-skills-dataagile
-claude plugin install fluig@claude-skills-dataagile
-claude plugin install playwright@claude-skills-dataagile
-claude plugin install po-ui@claude-skills-dataagile
+claude plugin install protheus@claude-skills-tbc
+claude plugin install fluig@claude-skills-tbc
+claude plugin install playwright@claude-skills-tbc
+claude plugin install po-ui@claude-skills-tbc
 ```
 
 **Configure API key:**
@@ -192,10 +192,10 @@ get_skill({ name: "protheus:specialist" })
 
 **Claude Code:**
 ```bash
-claude plugin uninstall protheus@claude-skills-dataagile
-claude plugin uninstall fluig@claude-skills-dataagile
-claude plugin uninstall playwright@claude-skills-dataagile
-claude plugin uninstall po-ui@claude-skills-dataagile
+claude plugin uninstall protheus@claude-skills-tbc
+claude plugin uninstall fluig@claude-skills-tbc
+claude plugin uninstall playwright@claude-skills-tbc
+claude plugin uninstall po-ui@claude-skills-tbc
 ```
 
 **Gemini CLI:**
