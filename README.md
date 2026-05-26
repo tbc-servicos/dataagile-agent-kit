@@ -60,10 +60,18 @@ Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**. O instalador detect
 
 ### Instalar via IA
 
-Cole este prompt no **Claude Code** e ele instala tudo automaticamente:
+Cole este prompt no **Claude Code**:
 
 ```
-Instale esse plugin globalmente: https://github.com/tbc-servicos/dataagile-agent-kit
+Execute os comandos abaixo para instalar o marketplace DataAgile e todos os plugins disponíveis globalmente:
+
+claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin install protheus@claude-skills-dataagile
+claude plugin install fluig@claude-skills-dataagile
+claude plugin install po-ui@claude-skills-dataagile
+claude plugin install playwright@claude-skills-dataagile
+
+Após cada comando, confirme se foi bem-sucedido. No final, rode "claude plugin list" e me mostre os plugins instalados.
 ```
 
 Depois configure sua chave de API (substitua `SUA_CHAVE`):
