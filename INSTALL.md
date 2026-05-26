@@ -18,14 +18,11 @@ Install the DataAgile MCP server and skills in **Claude Code**, **Codex CLI**, o
 
 ## ⚡ Quick Install — Let Your AI Do It
 
-Paste this prompt into **Claude Code**. The `!` prefix runs the installer in your real terminal (not in the AI's subshell), so it can prompt for your API key securely — the key never appears in the chat.
+Paste this prompt into **Claude Code**:
 
 ```
-Instale o DataAgile rodando este comando no meu terminal:
-! npx github:tbc-servicos/dataagile-agent-kit
+Instale esse plugin globalmente: https://github.com/tbc-servicos/dataagile-agent-kit
 ```
-
-The installer will detect your CLI, prompt for your API key interactively, and configure everything automatically.
 
 ---
 

@@ -60,11 +60,10 @@ Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**. O instalador detect
 
 ### Instalar via IA
 
-Cole este prompt no **Claude Code** — o instalador roda no seu terminal real e pede a chave de forma segura (sem aparecer no chat):
+Cole este prompt no **Claude Code**:
 
 ```
-Instale o DataAgile rodando este comando no meu terminal:
-! npx github:tbc-servicos/dataagile-agent-kit
+Instale esse plugin globalmente: https://github.com/tbc-servicos/dataagile-agent-kit
 ```
 
 > Guia completo por CLI, troubleshooting e desinstalação: [INSTALL.md](./INSTALL.md)
