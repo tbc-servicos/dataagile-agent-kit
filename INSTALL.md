@@ -16,6 +16,21 @@ Install the DataAgile MCP server and skills in **Claude Code**, **Codex CLI**, o
 
 ---
 
+## ⚡ Quick Install — Let Your AI Do It
+
+Paste this prompt into **Claude Code**. Your API key is read silently from the terminal — it never appears in the chat.
+
+```
+Instale o plugin DataAgile Knowledge no meu Claude Code executando o comando abaixo.
+Ele vai pedir minha chave de forma segura (sem mostrar no chat):
+
+bash -c 'read -s -p "Cole sua chave DataAgile e pressione Enter: " KEY && echo && claude mcp add dataagile-knowledge https://mcp.totvstbc.com.br/mcp --transport http --header "x-api-key: $KEY" && echo "✓ Instalado!" && claude mcp list'
+
+Após rodar, confirme que "dataagile-knowledge" aparece na lista de MCPs.
+```
+
+---
+
 ## Option 1 — Automated Installer (all CLIs)
 
 Run this command to detect all installed CLIs and register the MCP server automatically:

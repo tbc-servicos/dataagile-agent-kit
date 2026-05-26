@@ -58,6 +58,18 @@ npx github:tbc-servicos/dataagile-agent-kit
 
 Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**. O instalador detecta o CLI instalado, pede a API key e configura tudo automaticamente — instala todos os plugins disponíveis (protheus, fluig, playwright, po-ui). Se algum passo falhar, exibe os comandos exatos para executar manualmente.
 
+### Instalar via IA (sem expor a chave no chat)
+
+Cole o prompt abaixo direto no **Claude Code**. A chave é lida de forma silenciosa no terminal — não aparece no chat:
+
+```
+Instale o plugin DataAgile Knowledge no meu Claude Code executando:
+
+bash -c 'read -s -p "Cole sua chave DataAgile e pressione Enter: " KEY && echo && claude mcp add dataagile-knowledge https://mcp.totvstbc.com.br/mcp --transport http --header "x-api-key: $KEY" && echo "Instalado com sucesso!" && claude mcp list'
+
+Confirme que "dataagile-knowledge" aparece na lista de MCPs.
+```
+
 > Guia completo por CLI, troubleshooting e desinstalação: [INSTALL.md](./INSTALL.md)
 
 ---
