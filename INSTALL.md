@@ -18,10 +18,26 @@ Install the DataAgile MCP server and skills in **Claude Code**, **Codex CLI**, o
 
 ## ⚡ Quick Install — Let Your AI Do It
 
-Paste this prompt into **Claude Code**:
+**Step 1 — Paste this prompt into Claude Code** (or any AI assistant):
 
 ```
 Instale esse plugin globalmente: https://github.com/tbc-servicos/dataagile-agent-kit
+```
+
+The AI will run `claude plugin marketplace add` and install all available plugins (protheus, fluig, playwright, po-ui).
+
+**Step 2 — Set your API key** (run this yourself in the terminal, replace `SUA_CHAVE`):
+
+```bash
+mkdir -p ~/.config/dataagile && echo '{"api_key":"SUA_CHAVE"}' > ~/.config/dataagile/dev-config.json
+```
+
+Get your key at [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br).
+
+**Step 3 — Verify** (ask the AI):
+
+```
+Liste os plugins instalados e confirme que o dataagile está ativo.
 ```
 
 ---

@@ -60,10 +60,16 @@ Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**. O instalador detect
 
 ### Instalar via IA
 
-Cole este prompt no **Claude Code**:
+Cole este prompt no **Claude Code** e ele instala tudo automaticamente:
 
 ```
 Instale esse plugin globalmente: https://github.com/tbc-servicos/dataagile-agent-kit
+```
+
+Depois configure sua chave de API (substitua `SUA_CHAVE`):
+
+```bash
+mkdir -p ~/.config/dataagile && echo '{"api_key":"SUA_CHAVE"}' > ~/.config/dataagile/dev-config.json
 ```
 
 > Guia completo por CLI, troubleshooting e desinstalação: [INSTALL.md](./INSTALL.md)
