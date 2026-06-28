@@ -67,3 +67,5 @@ docs/plans/material_treinamento/*.pdf
 !/INSTALL.md
 !/package.json
 !/installer/
+!/RELEASING.md
+!/.github/
