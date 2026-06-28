@@ -30,7 +30,7 @@
       "name": "protheus",
       "source": "./protheus",
       "description": "Plugin para desenvolvimento TOTVS Protheus — cadeia de subagentes: intake MIT044, brainstorm, writing-plans, subagent-dev (implementação → review → compilação → TIR E2E).",
-      "version": "2.0.9",
+      "version": "2.1.0",
       "author": {
         "name": "TBC - Time de Desenvolvimento"
       },

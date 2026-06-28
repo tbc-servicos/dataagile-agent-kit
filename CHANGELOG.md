@@ -4,6 +4,11 @@ Histórico das versões públicas do `dataagile-agent-kit`.
 
 ---
 
+## [2.3.0] — 2026-06-28
+
+### Adicionado
+- **Suíte de skills AdvPL/TLPP da TOTVS** (`totvs/engpro-advpl-tlpp-skills`, MIT — atribuição em `protheus/skills/_THIRD_PARTY/`): geradores (mvc/rest/fwrest/query/entry-point), qualidade (code-review SonarQube G1–G5, sql-code-review, sql-optimization), refactor (2), data-dictionary-lookup, documentation-writer, context-map, create-implementation-plan, advpl-tlpp-sdd, utf8-to-cp1252-conversion, tir-test-generator. 17 skills + references/. Inglês — localização PT-BR follow-up. (protheus 2.1.0)
+
 ## [2.2.1] — 2026-06-28
 
 ### Corrigido
