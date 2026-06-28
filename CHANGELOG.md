@@ -4,6 +4,14 @@ Histórico das versões públicas do `dataagile-agent-kit`.
 
 ---
 
+## [2.2.1] — 2026-06-28
+
+### Corrigido
+- **Hooks com bit de execução (`+x`).** Hooks de `protheus/` e `fluig/` estavam `100644`; o `hooks.json` invoca `run-hook.cmd` como executável → `run-hook.cmd: Permission denied` no PostToolUse após `claude plugin update`. Marcados `100755`. (protheus 2.0.9, fluig 2.0.6)
+
+### Adicionado
+- **Versionamento + Releases.** Esquema de tag por plugin `<plugin>-vX.Y.Z`, `RELEASING.md`, workflow `release.yml` (cria release no push de tag `*-v*`) e templates de issue/PR padronizando o fluxo issue→PR.
+
 ## [2.2.0] — 2026-05-21
 
 ### Adicionado
