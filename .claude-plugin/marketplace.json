@@ -1,5 +1,5 @@
 {
-  "name": "claude-skills-dataagile",
+  "name": "claude-skills-tbc",
   "owner": {
     "name": "TBC - Time de Desenvolvimento",
     "email": "dev@tbc.com.br"
@@ -13,7 +13,7 @@
       "name": "fluig",
       "source": "./fluig",
       "description": "Plugin para desenvolvimento TOTVS Fluig — ciclo completo: design (brainstorm), scaffolding (widget/dataset/form/workflow), revisão estática + testes (review) e deploy (verify).",
-      "version": "2.0.6",
+      "version": "2.0.7",
       "author": {
         "name": "TBC - Time de Desenvolvimento"
       },
@@ -29,8 +29,8 @@
     {
       "name": "protheus",
       "source": "./protheus",
-      "description": "Plugin para desenvolvimento TOTVS Protheus — cadeia de subagentes: intake MIT044, brainstorm, writing-plans, subagent-dev (implementação → review → compilação → TIR E2E).",
-      "version": "2.1.0",
+      "description": "Plugin para desenvolvimento TOTVS Protheus — ciclo completo: brainstorm → plan → implement (Agent Teams) → deploy TDS-CLI → qa E2E → verify, geradores MVC/REST/query, dicionário de dados, SmartView/TReports e Knowledge Base remota (155k+ registros).",
+      "version": "2.11.0",
       "author": {
         "name": "TBC - Time de Desenvolvimento"
       },

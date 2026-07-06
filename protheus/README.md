@@ -1,18 +1,12 @@
-# Protheus Plugin — Claude Code / Codex / Gemini
+# Protheus Plugin — Claude Code
 
-Plugin para desenvolvimento **TOTVS Protheus** (ADVPL/TLPP). Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**.
+Plugin Claude Code para desenvolvimento **TOTVS Protheus** (ADVPL/TLPP).
 
 Ciclo completo: brainstorm → plan → implement (Agent Team haiku/sonnet, worktree) → deploy (TDS-CLI) → qa (TIR E2E) → verify.
 
-Conecta ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP DataAgile.
+Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP da TBC.
 
-> **Instalação em um comando (todos os CLIs):**
-> ```bash
-> npx github:tbc-servicos/dataagile-agent-kit
-> ```
-> Guia completo: [INSTALL.md](../INSTALL.md)
-
-## Instalação (Claude Code)
+## Instalação
 
 ### Pré-requisitos
 
@@ -157,7 +151,8 @@ O MCP também funciona no **Claude Desktop** (app). Adicione ao arquivo de confi
 {
   "mcpServers": {
     "tbc-knowledge": {
-      "command": "bash",
+      "command": "node",
+      "args": ["<HOME>/.claude/plugins/marketplaces/claude-skills-dataagile/protheus/dist/tbc-mcp-proxy.mjs"],
       "env": {
         "TBC_USER_EMAIL": "seu.nome@empresa.com.br"
       }
@@ -170,7 +165,7 @@ Reinicie o Claude Desktop depois de salvar.
 
 > **Atenção — conflito com o plugin:** Se você usa o plugin `protheus@claude-skills-dataagile` no Claude Code, **não adicione** o MCP manualmente nem pelo `claude_desktop_config.json` nem pelas Integrations do claude.ai. O plugin já registra o MCP automaticamente. Ter os dois ativos duplica cada chamada MCP, causando lentidão e respostas redundantes.
 
-## Arquitetura v2.0.8
+## Arquitetura v2.1.0
 
 ### Agent Teams + Worktree Isolation
 
@@ -257,6 +252,23 @@ Reinicie o Claude Desktop depois de salvar.
 | `/protheus:test` | Geração de testes E2E com TIR 2.x |
 | `/protheus:migrate` | Migração ADVPL procedural → TLPP orientado a objetos |
 | `/protheus:diagnose` | Diagnóstico e resolução de erros ADVPL/TLPP |
+| `/protheus:smartview-relatorio` | Relatório SmartView/TReports de ponta a ponta — BO TLPP (IntegratedProvider) → compila → registra → Grid/Pivot/Report |
+
+### Fluxo `smartview-relatorio`
+
+Esteira do código ao artefato renderizando dados num SmartView (TReports) self-hosted ligado a um AppServer Protheus:
+
+1. **Gerar o Business Object TLPP** — a partir de uma spec (tabelas/campos, query SQL ou dados literais), gera o `IntegratedProvider` (`scripts/generate_bo.py` via Jinja2, ou escreve o `.tlpp` seguindo `assets/VENDASIA.tlpp`). Padrão: namespace próprio, herda `IntegratedProvider`, métodos `getData`/`getSchema`, sem `BEGIN SEQUENCE`.
+2. **Compilar no AppServer** — `scripts/compile_bo.sh <fonte.tlpp> <env>`. Compila **remoto** via `advpls` (TDS-LS) na porta TCP de build; `appsrvlinux -compile` local falha porque o AppServer vivo trava o RPO.
+3. **Registrar + discovery** — reinicia o AppServer (a REST fica ~60s fora); confirma o BO via `GET /api/connectors/business-objects?q=<nome>` (`scripts/smartview_client.py`).
+4. **Montar o artefato** — Grid/Pivot/Report criados pela UI (Playwright, model sonnet) escolhendo o BO + campos; rebind via API **não** reconfigura colunas. Valida o render por `viewer-data` (Grid/Pivot) ou screenshot (Report).
+5. **Verificar de forma independente** — sempre confirmar o render por canal próprio. "Existir" ≠ "renderizar dado".
+
+**Pré-requisitos / gotchas**
+- **Report (PDF)** exige `libfontconfig1` + `libfreetype6` no container do `smartview-agent` (DevExpress/SkiaSharp); sem elas o `designer-model` dá HTTP 500. Grid e Pivot não precisam.
+- **Rede container↔container**: usar o nome do container do AppServer, nunca o hostname público (resolve para `127.0.1.1` → "Connection refused").
+- **advpls remoto** obrigatório (compilação local trava o RPO).
+- Ambiente (host, porta, env, namespace, credenciais, includes, UUID do connector) vem **por variável de ambiente** — ver `references/recipe.md`. Nunca hardcodar credenciais.
 
 ## Teammates
 
@@ -343,7 +355,7 @@ saveLocal=/patches/
 protheus/
 ├── .mcp.json                      # config do MCP (aponta para start.sh)
 ├── CLAUDE.md                      # convenções + regra de modelos + Agent Teams
-├── skills/                        # 17 skills especializadas
+├── skills/                        # 18 skills especializadas
 │   ├── init-project/              # setup do projeto
 │   ├── brainstorm/                # design aprovado
 │   ├── plan/                      # plano de implementação
@@ -363,7 +375,12 @@ protheus/
 │   ├── compile/                   # lint + compilação
 │   ├── test/                      # TIR E2E
 │   ├── migrate/                   # ADVPL → TLPP
-│   └── diagnose/                  # diagnóstico de erros
+│   ├── diagnose/                  # diagnóstico de erros
+│   └── smartview-relatorio/       # relatório SmartView (BO TLPP → Grid/Pivot/Report)
+│       ├── SKILL.md
+│       ├── scripts/               # generate_bo.py, compile_bo.sh, smartview_client.py
+│       ├── references/recipe.md   # receita do ambiente (env-driven)
+│       └── assets/VENDASIA.tlpp   # BO de exemplo (dados literais)
 ├── agents/                        # 5 teammates (Agent Teams)
 │   ├── protheus-implementer.md    # haiku — implementa tasks (worktree)
 │   ├── protheus-spec-reviewer.md  # sonnet — verifica spec
@@ -375,9 +392,7 @@ protheus/
 │   ├── advpl-encoding.sh          # auto-converts UTF-8 → CP-1252
 │   ├── advpl-lint.sh              # runs advpls appre
 │   └── pre-commit-encoding.sh     # git pre-commit hook
-    ├── start.sh                   # bootstrap (npm install + exec)
-    ├── connect-remote.js          # proxy stdio ↔ Streamable HTTP
-    └── package.json               # dependencias (@modelcontextprotocol/sdk)
+└── dist/tbc-mcp-proxy.mjs         # proxy remoto (stdio ↔ Streamable HTTP) — único MCP de KB
 ```
 
 ## Atualização

@@ -2,8 +2,6 @@
 
 Plugin Claude Code para desenvolvimento com **PO-UI** — biblioteca oficial de componentes Angular da TOTVS, usada em fronts Protheus, Fluig e outros produtos.
 
-> Instalação do kit completo DataAgile: [INSTALL.md](../INSTALL.md)
-
 ## O que entrega
 
 - **MCP server `@po-ui/mcp`** — 4 tools para consulta direta de componentes, docs e exemplos

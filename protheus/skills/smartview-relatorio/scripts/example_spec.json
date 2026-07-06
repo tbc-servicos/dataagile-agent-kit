@@ -1,0 +1,20 @@
+{
+  "namespace": "tbc.fsw.smartview.relatorioSaldosGesplan",
+  "className": "Gesplan_01",
+  "displayName": "Relatorio Saldos Gesplan",
+  "description": "Relatorio de Saldos originado pelo Gesplan",
+  "area": "_ESPECIFICO",
+  "team": "FSWTBC",
+  "country": "ALL",
+  "initialRelease": "12.1.2410",
+  "tables": ["SZT"],
+  "fields": [
+    {"campo": "ZT_ATIVO"},
+    {"campo": "ZT_NEWBCO"},
+    {"campo": "ZT_SDBRUT"}
+  ],
+  "params": [
+    {"id": "DATAINI", "label": "Data Posicao", "tipo": "date"},
+    {"id": "BCOINI",  "label": "De Banco",     "tipo": "string"}
+  ]
+}

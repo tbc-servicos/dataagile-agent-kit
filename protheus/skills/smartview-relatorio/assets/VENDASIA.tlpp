@@ -1,0 +1,51 @@
+#include "protheus.ch"
+#include "totvs.framework.treports.integratedprovider.th"
+
+namespace tbc.fsw.smartview.vendasia
+
+@totvsFrameworkTReportsIntegratedProvider(active=.T., team="FSWTBC", tables="", name="Vendas Demo IA", country="ALL", initialRelease="12.1.2410")
+class VendasDemoIA from totvs.framework.treports.integratedprovider.IntegratedProvider
+	public method new() as object
+	public method getData() as object
+	public method getSchema() as object
+endclass
+
+method new() class VendasDemoIA
+	_Super:new()
+	self:appendArea("_IA_DEMO")
+	self:setDisplayName("Vendas Demo IA")
+	self:setDescription("Relatorio demo gerado por IA - dados literais")
+return self
+
+method getData(nPage as numeric, oFilter as object) as object class VendasDemoIA
+	local aVend := {} as array
+	local jItems        as json
+	local nX     := 0   as numeric
+
+	aVend := { ;
+		{"Ana Souza"  , "Norte" , 15000.50, 12}, ;
+		{"Bruno Lima" , "Sul"   , 23400.00, 19}, ;
+		{"Carla Dias" , "Leste" ,  9800.75,  7}, ;
+		{"Diego Alves", "Oeste" , 31200.00, 25}, ;
+		{"Elisa Rocha", "Centro", 18750.25, 14}, ;
+		{"Fabio Melo" , "Norte" , 27600.00, 21}, ;
+		{"Gina Castro", "Sul"   , 12300.00,  9}  }
+
+	for nX := 1 to Len(aVend)
+		jItems := JsonObject():new()
+		jItems["VENDEDOR"] := aVend[nX][1]
+		jItems["REGIAO"]   := aVend[nX][2]
+		jItems["VALOR"]    := aVend[nX][3]
+		jItems["QTD"]      := aVend[nX][4]
+		self:oData:appendData(jItems)
+	next nX
+
+	self:setHasNext(.F.)
+return self:oData
+
+method getSchema() as object class VendasDemoIA
+	self:addProperty("VENDEDOR", "Vendedor", "string", "Nome do vendedor", "VENDEDOR")
+	self:addProperty("REGIAO"  , "Regiao"  , "string", "Regiao de vendas", "REGIAO")
+	self:addProperty("VALOR"   , "Valor"   , "number", "Valor de vendas" , "VALOR")
+	self:addProperty("QTD"     , "Qtd"     , "number", "Quantidade"      , "QTD")
+return self:oSchema

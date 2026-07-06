@@ -10,7 +10,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.cmd\" session-context",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/session-context.cjs\"",
             "timeout": 10
           }
         ]

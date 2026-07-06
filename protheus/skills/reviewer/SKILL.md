@@ -22,6 +22,24 @@ Use os resultados como **fonte primária** dos critérios de revisão. Só use c
 
 ---
 
+## Passo 1 — Quality gate SonarQube (G1–G5) 🔴 obrigatório
+
+Aplique como checklist canônico a referência [`references/sonarqube-rules-reference.md`](references/sonarqube-rules-reference.md) — o quality gate oficial da TOTVS. Para cada achado, cite o **ID da regra** e a **severidade**:
+
+- **G1 Segurança** — SQL injection (`CA2050/51` → `FWExecStatement`), `StaticCall` (`CA2022`), senha hardcoded (`CA2052`), atribuição a `__cUserID`/`cEmpAnt`.
+- **G2 Performance** — UI em transação (`CA1002`), `GetMV`/`SuperGetMV` em loop (`CA1003`).
+- **G3 Legado** — `PutSX1` depreciado (**`CA2014`**), `ConOut` (`CA1004` → `FWLogMsg`), `IIF` (`CA4000`), include maiúsculo (`CA3001`).
+- **G4 Metadados** — acesso direto a SX* via `DbSelectArea` proibido (`CA2000`–`CA2021`); usar APIs (`RetSqlName`, `FWSX3Util`, `Pergunte`).
+- **G5 Compilação** — charset **Windows-1252** (`CA0000`), I18N (`CA2016`).
+
+## Passo 2 — Guardrails anti-alucinação 🔴 obrigatório
+
+Verifique (e exija do `writer`/`migrate`) os dois passos de [`references/validacao-simbolos-e-completude.md`](references/validacao-simbolos-e-completude.md):
+1. **Validação de símbolos** — toda função/classe/método chamado existe na doc/MCP/código (anti `Cannot find method`).
+2. **Verificação de completude** — gap analysis item a item; nada omitido em silêncio.
+
+---
+
 ## Consulta de Conhecimento
 
 Se precisar de informação não disponível no MCP, consulte o RAG:

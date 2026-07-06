@@ -21,11 +21,16 @@ Para código com padrões TOTVS (notação húngara, BeginSQL, ExecBlock, MVC), 
 | Buscar referência de função/API TOTVS | `/protheus:specialist` |
 | Escrever SQL embarcado (BeginSQL/EndSQL) | `/protheus:sql` |
 | Migrar ADVPL procedural para TLPP OO | `/protheus:migrate` |
+| Gerar relatório SmartView/TReports (BO TLPP → Grid/Pivot/Report) | `/protheus:smartview-relatorio` |
+| Gerar tela MVC (ModelDef/ViewDef/MenuDef, Modelo 1 ou 3) | `/protheus:mvc-generator` |
+| Criar endpoint REST TLPP (@Get/@Post, padrão TTALK) | `/protheus:tlpp-rest-endpoint-generator` |
+| Montar query SQL segura (D_E_L_E_T_, filial, índices SIX) | `/protheus:query-builder` |
+| Consultar dicionário de dados (SX2/SX3/SIX/SX6…) | `/protheus:data-dictionary-lookup` |
 
 Custo de invocar a skill: baixo (alguns segundos).
 Custo de código fora do padrão: alto (retrabalho, code review, manutenção).
 
-> Ao adicionar/remover skill, atualizar também `protheus/hooks/session-context` (catálogo).
+> O catálogo do hook `session-context.cjs` é gerado dinamicamente do frontmatter das skills — nova skill aparece sozinha no contexto de sessão.
 
 ## Convenções obrigatórias (inegociáveis)
 
@@ -112,8 +117,7 @@ export CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=50
 **Utilitários:**
 `/protheus:patterns` · `/protheus:sql` · `/protheus:migrate` · `/protheus:diagnose`
 
-**Gerenciador de Projetos:**
-`/protheus:importar-gerenciador-projeto` → monta JSON para endpoint `/api/v1/projetos/importar` (UTBCA012)
+
 
 ## Teammates
 

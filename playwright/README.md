@@ -2,8 +2,6 @@
 
 Plugin com skill `playwright-cli` para setup, execução e geração de testes E2E com Playwright CLI, incluindo suporte ao fluxo test-agents (planner/generator/healer) integrado ao Claude Code.
 
-> Instalação do kit completo DataAgile: [INSTALL.md](../INSTALL.md)
-
 ## Pré-requisitos
 
 | Requisito | Versão mínima |

@@ -212,10 +212,10 @@ Após aprovação das evidências, gerar documento MIT010 (Análise de Negócio)
 8. **Conclusão:** APROVADO / REPROVADO / PENDENTE
 9. **Lições aprendidas:** o que foi registrado via feedback
 
-Para gerar o MIT010, usar a skill `confluence:mit-doc-extractor` se disponível,
+Para gerar o MIT010, usar a skill `/mit-docs:mit010` (plugin mit-docs) se disponível,
 ou gerar em Markdown/DOCX com referências às imagens.
 
-Formato de saída: perguntar ao usuário (Markdown, DOCX, Confluence).
+Formato de saída: perguntar ao usuário (Markdown, DOCX).
 
 ## Regras Críticas
 

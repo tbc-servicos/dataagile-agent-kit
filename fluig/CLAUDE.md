@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Plugin Claude Code para desenvolvimento **TOTVS Fluig** v2.0.5.
+Plugin Claude Code para desenvolvimento **TOTVS Fluig** (versão: ver `.claude-plugin/plugin.json`).
 
 ## Namespace
 

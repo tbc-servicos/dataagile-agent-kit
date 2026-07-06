@@ -1,0 +1,88 @@
+#include "protheus.ch"
+#include "msobject.ch"
+#include "totvs.framework.treports.integratedprovider.th"
+
+namespace {{ namespace }}
+
+@totvsFrameworkTReportsIntegratedProvider(active=.T., team="{{ team }}", tables="{{ tables|join(',') }}", name="{{ displayName }}", country="{{ country }}", initialRelease="{{ initialRelease }}")
+class {{ className }} from totvs.framework.treports.integratedprovider.IntegratedProvider
+    public data aCampos as array
+    public method new() as object
+    public method getData() as object
+    public method getSchema() as object
+endclass
+
+method new() class {{ className }}
+    _Super:new()
+    self:appendArea("{{ area }}")
+    self:setDisplayName("{{ displayName }}")
+    self:setDescription("{{ description }}")
+    ::aCampos := { {% for f in fields %}"{{ f.campo }}"{% if not loop.last %}, {% endif %}{% endfor %} }
+return self
+
+method getData(nPage as numeric, oFilter as object) as object class {{ className }}
+    local cQuery   := "" as character
+    local cAlias        as character
+    local jItems        as json
+    local nX       := 1  as numeric
+    local cCampo   := ""  as character
+    local jParams  := oFilter:getParameters() as json
+    local oSQL     := FwPreparedStatement():New()
+    local aParams  := {}
+
+    cQuery := "SELECT R_E_C_N_O_ "
+    For nX := 1 to Len(::aCampos)
+        cQuery += ","+AllTrim(::aCampos[nX])
+    Next
+    cQuery += " FROM "+ RetSQLName("{{ tables[0] }}") +" {{ tables[0] }} "
+    cQuery += " WHERE {{ tables[0] }}.D_E_L_E_T_ = "+ValToSql(" ")
+{%- for p in params %}
+    If !Empty(jParams["{{ p.id }}"][1])
+        cQuery += " AND ... ? "        // ajuste a coluna conforme a regra do parametro {{ p.id }}
+        aAdd(aParams, jParams["{{ p.id }}"][1])
+    EndIf
+{%- endfor %}
+    oSQL:SetQuery(cQuery)
+    For nX := 1 to Len(aParams)
+        oSql:SetString(nX, aParams[nX])
+    Next
+    cQuery := oSql:GetFixQuery()
+
+    cAlias := MPSysOpenQuery(cQuery)
+    while !(cAlias)->(Eof())
+        jItems := JsonObject():new()
+        for nX := 1 To Len(::aCampos)
+            cCampo := ::aCampos[nX]
+            if GetSX3Cache(cCampo,"X3_TIPO") == "D"
+                jItems[cCampo] := FWTimeStamp(5, StoD((cAlias)->&(cCampo)), "00:00:00")
+            Else
+                jItems[cCampo] := (cAlias)->&(cCampo)
+            EndIf
+        next nX
+        self:oData:appendData(jItems)
+        (cAlias)->(DBSkip())
+    enddo
+    self:setHasNext(.F.)
+    (cAlias)->(DBCloseArea())
+return self:oData
+
+method getSchema() as object class {{ className }}
+    Local nX as numeric
+    local cCampo := "" as character
+    For nX := 1 to Len(::aCampos)
+        cCampo := ::aCampos[nX]
+        self:addProperty(cCampo, GetSX3Cache(cCampo,"X3_TITULO"), fConverteTipo(GetSX3Cache(cCampo,"X3_TIPO")), GetSX3Cache(cCampo,"X3_TITULO"), cCampo)
+    Next
+{%- for p in params %}
+    self:addParameter("{{ p.id }}", "{{ p.label }}", "{{ p.tipo }}", .F., , , .F., , , , , , , )
+{%- endfor %}
+return self:oSchema
+
+static function fConverteTipo(cTipo as character) as character
+    DO CASE
+    CASE cTipo = "C" ; cTipo := 'string'
+    CASE cTipo = "N" ; cTipo := 'number'
+    CASE cTipo = "D" ; cTipo := 'date'
+    OTHERWISE        ; cTipo := 'string'
+    ENDCASE
+return cTipo

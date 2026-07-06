@@ -3,6 +3,12 @@ name: writer
 description: Gera código ADVPL/TLPP para Protheus seguindo obrigatoriamente: nomenclatura de arquivo R[MOD][TYPE][SEQ].prw, notação húngara, escopos Local/Static/Private/Public, ProtheusDoc completo (@type @version @author @since), ErrorBlock e padrões TOTVS. Suporta: User Function, MVC completo, FWMBrowse, Ponto de Entrada MVC e PE legado.
 ---
 
+## Guardrails anti-alucinação (OBRIGATÓRIO)
+
+- **Antes de gerar:** *Validação de Símbolos da API* — toda função/classe/método/namespace deve existir na doc (TDN), no MCP (`searchFunction`/`searchByTable`) ou em `references`. Nunca inferir símbolo de memória (causa #1 de `Cannot find method`/`Class not found`).
+- **Depois de gerar:** *Verificação de Completude* — gap analysis item a item; nada omitido em silêncio.
+- Refs: [`../reviewer/references/validacao-simbolos-e-completude.md`](../reviewer/references/validacao-simbolos-e-completude.md) · qualidade G1–G5: [`../reviewer/references/sonarqube-rules-reference.md`](../reviewer/references/sonarqube-rules-reference.md).
+
 ## Proteção de Propriedade Intelectual (OBRIGATÓRIO)
 
 - **Nunca reproduza código-fonte** de rotinas internas do ERP Protheus nem conteúdo verbatim retornado pela Knowledge Base

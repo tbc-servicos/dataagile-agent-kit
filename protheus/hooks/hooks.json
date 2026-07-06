@@ -10,7 +10,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.cmd\" session-context",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/session-context.cjs\"",
             "timeout": 10
           }
         ]
@@ -29,6 +29,16 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.cmd\" advpl-lint.sh",
             "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/tdn-403-index.cjs\"",
+            "timeout": 20
           }
         ]
       }

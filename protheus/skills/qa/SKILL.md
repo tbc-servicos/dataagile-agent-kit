@@ -1,10 +1,12 @@
 ---
 name: qa
-description: Testes TIR E2E contra ambiente Protheus compilado. Aciona protheus:test para gerar/executar scripts TIR e analisa qualidade. Se falhas encontradas, retorna para /protheus:implement. Acione após /protheus:deploy. Próximo passo: /protheus:verify.
+description: Gate de QA E2E contra ambiente Protheus compilado. Aciona /protheus:test-web (Playwright — visão real + evidências MIT010) e analisa qualidade. Se falhas, retorna para /protheus:implement. Acione após /protheus:deploy. Próximo passo: /protheus:verify.
 disable-model-invocation: true
 ---
 
 Você vai conduzir testes E2E e análise de qualidade contra os artefatos compilados no ambiente Protheus.
+
+> **Engine de E2E: Playwright** (`/protheus:test-web`) — visão computacional real (screenshots), validação visual e geração de evidência/MIT010. Para suíte de **regressão CI re-executável sem LLM**, gere opcionalmente um script TIR a partir da sessão Playwright validada (ver nota no fim).
 
 ## HARD GATE
 
@@ -14,29 +16,28 @@ Não inicie testes se:
 
 Verifique que o deploy do passo anterior foi concluído antes de prosseguir.
 
-## Passo 1 — Executar testes TIR E2E
+## Passo 1 — Executar testes E2E (Playwright)
 
-Acione a skill `/protheus:test` solicitando execução dos testes E2E contra o ambiente compilado:
+Acione a skill `/protheus:test-web` solicitando execução dos testes E2E contra o ambiente compilado:
 
 ```
-Execute os testes TIR E2E dos artefatos [nomes] contra o ambiente [URL Webapp].
+Execute os testes E2E (Playwright) dos artefatos [nomes] contra o ambiente [URL Webapp].
 Módulo: [SIGAXXX]
 Fluxos: [listar fluxos críticos do design]
 Use a configuração do CLAUDE.md para URL, módulo, grupo e filial.
+Colete evidências (screenshots) e gere o MIT010.
 ```
 
-Os testes TIR devem validar:
+Os testes devem validar:
 - Inclusão, alteração e exclusão de registros
 - Regras de negócio críticas identificadas no design
 - Integridade do fluxo completo
 
-**Se os testes TIR falharem:** analise screenshots e logs, corrija o artefato, recompile via `/protheus:deploy` e retorne para este passo.
+**Se os testes falharem:** analise screenshots e logs, corrija o artefato, recompile via `/protheus:deploy` e retorne para este passo.
 
 ## Passo 2 — Análise de qualidade
 
-Após testes TIR passando, revise a qualidade dos artefatos:
-
-Consulte o MCP para checklist de qualidade:
+Após testes passando, revise a qualidade dos artefatos. Use o `/protheus:reviewer` (quality gate SonarQube G1–G5) e o MCP:
 ```
 searchKnowledge({ skill: "protheus-reviewer", keyword: "checklist revisao" })
 searchKnowledge({ skill: "protheus-patterns", keyword: "regras criticas" })
@@ -70,8 +71,8 @@ Apresente os resultados ao usuário e prossiga para o próximo passo.
 ```
 QA concluído.
 
-Testes TIR: [PASSANDO] — [N] cenários
-Análise de qualidade: [APROVADO / APROVADO COM RESSALVAS]
+Testes E2E (Playwright): [PASSANDO] — [N] cenários · evidência MIT010 gerada
+Análise de qualidade (SonarQube G1–G5): [APROVADO / APROVADO COM RESSALVAS]
 
 Riscos identificados:
 - Altos: N
@@ -83,11 +84,15 @@ Próximo passo: /protheus:verify
 
 ## Regras obrigatórias
 
-- Testes TIR sempre contra ambiente com RPO atualizado (nunca sem compilação)
-- Análise de qualidade sempre após testes TIR
+- E2E sempre contra ambiente com RPO atualizado (nunca sem compilação)
+- Análise de qualidade sempre após os testes E2E
 - Riscos ALTOS obrigam retorno para `/protheus:implement` — não pule
 - Riscos MÉDIO/BAIXO são documentados mas não bloqueiam
 - O próximo passo obrigatório é `/protheus:verify` — gate final antes de produção
+
+## Nota — regressão CI (opcional, TIR)
+
+O Playwright é o caminho de validação/evidência. Quando o projeto exigir **suíte de regressão re-executável em CI sem LLM**, gere um script TIR (Python) a partir dos fluxos já validados na sessão Playwright — o melhor dos dois: validação visual + regressão determinística.
 
 ---
 

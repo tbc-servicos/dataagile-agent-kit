@@ -1,8 +1,6 @@
-# Conteúdo de terceiros — atribuição (MIT)
+# Conteúdo de terceiros — atribuição
 
-As skills AdvPL/TLPP abaixo foram **portadas de** [`totvs/engpro-advpl-tlpp-skills`](https://github.com/totvs/engpro-advpl-tlpp-skills) (Engenharia Protheus TOTVS), licença **MIT** — uso permitido com atribuição. Conteúdo original em inglês; localização PT-BR é follow-up.
-
-Skills: advpl-tlpp-sdd, code-review, context-map, create-implementation-plan, data-dictionary-lookup, documentation-writer, entry-point-designer, fwrest-client-generator, mvc-generator, query-builder, refactor, refactor-method-complexity-reduce, sql-code-review, sql-optimization, tir-test-generator, tlpp-rest-endpoint-generator, utf8-to-cp1252-conversion + references/.
+As skills `mvc-generator`, `tlpp-rest-endpoint-generator`, `query-builder` e `data-dictionary-lookup` foram **portadas de** [`totvs/engpro-advpl-tlpp-skills`](https://github.com/totvs/engpro-advpl-tlpp-skills) (Engenharia Protheus TOTVS), sob licença **MIT**. Conteúdo original em inglês; localização PT-BR é follow-up.
 
 ## Licença original (MIT)
 

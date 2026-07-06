@@ -1,12 +1,6 @@
-# Fluig Plugin v2.0.5 — Claude Code / Codex / Gemini
+# Fluig Plugin v2.0.5 — Claude Code
 
-Plugin para desenvolvimento na plataforma **TOTVS Fluig** com ciclo completo guiado por skills e execução via Agent Teams.
-
-> **Instalação rápida (todos os CLIs):**
-> ```bash
-> npx github:tbc-servicos/dataagile-agent-kit
-> ```
-> Guia completo: [INSTALL.md](../INSTALL.md)
+Plugin Claude Code para desenvolvimento na plataforma **TOTVS Fluig** com ciclo completo guiado por skills e execução via Agent Teams.
 
 ## O que o plugin entrega
 
@@ -18,7 +12,7 @@ Plugin para desenvolvimento na plataforma **TOTVS Fluig** com ciclo completo gui
 - **Base de conhecimento MCP:** consulta automática de padrões, APIs e referências Fluig
 - **Estratégia anti-compactação:** 4 camadas para preservar contexto em sessões longas
 
-## Instalação (Claude Code)
+## Instalação
 
 ### Opção 1: `--plugin-dir` (desenvolvimento local)
 ```bash
@@ -33,14 +27,6 @@ claude --plugin-dir /path/to/fluig-plugin
 # Instalar o plugin
 /plugin install fluig@claude-skills-dataagile
 ```
-
-### Codex CLI / Gemini CLI
-
-```bash
-npx github:tbc-servicos/dataagile-agent-kit
-```
-
-O instalador detecta o CLI instalado, pede a API key e configura tudo automaticamente. Ver [INSTALL.md](../INSTALL.md) para todos os detalhes.
 
 ### Habilitar Agent Teams (recomendado)
 
