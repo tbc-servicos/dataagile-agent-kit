@@ -1,11 +1,11 @@
 {
-  "name": "claude-skills-tbc",
+  "name": "claude-skills-dataagile",
   "owner": {
-    "name": "TBC - Time de Desenvolvimento",
-    "email": "dev@tbc.com.br"
+    "name": "DataAgile",
+    "email": "dev@dataagile.com.br"
   },
   "metadata": {
-    "description": "Plugins Claude Code para desenvolvimento TOTVS (Fluig, Protheus, documentação MIT) e ferramentas de produtividade — TBC",
+    "description": "Plugins Claude Code para desenvolvimento TOTVS (Protheus, Fluig, PO-UI, Playwright) — DataAgile",
     "pluginRoot": "."
   },
   "plugins": [
@@ -15,7 +15,7 @@
       "description": "Plugin para desenvolvimento TOTVS Fluig — ciclo completo: design (brainstorm), scaffolding (widget/dataset/form/workflow), revisão estática + testes (review) e deploy (verify).",
       "version": "2.0.7",
       "author": {
-        "name": "TBC - Time de Desenvolvimento"
+        "name": "DataAgile"
       },
       "category": "development",
       "tags": [
@@ -32,7 +32,7 @@
       "description": "Plugin para desenvolvimento TOTVS Protheus — ciclo completo: brainstorm → plan → implement (Agent Teams) → deploy TDS-CLI → qa E2E → verify, geradores MVC/REST/query, dicionário de dados, SmartView/TReports e Knowledge Base remota (155k+ registros).",
       "version": "2.11.0",
       "author": {
-        "name": "TBC - Time de Desenvolvimento"
+        "name": "DataAgile"
       },
       "category": "development",
       "tags": [
@@ -49,7 +49,7 @@
       "description": "Plugin para desenvolvimento com PO-UI (TOTVS Angular components). Expõe MCP server @po-ui/mcp com 4 tools (list_components, get_component_docs, search_docs, get_guide) + skill com convenções de uso.",
       "version": "1.0.0",
       "author": {
-        "name": "TBC - Time de Desenvolvimento"
+        "name": "DataAgile"
       },
       "category": "development",
       "tags": [
@@ -66,7 +66,7 @@
       "description": "Plugin para testes E2E com Playwright CLI — setup, execução, test-agents (planner/generator/healer) e autenticação via storageState.",
       "version": "1.0.0",
       "author": {
-        "name": "TBC - Time de Desenvolvimento"
+        "name": "DataAgile"
       },
       "category": "testing",
       "tags": [
