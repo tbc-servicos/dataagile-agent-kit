@@ -58,6 +58,7 @@ docs/plans/material_treinamento/*.pdf
 # Repo metadata
 !/.claude-plugin/
 !/README.md
+!/FLUXO-DE-TRABALHO.md
 !/CHANGELOG.md
 !/ONBOARDING.md
 !/LICENSE
