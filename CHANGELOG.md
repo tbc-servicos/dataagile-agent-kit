@@ -4,6 +4,14 @@ Histórico das versões públicas do `dataagile-agent-kit`.
 
 ---
 
+## [2.4.0] — 2026-07-12
+
+### Adicionado
+- **`/protheus:clean-architecture`** — Clean Architecture (Robert Martin) aplicada a ADVPL/TLPP: regra de dependência, camadas → artefatos Protheus (MVC/REST/PE/ExecAuto), SOLID em TLPP OO com before/after, refatoração guiada do endpoint-monólito com checklist estrutural de review. SKILL.md + 3 references. (protheus 2.12.0)
+- **`/protheus:ddd`** — Implementing DDD (Vaughn Vernon) aplicado a Protheus: linguagem ubíqua (glossário ↔ dicionário), bounded contexts (1 = 1 namespace TLPP), ACL sobre ExecAuto/integrações, agregado como fronteira transacional, exemplo de modelagem ponta a ponta. SKILL.md + 3 references. (protheus 2.12.0)
+- **`/fluig:clean-architecture`** — camadas no widget Angular + PO-UI (DI do Angular = DIP), god-dataset refatorado, eventos de workflow como adaptadores. **Sem versão fixa de Angular** — consulta o MCP oficial do Angular CLI (`npx -y @angular/cli mcp`) e o `@po-ui/mcp` antes de gerar. SKILL.md + 2 references. (fluig 2.1.0)
+- **`/fluig:ddd`** — o processo BPM como bounded context, documento do processo como agregado (client valida UX, evento server é autoridade), falha de integração modelada; compatível com Fluig Voyager 2.0. SKILL.md + 2 references. (fluig 2.1.0)
+
 ## [2.3.0] — 2026-06-28
 
 ### Adicionado
