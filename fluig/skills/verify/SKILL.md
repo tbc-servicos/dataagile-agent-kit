@@ -8,6 +8,9 @@ Você vai conduzir o gate final antes de declarar um artefato Fluig pronto para 
 
 ## HARD GATE
 
+- **Leia `docs/plans/<plan>.gates.json`** e confirme: todas as chaves `ok`. O arquivo é a fonte de
+  verdade — não confie em afirmação da conversa.
+
 Não acione o deploy final e não declare o artefato "pronto" sem completar o checklist abaixo com todas as respostas positivas.
 
 ## Passo 1 — Ler contexto do projeto

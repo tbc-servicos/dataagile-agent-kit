@@ -114,7 +114,7 @@ Para iniciar o desenvolvimento:
   /protheus:plan       → criar plano de implementação
   /protheus:implement  → executar com teammates (haiku dev + sonnet review)
   /protheus:deploy     → lint + compilação AppServer + patch .ptm
-  /protheus:qa         → testes TIR E2E + análise qualidade
+  /protheus:qa         → testes E2E Playwright + análise qualidade
   /protheus:verify     → checklist TOTVS + deploy produção
 
 Atalho para mudanças rápidas:

@@ -8,6 +8,9 @@ Você vai conduzir testes de integração e QA contra os artefatos deployados no
 
 ## HARD GATE
 
+- **Leia `docs/plans/<plan>.gates.json`** e confirme: `deploy.status=ok` e `tests_unit.status=ok`. O arquivo é a fonte de
+  verdade — não confie em afirmação da conversa.
+
 Não inicie testes de QA se:
 - O deploy não foi realizado com sucesso (não há servidor com os artefatos)
 - O servidor não está acessível ou os artefatos não estão publicados
@@ -20,7 +23,9 @@ Acione a skill `/fluig:test` solicitando execução dos testes E2E contra o serv
 
 ```
 Execute os testes Playwright E2E dos artefatos [nomes] contra o servidor [URL do deploy anterior].
-Não gere novos testes — execute os existentes.
+Se NÃO existirem testes E2E para os artefatos da task: **PARE e gere-os via
+`/fluig:test`** (com aprovação do roteiro) antes de prosseguir — QA sem E2E é
+reprovação automática. Se existirem, execute os existentes (não duplique).
 Use FLUIG_BASE_URL apontando para o servidor (nunca localhost).
 ```
 

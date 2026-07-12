@@ -31,6 +31,14 @@ Se Agent Teams não estiver habilitado, informe o usuário e caia no fallback (s
 | fluig-reviewer | **sonnet** | Qualidade de código Fluig |
 | Opus | **NUNCA automático** | Se complexo, sugerir ao dev — decisão é dele |
 
+
+## Artefato de estado dos gates (gates.json)
+
+Todo veredito de gate é GRAVADO em `docs/plans/<plan>.gates.json` — a skill seguinte LÊ o
+arquivo em vez de confiar na memória da conversa. Atualize a chave do estágio ao concluí-lo:
+`{ "tests_unit": {...}, "spec_review": "ok", "code_review": "ok", "lint": "ok", "deploy": {...}, "qa_e2e": {...} }`.
+Pipeline retomável: sessão nova lê o arquivo e continua de onde parou.
+
 ## Estágio 0 — Criar Agent Team
 
 Crie o time de implementação:
@@ -79,6 +87,17 @@ Aguarde resposta. Possíveis status:
 - **DONE** — task implementada, testes passam
 - **NEEDS_CONTEXT** — responda via SendMessage com informação solicitada
 - **BLOCKED** — investigue, forneça contexto ou escale ao usuário
+
+### 2a-gate. Testes e cobertura (executado pelo ORQUESTRADOR)
+
+Antes de despachar reviews, **você mesmo** valida (self-report do implementer NÃO aprova):
+
+```bash
+npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+```
+
+Verde é o critério mecânico (com o karma.conf do template, cobertura < 70% já FALHA).
+Vermelho → devolva ao implementer; **máximo 3 ciclos** — no 3º, pare e reporte ao dev.
 
 ### 2b. Dispatch para fluig-spec-reviewer (sonnet)
 

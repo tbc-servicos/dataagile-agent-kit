@@ -11,7 +11,10 @@ FILE=$(echo "$INPUT" | jq -r '.tool_input.file_path // .tool_input.path // ""' 2
 
 # Localizar advpls: PATH global, npm global, ou local no projeto
 find_advpls() {
-  if command -v advpls &>/dev/null; then echo "advpls"; return; fi
+  # command -v devolve o caminho absoluto — necessário porque o chamador valida
+  # com [[ -x ]], que sobre um nome puro testaria um arquivo no CWD (bug real:
+  # com advpls no PATH o hook saía com "não encontrado" e o gate virava no-op)
+  if command -v advpls &>/dev/null; then command -v advpls; return; fi
   local bin
   bin=$(node -e "try{console.log(require('@totvs/tds-ls'))}catch(e){}" 2>/dev/null)
   [[ -n "$bin" && -x "$bin" ]] && echo "$bin" && return
@@ -55,10 +58,13 @@ done
 RAW=$("$ADVPLS" appre "$FILE" "${INCLUDE_FLAGS[@]}" 2>/dev/null)
 [[ -z "$RAW" ]] && echo "✅ ADVPL LINT: $(basename "$FILE") ok" && exit 0
 
-# Parsear JSON e categorizar mensagens
-node -e "
-const raw = \`$RAW\`.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-const file = '$FILE';
+# Parsear JSON e categorizar mensagens.
+# SEGURANÇA: RAW (saída do advpls, que ecoa trechos do fonte do usuário) e FILE
+# entram no Node via AMBIENTE — nunca interpolados no código JS. Interpolar
+# permitiria injeção de código por um fonte contendo ` ou ${...} (ou path com ').
+ADVPL_LINT_RAW="$RAW" ADVPL_LINT_FILE="$FILE" node -e "
+const raw = String(process.env.ADVPL_LINT_RAW || '').replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+const file = String(process.env.ADVPL_LINT_FILE || '');
 const basename = file.split('/').pop();
 
 // Warnings que devem ser tratados como ERROS (bloqueantes)
@@ -91,7 +97,7 @@ try {
   const warnInfo = [];      // tipo != 0, apenas avisos
 
   // Formato da mensagem: 'arquivo.prw(linha) texto da mensagem'
-  const lineRe = /\\(\\d+\\)/;
+  const lineRe = /\\((\\d+)\\)/;
 
   for (const [msg, type] of Object.entries(msgs)) {
     const lineMatch = msg.match(lineRe);
@@ -140,7 +146,9 @@ try {
   if (totalIssues > 0) {
     lines.push('');
     lines.push('Corrija os problemas acima antes de compilar.');
-    console.log(lines.join('\n'));
+    // exit 2 (bloqueante): o Claude Code entrega o STDERR ao modelo — o
+    // relatório PRECISA ir para lá (em stdout o Claude era bloqueado às cegas)
+    console.error(lines.join('\n'));
     process.exit(2); // bloquear o Claude
   } else {
     console.log(lines.join('\n'));
@@ -153,4 +161,4 @@ try {
   console.log(raw.substring(0, 300));
   process.exit(0);
 }
-" 2>/dev/null
+"

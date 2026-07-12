@@ -165,7 +165,7 @@ Próximo passo:
 ```
 
 > O `protheus:plan` irá decompor o design em tasks tipadas para ADVPL
-> e preparar o plano para os teammates de implementação, revisão, compilação e testes TIR.
+> e preparar o plano para os teammates de implementação, revisão, compilação e testes E2E Playwright.
 
 ---
 

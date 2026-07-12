@@ -10,6 +10,12 @@ metadata:
   category: Testing
 ---
 
+> ⚠️ **O TIR não é a forma oficial de testar neste plugin** — ele não tem visão computacional.
+> A engine oficial de E2E é o **Playwright** (`/protheus:test-web`, com screenshots e validação
+> visual). Use esta skill apenas para gerar suíte de **regressão CI re-executável sem LLM**,
+> derivada de uma sessão Playwright já validada (ver `/protheus:qa`).
+
+
 # Protheus TIR Test Generator
 
 ## Overview

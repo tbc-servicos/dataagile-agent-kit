@@ -66,7 +66,7 @@ searchFluigPatterns({ category: "naming" })
 
 #### 4c. Qualidade
 - [ ] Testes passando?
-- [ ] Coverage adequada (> 80% para código novo)?
+- [ ] Cobertura na regra única: global ≥ 70% (gate do karma.conf) e ~80% no código novo?
 - [ ] Sem código comentado/temporário?
 - [ ] Mensagens ao usuário em português?
 - [ ] Sem vulnerabilidades óbvias (XSS, injection, etc)?

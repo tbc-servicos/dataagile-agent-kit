@@ -137,7 +137,7 @@ PRÓXIMOS PASSOS:
 ## Checklist de Entrega
 
 - [ ] Testes passando (Karma)
-- [ ] Coverage > 80% para código novo
+- [ ] Cobertura na regra única: global ≥ 70% (gate do karma.conf) e ~80% no código novo
 - [ ] Sem warnings no build
 - [ ] Sem `alert()` ou `console.log()` permanente
 - [ ] Todas as variáveis com `const`/`let`

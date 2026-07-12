@@ -39,7 +39,7 @@ Acione a skill `/fluig:test` solicitando execução dos testes unitários:
 Se não houver testes unitários ainda:
 > "Gere e execute os testes unitários Jasmine/Karma para o artefato [nome]."
 
-Threshold mínimo: **70% de cobertura** (configurado no karma.conf.js).
+Threshold mínimo: **70% global** (gate mecânico via `coverageReporter.check`; alvo de 80% no código novo). **Se o projeto não tem `karma.conf.js` com check:** copie `skills/test/assets/karma.conf.template.js` — sem ele `npm test` passa sem medir e o threshold é ficção.
 
 **Se os testes unitários falharem:** corrija o código ou os testes e volte ao Passo 1.
 

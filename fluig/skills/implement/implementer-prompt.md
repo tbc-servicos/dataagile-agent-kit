@@ -54,7 +54,7 @@ npm run lint
 - Teste falhou inicialmente ✅
 - Implementação realizada ✅
 - Teste passa ✅
-- Cobertura testada (mín 70%) ✅
+- Cobertura na regra única: global ≥ 70% (gate mecânico) / alvo 80% no código novo ✅
 - Commit feito com mensagem esperada ✅
 - Código segue Fluig best practices ✅
 

@@ -13,7 +13,7 @@
       "name": "fluig",
       "source": "./fluig",
       "description": "Plugin para desenvolvimento TOTVS Fluig — ciclo completo: design (brainstorm), scaffolding (widget/dataset/form/workflow), revisão estática + testes (review) e deploy (verify).",
-      "version": "2.0.7",
+      "version": "2.1.0",
       "author": {
         "name": "DataAgile"
       },
@@ -30,7 +30,7 @@
       "name": "protheus",
       "source": "./protheus",
       "description": "Plugin para desenvolvimento TOTVS Protheus — ciclo completo: brainstorm → plan → implement (Agent Teams) → deploy TDS-CLI → qa E2E → verify, geradores MVC/REST/query, dicionário de dados, SmartView/TReports e Knowledge Base remota (155k+ registros).",
-      "version": "2.11.0",
+      "version": "2.12.0",
       "author": {
         "name": "DataAgile"
       },
