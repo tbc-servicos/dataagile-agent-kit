@@ -6,6 +6,18 @@ Histórico das versões públicas do `dataagile-agent-kit`.
 
 ## [2.4.0] — 2026-07-12
 
+### Corrigido/Endurecido (mesma release)
+- **Playwright é a engine oficial de E2E** (visão computacional); aviso no topo do
+  `tir-test-generator` (TIR = só regressão CI opcional); nomenclatura "testes TIR"
+  substituída em plan/verify/CLAUDE.md/init-project/brainstorm/plugin.json.
+- **`advpl-lint.sh`:** injeção shell→JS neutralizada (dados via ambiente); gate deixou
+  de ser no-op com advpls no PATH; relatório bloqueante via stderr; linha correta.
+- **`fluig-lint.sh`:** -prune de node_modules, tsc incremental, npx --no-install.
+- **Gates mecânicos:** `karma.conf.template.js` (cobertura <70% falha o `npm test`),
+  gate do orquestrador no implement, `gates.json` lido nos HARD GATEs de
+  deploy/qa/verify, QA com critério verificável por TC e lista fechada de ALTO.
+- **Testes novos:** `tests/hooks/` (15 asserts, payloads maliciosos reais).
+
 ### Adicionado
 - **`/protheus:clean-architecture`** — Clean Architecture (Robert Martin) aplicada a ADVPL/TLPP: regra de dependência, camadas → artefatos Protheus (MVC/REST/PE/ExecAuto), SOLID em TLPP OO com before/after, refatoração guiada do endpoint-monólito com checklist estrutural de review. SKILL.md + 3 references. (protheus 2.12.0)
 - **`/protheus:ddd`** — Implementing DDD (Vaughn Vernon) aplicado a Protheus: linguagem ubíqua (glossário ↔ dicionário), bounded contexts (1 = 1 namespace TLPP), ACL sobre ExecAuto/integrações, agregado como fronteira transacional, exemplo de modelagem ponta a ponta. SKILL.md + 3 references. (protheus 2.12.0)
