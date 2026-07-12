@@ -46,10 +46,20 @@ Estrutura esperada, configuração karma.conf.js com cobertura Istanbul, templat
 
 Consulte a referência completa via MCP:
 ```
-search_knowledge({ skill: "fluig-test", keyword: "unit tests" })
+searchKnowledge({ skill: "fluig-test", keyword: "unit tests" })
 ```
 
 ---
+
+## Configuração de cobertura (obrigatória)
+
+Se o projeto **não tem** `karma.conf.js` com `coverageReporter.check`, copie o template do
+plugin — cobertura vira **gate mecânico** (`npm test` falha sozinho abaixo de 70%):
+
+```bash
+cp <plugin>/skills/test/assets/karma.conf.template.js ./karma.conf.js
+npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+```
 
 ## E2E Tests — Playwright
 

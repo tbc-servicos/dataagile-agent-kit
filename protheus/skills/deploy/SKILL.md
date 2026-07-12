@@ -8,6 +8,9 @@ Você vai conduzir a compilação e deploy de artefatos ADVPL/TLPP no AppServer 
 
 ## HARD GATE
 
+- **Leia `docs/plans/<plan>.gates.json`** e confirme: `tests_unit.status=ok`, reviews `ok`. O arquivo é a fonte de
+  verdade — não confie em afirmação da conversa.
+
 Não inicie a compilação se as tarefas de implementação não estiverem concluídas e aprovadas nos reviews.
 
 ## Passo 1 — Ler contexto do projeto

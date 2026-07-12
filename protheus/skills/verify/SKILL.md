@@ -8,6 +8,9 @@ Você vai conduzir a verificação final antes de liberar os artefatos para prod
 
 ## HARD GATE
 
+- **Leia `docs/plans/<plan>.gates.json`** e confirme: todas as chaves `ok`. O arquivo é a fonte de
+  verdade — não confie em afirmação da conversa.
+
 Não inicie a verificação se:
 - QA não foi concluído com sucesso
 - Existem riscos ALTOS não resolvidos

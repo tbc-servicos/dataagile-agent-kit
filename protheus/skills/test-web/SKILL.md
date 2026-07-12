@@ -63,6 +63,9 @@ Apresentar ao team leader:
 - **Ação:** <o que fazer>
 - **Dados:** <valores a preencher>
 - **Resultado esperado:** <o que deve acontecer>
+- **Critério VERIFICÁVEL:** <texto literal esperado no snapshot, registro consultável
+  (tabela+chave) ou mensagem exata — PASSOU exige o critério ENCONTRADO; "a tela
+  parece certa" NÃO é critério>
 
 ### TC02 — <descrição>
 ...

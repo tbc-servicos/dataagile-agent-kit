@@ -8,6 +8,9 @@ Você vai conduzir o deploy de artefatos Fluig no servidor de teste de forma seg
 
 ## HARD GATE
 
+- **Leia `docs/plans/<plan>.gates.json`** e confirme: `tests_unit.status=ok`, reviews `ok`. O arquivo é a fonte de
+  verdade — não confie em afirmação da conversa.
+
 Não inicie o deploy se as tarefas de implementação não estiverem concluídas. Verifique o status das tarefas antes de prosseguir.
 
 ## Passo 1 — Ler contexto do projeto

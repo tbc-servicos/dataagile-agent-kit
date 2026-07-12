@@ -32,6 +32,14 @@ Se Agent Teams não estiver habilitado, informe o usuário e caia no fallback (E
 
 ---
 
+
+## Artefato de estado dos gates (gates.json)
+
+Todo veredito de gate é GRAVADO em `docs/plans/<plan>.gates.json` — a skill seguinte LÊ o
+arquivo em vez de confiar na memória da conversa. Atualize a chave do estágio ao concluí-lo:
+`{ "tests_unit": {...}, "spec_review": "ok", "code_review": "ok", "lint": "ok", "deploy": {...}, "qa_e2e": {...} }`.
+Pipeline retomável: sessão nova lê o arquivo e continua de onde parou.
+
 ## Estágio 0 — Criar Agent Team
 
 Crie o time de implementação:

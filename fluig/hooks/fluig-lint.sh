@@ -59,20 +59,20 @@ ERRORS=""
 
 # 1. Prettier — auto-fix silencioso (não bloqueia)
 if command -v npx &>/dev/null; then
-  npx --yes prettier --write "$FILE_PATH" &>/dev/null || true
+  npx --no-install prettier --write "$FILE_PATH" &>/dev/null || true
 fi
 
 # 2. ESLint — bloqueia se erros (só se config existir no projeto)
 if command -v npx &>/dev/null; then
-  ESLINT_CONFIG=$(find "$CWD" -maxdepth 4 \( \
+  ESLINT_CONFIG=$(find "$CWD" -maxdepth 4 -name node_modules -prune -o \( \
     -name "eslint.config.js" -o -name "eslint.config.mjs" -o \
     -name ".eslintrc.js" -o -name ".eslintrc.cjs" -o \
     -name ".eslintrc.json" -o -name ".eslintrc.yml" -o \
     -name ".eslintrc" \
-  \) 2>/dev/null | head -1)
+  \) -print 2>/dev/null | head -1)
   if [[ -n "$ESLINT_CONFIG" ]]; then
     ESLINT_EXIT=0
-    ESLINT_OUT=$(npx --yes eslint "$FILE_PATH" 2>&1) || ESLINT_EXIT=$?
+    ESLINT_OUT=$(npx --no-install eslint "$FILE_PATH" 2>&1) || ESLINT_EXIT=$?
     if [[ $ESLINT_EXIT -ne 0 ]]; then
       ERRORS+="ESLint:\n${ESLINT_OUT}\n"
     fi
@@ -81,9 +81,12 @@ fi
 
 # 3. tsc --noEmit — bloqueia se error TS (só para .ts, não .spec.ts)
 if [[ "$EXT" == "ts" ]] && [[ "$FILE_PATH" != *.spec.ts ]]; then
-  TSCONFIG=$(find "$CWD" -maxdepth 4 -name "tsconfig.json" 2>/dev/null | head -1)
+  TSCONFIG=$(find "$CWD" -maxdepth 4 -name node_modules -prune -o -name "tsconfig.json" -print 2>/dev/null | head -1)
   if [[ -n "$TSCONFIG" ]] && command -v npx &>/dev/null; then
-    TSC_OUT=$(cd "$CWD" && npx --yes tsc --noEmit 2>&1) || true
+    # --incremental: 1ª execução compila o projeto, seguintes só o que mudou —
+    # tsc full a cada Write/Edit estourava o timeout de 60s em Angular real.
+    # --no-install: hook não deve baixar pacote da rede; sem tsc local, pula.
+    TSC_OUT=$(cd "$(dirname "$TSCONFIG")" && npx --no-install tsc --noEmit --incremental --tsBuildInfoFile .tsbuildinfo.fluig-lint 2>&1) || true
     if echo "$TSC_OUT" | grep -qE "error TS"; then
       ERRORS+="TypeScript:\n${TSC_OUT}\n"
     fi

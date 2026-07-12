@@ -10,6 +10,9 @@ Você vai conduzir testes E2E e análise de qualidade contra os artefatos compil
 
 ## HARD GATE
 
+- **Leia `docs/plans/<plan>.gates.json`** e confirme: `deploy.status=ok` e `tests_unit.status=ok`. O arquivo é a fonte de
+  verdade — não confie em afirmação da conversa.
+
 Não inicie testes se:
 - A compilação não foi concluída com sucesso (patch não aplicado)
 - O ambiente não está acessível com o RPO atualizado
@@ -43,7 +46,11 @@ searchKnowledge({ skill: "protheus-reviewer", keyword: "checklist revisao" })
 searchKnowledge({ skill: "protheus-patterns", keyword: "regras criticas" })
 ```
 
-Classifique riscos como ALTO, MÉDIO ou BAIXO:
+Classifique riscos como ALTO, MÉDIO ou BAIXO. **ALTO é lista FECHADA** (qualquer
+item = ALTO; nada pode ser rebaixado por "parece ok"): TC com critério verificável
+NÃO ENCONTRADO; THREAD ERROR/error.log durante o teste; lock não liberado; SQL com
+input concatenado; escrita em tabela padrão fora de ExecAuto; gate anterior vermelho.
+Classificação:
 - **ALTO:** violações de convenções críticas, SQL injection, locks não liberados
 - **MÉDIO:** performance, falta de validação em campos opcionais
 - **BAIXO:** estilo, sugestões de melhoria
