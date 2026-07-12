@@ -1,5 +1,7 @@
 <div align="center">
 
+🗺️ **[Fluxo de trabalho visual](./FLUXO-DE-TRABALHO.md)** — mapa mental (Mermaid) do ciclo Protheus e Fluig, gates e onde `/clean-architecture` e `/ddd` entram.
+
 <br/>
 
 # DA DataAgile Agent Kit
