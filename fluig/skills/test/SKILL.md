@@ -53,6 +53,9 @@ search_knowledge({ skill: "fluig-test", keyword: "unit tests" })
 
 ## E2E Tests — Playwright
 
+> **Playwright é a engine oficial de E2E do plugin** — visão computacional real da tela
+> (screenshots + snapshots), não automação cega de seletores.
+
 HARD GATE: build + deploy obrigatório antes dos testes.
 
 **Restrições Fluig obrigatórias:**

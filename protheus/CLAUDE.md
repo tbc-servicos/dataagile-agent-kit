@@ -107,7 +107,7 @@ export CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=50
 /protheus:plan       → plano de implementação com tasks tipadas
 /protheus:implement  → Agent Team (implementer haiku + reviewers sonnet, worktree)
 /protheus:deploy     → lint + compilação AppServer + patch .ptm
-/protheus:qa         → testes TIR E2E + análise qualidade
+/protheus:qa         → testes E2E Playwright + análise qualidade
 /protheus:verify     → checklist TOTVS + deploy produção
 ```
 

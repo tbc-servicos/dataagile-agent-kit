@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Decompõe o design aprovado do brainstorm em tasks concretas para teammates ADVPL. Gera plano tipado com artefatos R[MOD][TYPE][SEQ].prw/.tlpp, gates de lint e testes TIR. Use após /protheus:brainstorm.
+description: Decompõe o design aprovado do brainstorm em tasks concretas para teammates ADVPL. Gera plano tipado com artefatos R[MOD][TYPE][SEQ].prw/.tlpp, gates de lint e testes E2E Playwright (test-web). Use após /protheus:brainstorm.
 disable-model-invocation: true
 ---
 
@@ -86,9 +86,14 @@ Ação: compilar no AppServer via advpls cli, gerar patch .ptm
 Bloqueio: lint aprovado
 ```
 
-### Task Testes TIR E2E
+### Task Testes E2E Playwright
+
+> **Engine oficial de E2E: Playwright** (`/protheus:test-web`) — visão computacional real
+> (screenshots + snapshot da tela). **O TIR não é a forma oficial de testar** (não tem visão
+> computacional): use-o apenas, opcionalmente, como suíte de regressão CI gerada a partir da
+> sessão Playwright já validada (ver nota em `/protheus:qa`).
 ```
-Task N+5: Executar testes TIR E2E
+Task N+5: Executar testes E2E Playwright (via /protheus:qa → /protheus:test-web)
 Skill: /protheus:qa
 Escopo: fluxos críticos de negócio identificados no design
 Bloqueio: compilação bem-sucedida (RPO atualizado)
@@ -128,7 +133,7 @@ Formato do plano:
 | 4 | Qualidade código | protheus-reviewer (sonnet) | 3 |
 | 5 | Lint gate (appre) | — | 4 |
 | 6 | Compilação + patch | /protheus:deploy | 5 |
-| 7 | Testes TIR E2E | /protheus:qa | 6 |
+| 7 | Testes E2E Playwright | /protheus:qa | 6 |
 ```
 
 ---

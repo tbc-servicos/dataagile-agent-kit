@@ -63,7 +63,7 @@ Artefatos aprovados:
 
 Patch: [nome.ptm]
 Ambiente testado: [servidor:porta/env]
-Testes TIR: [N] cenários passando
+Testes E2E (Playwright): [N] cenários passando
 
 Próximos passos para produção:
 - [ ] Registrar fontes no MIT043 (se ainda não feito)
@@ -83,7 +83,7 @@ Todos os gates passaram:
   ✅ Review spec + qualidade
   ✅ Lint gate (advpls appre)
   ✅ Deploy compilado (patch .ptm)
-  ✅ QA TIR E2E
+  ✅ QA E2E Playwright
   ✅ Verificação TOTVS (MIT043, Code Analysis)
 
 Os artefatos estão aprovados para produção.
