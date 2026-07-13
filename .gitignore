@@ -59,6 +59,7 @@ docs/plans/material_treinamento/*.pdf
 !/.claude-plugin/
 !/README.md
 !/FLUXO-DE-TRABALHO.md
+!/tests/
 !/CHANGELOG.md
 !/ONBOARDING.md
 !/LICENSE
