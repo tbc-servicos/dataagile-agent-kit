@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 # advpl-lint.sh — Lint ADVPL/TLPP via advpls appre
 # Lê o input do hook via stdin (JSON do Claude Code)
+#
+# ESCOPO (validado com binário real TDS-LS 2.0 rev 46759): o appre cobre
+# PRÉ-PROCESSAMENTO (includes/defines) e, quando o binário emite o JSON de
+# msgs, sintaxe/avisos. Versões do TDS-LS que retornam vazio em sucesso não
+# emitem diagnóstico semântico aqui — a validação PLENA (variável não usada,
+# undefined, C####) acontece na COMPILAÇÃO (deploy/PROBAT), que é gate do
+# pipeline. Este hook nunca trava (timeout 45s) e nunca finge sucesso quando
+# o appre falha (aviso com orientação de PROTHEUS_INCLUDES).
 
 INPUT=$(cat)
 FILE=$(echo "$INPUT" | jq -r '.tool_input.file_path // .tool_input.path // ""' 2>/dev/null)
@@ -55,8 +63,30 @@ while [[ "$_dir" != "/" ]]; do
   _dir=$(dirname "$_dir")
 done
 
-RAW=$("$ADVPLS" appre "$FILE" "${INCLUDE_FLAGS[@]}" 2>/dev/null)
-[[ -z "$RAW" ]] && echo "✅ ADVPL LINT: $(basename "$FILE") ok" && exit 0
+# timeout interno: sem includes o appre pode TRAVAR (validado com binário real);
+# stderr capturado à parte — erro de pré-processamento não pode virar "ok" silencioso
+_ERR=$(mktemp)
+if command -v timeout >/dev/null 2>&1; then
+  RAW=$(timeout 45 "$ADVPLS" appre "$FILE" "${INCLUDE_FLAGS[@]}" 2>"$_ERR")
+  _APPRE_RC=$?
+else
+  RAW=$("$ADVPLS" appre "$FILE" "${INCLUDE_FLAGS[@]}" 2>"$_ERR")
+  _APPRE_RC=$?
+fi
+if [[ $_APPRE_RC -eq 124 ]]; then
+  echo "⚠️  ADVPL LINT: advpls appre excedeu 45s (provável falta de includes) — configure PROTHEUS_INCLUDES=<path> no CLAUDE.md do projeto"
+  rm -f "$_ERR"; exit 0
+fi
+if [[ -z "$RAW" ]]; then
+  if grep -qiE "ERR|error" "$_ERR" 2>/dev/null; then
+    echo "⚠️  ADVPL LINT: appre não conseguiu pré-processar $(basename "$FILE") — configure PROTHEUS_INCLUDES=<path> no CLAUDE.md do projeto. Detalhe:"
+    tail -2 "$_ERR" | tr -d '\033' | sed 's/\[[0-9;]*m//g' | head -2
+  else
+    echo "✅ ADVPL LINT: $(basename "$FILE") ok"
+  fi
+  rm -f "$_ERR"; exit 0
+fi
+rm -f "$_ERR"
 
 # Parsear JSON e categorizar mensagens.
 # SEGURANÇA: RAW (saída do advpls, que ecoa trechos do fonte do usuário) e FILE

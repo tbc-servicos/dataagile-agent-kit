@@ -23,7 +23,28 @@
 
 </div>
 
-🗺️ **[Fluxo de trabalho visual](./FLUXO-DE-TRABALHO.md)** — mapa mental (Mermaid) do ciclo Protheus e Fluig, gates e onde `/clean-architecture` e `/ddd` entram.
+## Como trabalhar (o fluxo em 30 segundos)
+
+```mermaid
+flowchart LR
+    A["🧠 brainstorm<br/>+ <b>/ddd</b><br/><i>o QUE construir</i>"] --> B["📋 plan<br/>+ <b>/clean-architecture</b><br/><i>COMO organizar</i>"]
+    B --> C["⚙️ implement<br/>TDD test-first<br/>Agent Team"]
+    C -->|"gate: teste unitário verde<br/>karma check ≥70% (fluig)"| D["🔍 reviews<br/>spec + código<br/>+ estruturais"]
+    D -->|"gates.json"| E["🚀 deploy"]
+    E --> F["🧪 qa<br/>E2E Playwright<br/>critério verificável"]
+    F --> G["✅ verify"]
+    style A fill:#e8f0fe,stroke:#4285f4,color:#000
+    style C fill:#fef7e0,stroke:#f9ab00,color:#000
+    style F fill:#e6f4ea,stroke:#34a853,color:#000
+```
+
+- **`/ddd`** entra no *brainstorm*: linguagem ubíqua com o cliente, bounded contexts, agregados, ACL nas integrações — decide **o que** construir.
+- **`/clean-architecture`** entra no *plan/implement*: adaptador fino → caso de uso → regra pura (testável sem banco) → repositório — decide **como** organizar.
+- Os **gates são mecânicos** (lint bloqueante, teste unitário verde, `gates.json` entre etapas, QA com critério verificável) — o que passou foi *provado*, não afirmado.
+- Mudança trivial (1 fonte, <50 linhas, sem regra nova)? Atalho `writer → compile`. Fora disso, pipeline completo.
+
+🗺️ **Diagramas completos por plugin** (Protheus e Fluig, com todos os gates): [FLUXO-DE-TRABALHO.md](./FLUXO-DE-TRABALHO.md)
+
 
 ---
 
