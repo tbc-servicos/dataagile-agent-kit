@@ -1,4 +1,11 @@
-# Referência de Regras SonarQube — AdvPL/TLPP
+# Quality Gate SonarQube — visão do reviewer
+
+> **Catálogo OFICIAL e completo (49 regras, com "como corrigir"):**
+> [`sonarqube-rules-engpro.md`](./sonarqube-rules-engpro.md) — gerado de
+> https://sonar-rules.engpro.totvs.com.br por `scripts/sync-sonar-rules.cjs`.
+> Este arquivo é o **resumo operacional**; em caso de divergência, **a referência
+> oficial prevalece**.
+
 
 Quality gate canônico da TOTVS para revisão de código AdvPL/TLPP. Use estas regras
 (G1–G5) como checklist primário no `/protheus:reviewer`, classificando cada achado

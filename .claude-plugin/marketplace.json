@@ -30,7 +30,7 @@
       "name": "protheus",
       "source": "./protheus",
       "description": "Plugin para desenvolvimento TOTVS Protheus — ciclo completo: brainstorm → plan → implement (Agent Teams) → deploy TDS-CLI → qa E2E → verify, geradores MVC/REST/query, dicionário de dados, SmartView/TReports e Knowledge Base remota (155k+ registros).",
-      "version": "2.12.1",
+      "version": "2.13.0",
       "author": {
         "name": "DataAgile"
       },

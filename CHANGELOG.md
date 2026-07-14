@@ -4,6 +4,13 @@ Histórico das versões públicas do `dataagile-agent-kit`.
 
 ---
 
+## [2.5.0] — 2026-07-13
+
+### Adicionado
+- **Catálogo oficial das 49 regras SonarQube da EngPro TOTVS** (39 BUG · 9 CODE SMELL · 1 VULNERABILIDADE) em `protheus/skills/reviewer/references/sonarqube-rules-engpro.md` — com causa, descrição, **como corrigir** e exemplos. O `/protheus:reviewer` passa a citar o código da regra (ex.: `CA4000`) e a correção oficial: a mesma régua da homologação TOTVS. (protheus 2.13.0)
+- **`scripts/sync-sonar-rules.cjs`** — sincronizador versionado a partir de https://sonar-rules.engpro.totvs.com.br. A fonte é uma SPA Angular **sem API**: o script descobre o bundle, extrai o catálogo embutido e baixa o detalhe de cada regra, gerando markdown determinístico. `--check` detecta quando a TOTVS publica regra nova; falha explícita se o formato da SPA mudar.
+- **Teste** com servidor falso (10 asserts): parser, extração do "como corrigir", `--check` e fail-fast de formato.
+
 ## [2.4.0] — 2026-07-12
 
 ### Corrigido/Endurecido (mesma release)
