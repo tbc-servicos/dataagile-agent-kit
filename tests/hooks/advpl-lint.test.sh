@@ -9,6 +9,10 @@ set -u
 
 HOOK="${1:-$(cd "$(dirname "$0")/../.." && pwd)/protheus/hooks/advpl-lint.sh}"
 FAIL=0
+# O PATH abaixo é propositalmente estreito (isola o advpls FALSO), mas o hook usa `node` no
+# parser. Na máquina do dev o node vive em /usr/bin e passava; no runner do CI ele fica no
+# toolcache e sumiria do PATH — o parser não rodaria e a suíte reprovaria.
+NODE_DIR="$(dirname "$(command -v node)")"
 check() { local d="$1"; shift; if "$@"; then echo "  ✅ $d"; else echo "  ❌ $d"; FAIL=1; fi; }
 
 SANDBOX="$(mktemp -d)"
@@ -24,7 +28,7 @@ chmod +x "$FAKEBIN/advpls"
 
 run_hook() { # run_hook <arquivo> ; INPUT via stdin do hook
   printf '{"tool_input":{"file_path":"%s"}}' "$1" | \
-    PATH="$FAKEBIN:/usr/bin:/bin" FAKE_ADVPLS_OUT="$SANDBOX/advpls.out" bash "$HOOK"
+    PATH="$FAKEBIN:$NODE_DIR:/usr/bin:/bin" FAKE_ADVPLS_OUT="$SANDBOX/advpls.out" bash "$HOOK"
 }
 
 SRC="$SANDBOX/ZTESTE.prw"; echo "User Function ZTESTE()" > "$SRC"
@@ -58,7 +62,7 @@ echo "T4 — path com apóstrofo não quebra"
 SRCQ="$SANDBOX/o'brien.prw"; echo "User Function TESTE()" > "$SRCQ"
 printf '%s' '{"msgs":{"grp":{"teste(1) variable X not used":"1"}}}' > "$SANDBOX/advpls.out"
 printf '{"tool_input":{"file_path":"%s"}}' "$SRCQ" | \
-  PATH="$FAKEBIN:/usr/bin:/bin" FAKE_ADVPLS_OUT="$SANDBOX/advpls.out" bash "$HOOK" > "$SANDBOX/out4" 2>&1
+  PATH="$FAKEBIN:$NODE_DIR:/usr/bin:/bin" FAKE_ADVPLS_OUT="$SANDBOX/advpls.out" bash "$HOOK" > "$SANDBOX/out4" 2>&1
 RC=$?
 check "exit 2 (warning crítico bloqueia mesmo com quote no path)" test "$RC" -eq 2
 check "parser processou o arquivo com quote" grep -q "Problemas que devem ser corrigidos" "$SANDBOX/out4"

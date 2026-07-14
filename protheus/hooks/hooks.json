@@ -25,6 +25,11 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.cmd\" advpl-lint.sh",
             "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/sonar-lint.cjs\"",
+            "timeout": 10
           }
         ]
       }

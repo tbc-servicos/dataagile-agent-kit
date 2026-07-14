@@ -1,7 +1,7 @@
 {
   "name": "protheus",
   "description": "Plugin Claude Code para desenvolvimento TOTVS Protheus — ciclo completo: brainstorm → plan → implement (teammates haiku/sonnet) → deploy (TDS-CLI) → qa (E2E Playwright) → verify. Geração ADVPL/TLPP, SQL embarcado, migração TLPP, diagnóstico, compilação, revisão, testes E2E Playwright (test-web), Knowledge Base MCP, integração TDN, geradores MVC/REST/query, dicionário de dados e geração de relatórios SmartView/TReports (smartview-relatorio).",
-  "version": "2.13.0",
+  "version": "2.14.0",
   "author": {
     "name": "TBC - Time de Desenvolvimento"
   },
