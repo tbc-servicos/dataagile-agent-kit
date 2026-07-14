@@ -37,7 +37,9 @@ OUT="$REPO/protheus/skills/reviewer/references/sonarqube-rules-engpro.md"
 BK="$S/backup.md"; cp "$OUT" "$BK"
 
 echo "T1 — sincroniza catálogo + detalhes do servidor"
-SONAR_RULES_URL=http://127.0.0.1:$PORT node "$REPO/scripts/sync-sonar-rules.cjs" >/dev/null 2>&1
+# a saída do sync é GUARDADA (e mostrada se algo falhar): um teste que engole a mensagem de
+# erro obriga quem investiga a adivinhar — foi o que aconteceu quando isto quebrou no CI.
+SONAR_RULES_URL=http://127.0.0.1:$PORT node "$REPO/scripts/sync-sonar-rules.cjs" >"$S/sync.log" 2>&1 || true
 check "regra CA9001 no índice" grep -q "CA9001" "$OUT"
 check "tipo preservado" grep -q "CODE SMELL" "$OUT"
 check "'como corrigir' extraído" grep -q "Trocar X por Y" "$OUT"
@@ -58,4 +60,8 @@ check "exit != 0" test "$RC" -ne 0
 check "erro explica a causa" grep -qi "catálogo de regras não encontrado" <<<"$ERR"
 
 cp "$BK" "$OUT"   # restaura a referência real
+if [ "$FAIL" -ne 0 ]; then
+  echo "--- saída do sync (T1) ---"; cat "$S/sync.log" 2>/dev/null
+  echo "--- servidor falso: porta $PORT ---"; curl -sS "http://127.0.0.1:$PORT/index.html" 2>&1 | head -3
+fi
 [ "$FAIL" -eq 0 ] && echo "TODOS OS TESTES PASSARAM" || { echo "FALHAS DETECTADAS"; exit 1; }
