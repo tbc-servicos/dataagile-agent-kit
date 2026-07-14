@@ -4,6 +4,36 @@ Histórico das versões públicas do `dataagile-agent-kit`.
 
 ---
 
+## [2.6.0] — 2026-07-14
+
+### Regras do SonarQube EngPro agora são gate na hora da gravação (protheus 2.14.0)
+
+As 49 regras oficiais eram **referência de leitura** do `/protheus:reviewer`: o dev só descobria a
+violação quando o review rodava — ou, pior, na homologação da TOTVS. Agora a parte mecânica delas é
+verificada **no instante em que o fonte é gravado**.
+
+- **Novo hook `sonar-lint.cjs`** (`PostToolUse`): analisa o fonte a cada Write/Edit e aplica **~30
+  das 49 regras** — as decidíveis por léxico. BUG e VULNERABILIDADE **bloqueiam** (`exit 2`, com o
+  código da regra e como corrigir); CODE SMELL avisa sem travar o dev. Cobre API restrita (`CA2022`
+  StaticCall, `CA2023` PTInternal), dicionário por workarea (`CA2000`–`CA2013`), driver ISAM
+  (`CA1000`), interface em transação (`CA1002`), `GetMV` em loop (`CA1003`), SQL injection
+  (`CA2050`), `IIF` (`CA4000`), include maiúsculo (`CA3001`) e mais.
+- **Não depende do `advpls`/TDS-LS**: é análise de texto, roda em qualquer máquina em
+  milissegundos — inclusive para quem não tem o binário instalado.
+- **Supressão exige justificativa:** `// sonar:ignore CA1000 <motivo>`. Sem motivo, não vale — e o
+  reviewer continua reportando de qualquer jeito.
+- **Testes:** 40 unitários do motor (incluindo casos de **falso positivo**: regra citada em
+  comentário ou string não pode acusar) + 8 do contrato do hook.
+
+### Infra de qualidade
+
+- **`tests/run-all.sh` e CI**: o repo tinha testes que **nada executava**. Agora há runner agregado
+  e workflow do GitHub Actions rodando a suíte em todo push e PR.
+- **Corrigido** o teste do sincronizador de regras: o servidor falso usava porta fixa e `kill %1`
+  (que não funciona sem job control), deixando um processo órfão que servia conteúdo velho.
+
+---
+
 ## [2.5.0] — 2026-07-13
 
 ### Adicionado

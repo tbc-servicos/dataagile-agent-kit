@@ -24,7 +24,22 @@ Use os resultados como **fonte primária** dos critérios de revisão. Só use c
 
 ## Passo 1 — Quality gate SonarQube (G1–G5) 🔴 obrigatório
 
-Aplique como checklist canônico a referência [`references/sonarqube-rules-reference.md`](references/sonarqube-rules-reference.md) — o quality gate oficial da TOTVS. Para cada achado, cite o **ID da regra** e a **severidade**:
+**Rode a máquina primeiro** — o mesmo catálogo EngPro está implementado como analisador:
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/hooks/sonar-lint.cjs" <fonte.prw|.tlpp>   # exit 2 = violação bloqueante
+```
+
+Ele já roda sozinho a cada gravação (hook `PostToolUse`), então o fonte que chega aqui **deveria**
+estar limpo das regras mecânicas (API proibida, dicionário por workarea, `IIF`, concatenação em
+query, include maiúsculo). Se o analisador ainda acusa algo, isso é **CRÍTICO** — foi suprimido com
+`// sonar:ignore` ou escapou do hook: reporte, com o código da regra, e não aceite a supressão como
+justificativa (a TOTVS não admite supressão na maioria delas).
+
+Sua revisão **não é repetir o que a máquina já fez** — é julgar o que ela não consegue:
+`CA2017`/`CA2018` (API não permitida, sem lista pública), `CA0000` (só a compilação prova),
+`CA2016` (a mensagem está de fato internacionalizada?), `CA2015` (o commit foi interceptado no
+lugar certo?) e o desenho do código. Use o checklist abaixo para isso:
 
 - **G1 Segurança** — SQL injection (`CA2050/51` → `FWExecStatement`), `StaticCall` (`CA2022`), senha hardcoded (`CA2052`), atribuição a `__cUserID`/`cEmpAnt`.
 - **G2 Performance** — UI em transação (`CA1002`), `GetMV`/`SuperGetMV` em loop (`CA1003`).
