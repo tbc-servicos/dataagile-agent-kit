@@ -4,8 +4,18 @@
 
 ### Tela de Parâmetros Iniciais
 - Combo "Programa Inicial" (SIGAADV, SIGACOM, etc.)
+  - No fluxo padrão do test-web, informar `dev.tools.u_run_aplica`
+    (runner do `assets/fsttst.tlpp`) para abrir direto a tela "Executa funcao"
 - Combo "Ambiente no servidor" (lista de ambientes)
 - Botão "Ok"
+
+### Tela "Executa funcao" (runner dev.tools.U_Run_Aplica)
+- Campos: "Empresa:", "Filial:", "Usuario:", "Senha:"
+- Botão "Ambiente" (monta o ambiente via RpcSetEnv) / "Sem Ambiente" (desmonta)
+- Campo "Funcao:" + botão "Executar" — roda a função digitada (ex: MATA103)
+- Checkbox "Protecao de erro:" — captura erro e mostra na área "Resultado"
+- Campo "Mascara Funcao:" + botão "Buscar" — localiza funções no RPO
+  (aceita `*` como coringa); duplo clique na lista mostra os parâmetros
 
 ### Tela de Login
 - Campo "Usuário" (textbox)

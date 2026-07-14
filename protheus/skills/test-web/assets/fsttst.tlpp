@@ -1,0 +1,342 @@
+#include "totvs.ch"
+#include "protheus.ch"
+
+namespace dev.tools
+
+#Define HTMO ' <B><font size="4"> '
+#Define HTMC ' </B></font> '
+
+// Cache das funcoes internas (ADVPL) do RPO, usado por LeFuncRPO/BuscaPar.
+Static aRet__Func := __FunArr()
+// Linha vazia padrao do TWBrowse de funcoes (Funcao, Tipo, Arquivo, Linha, Data, Hora).
+Static aVetVazio  := {{Space(15), Space(5), Space(15), Space(4), Space(8), Space(4)}}
+
+/*/{Protheus.doc} Run_Aplica
+Runner universal de funcoes. Usado como Programa Inicial (no campo "Programa
+Inicial" dos Parametros Iniciais) no lugar de SIGAADV/SIGAMDI: abre a tela
+"Executa funcao" onde se digita o nome da funcao no campo "Funcao:" e clica
+"Executar" para roda-la direto, sem navegar pelo menu.
+
+Chamada (TLPP com namespace): dev.tools.U_Run_Aplica
+
+@author  DataAgile Agent Kit
+@since   2026-07-10
+@version 2.0
+/*/
+User Function Run_Aplica()
+    MsApp():New('SIGACOM')
+    oApp:CreateEnv()
+    oApp:Activate({|| AuxRunAplica(.F.), Final()})
+Return
+
+/*/{Protheus.doc} AuxRunAplica
+Monta o dialog "Executa funcao": campos de ambiente (Empresa/Filial/Usuario/
+Senha), campo "Funcao:" + botao "Executar" (macro-executa a funcao digitada
+sob protecao de erro opcional), area de Resultado e um localizador de funcoes
+do RPO por mascara.
+
+@param lRunEnv Logico. .T. permite montar ambiente pela tela (uso como Programa
+               Inicial); .F. reaproveita o ambiente ja ativo.
+@author  DataAgile Agent Kit
+@since   2026-07-10
+@version 2.0
+/*/
+Static Function AuxRunAplica(lRunEnv)
+    Local bGet                                          As CodeBlock
+    Local oDlgRun                                       As Object
+    Local oResult                                       As Object
+    Local cResult   := ""                               As Character
+    Local cGet      := Space(255)                       As Character
+    Local cEmpRun   := "T1"                             As Character
+    Local cFilRun   := "01    "                         As Character
+    Local cUsuRun   := Space(20)                           As Character
+    Local cPasRun   := Space(20)                        As Character
+    Local lComAmb   := .F.                              As Logical
+    Local lProtErro := .F.                              As Logical
+    Local cMascFun  := Space(80)                         As Character
+    Local nCount    := 0                                As Numeric
+
+    Default lRunEnv := .T.
+
+    If !lRunEnv
+        cEmpRun := cEmpAnt
+        cFilRun := cFilAnt
+        cUsuRun := Substr(cUsuario, 7, 15)
+    EndIf
+
+    Private oList
+    Private xRet     := Space(255)
+    Private aListBox := AClone(aVetVazio)
+
+    oDlgRun := MSDialog():New(0, 0, 700, 600, "Executa funcao", , , , , , , , , .T., , , )
+
+    TSay():New(05, 02, {|| "Empresa:" }, oDlgRun, , , , , , .T., , , 30, 10, , , , , , .T.)
+    TGet():New(03, 25, bSETGET(cEmpRun), oDlgRun, 15, 10, , , , , , , , .T., , , {|| lRunEnv .And. !lComAmb }, , , , , , )
+    TSay():New(05, 45, {|| "Filial:" }, oDlgRun, , , , , , .T., , , 30, 10, , , , , , .T.)
+    TGet():New(03, 65, bSETGET(cFilRun), oDlgRun, 15, 10, , , , , , , , .T., , , {|| lRunEnv .And. !lComAmb }, , , , , , )
+
+    TSay():New(05, 85, {|| "Usuario:" }, oDlgRun, , , , , , .T., , , 30, 10, , , , , , .T.)
+    TGet():New(03, 105, bSETGET(cUsuRun), oDlgRun, 30, 10, , , , , , , , .T., , , {|| lRunEnv .And. !lComAmb }, , , , , , )
+    TSay():New(05, 145, {|| "Senha:" }, oDlgRun, , , , , , .T., , , 30, 10, , , , , , .T.)
+    TGet():New(03, 165, bSETGET(cPasRun), oDlgRun, 30, 10, , , , , , , , .T., , , {|| lRunEnv .And. !lComAmb }, , , , , .T., )
+
+    TSay():New(20, 02, {|| "Funcao:" }, oDlgRun, , , , , , .T., , , 30, 10, , , , , , .T.)
+    TGet():New(18, 25, bSETGET(cGet), oDlgRun, 200, 10, , , , , , , , .T., , , , , , , , , )
+    TButton():New(02, 200, "&Ambiente", oDlgRun, {|| AuxRunApl(cEmpRun, cFilRun, cUsuRun, cPasRun, , , , @lComAmb) }, 45, 15, , , , .T., , , , {|| lRunEnv .And. !lComAmb }, , )
+    TButton():New(02, 250, "&Sem Ambiente", oDlgRun, {|| RpcClearEnv(), lComAmb := .F. }, 45, 15, , , , .T., , , , {|| lRunEnv .And. lComAmb }, , )
+    TButton():New(17, 250, "&Executar", oDlgRun, {|| If(Empty(cGet), bGet := {|| .T. }, bGet := &("{||xRet := " + cGet + "() }")), MsgRun("Executando...", "Aguarde.", {|| TrataExec(bGet, lProtErro) }), cResult := VarInfo('xRet', xRet, , .F.), oResult:Refresh() }, 45, 15, , , , .T., , , , , , )
+    TSay():New(33, 02, {|| '<B><I><font size="4">Resultado:</font></B></I>' }, oDlgRun, , , , , , .T., , , 50, 10, , , , , , .T.)
+    TCheckBox():New(33, 235, 'Protecao de erro:', bSETGET(lProtErro), oDlgRun, 55, 10, , , , , , , , .T., , , )
+    oResult := TMultiGet():New(48, 02, bSETGET(cResult), oDlgRun, 293, 175, , , , , , .T., , , , , , , , , , , )
+
+    TSay():New(230, 002, {|| "Mascara Funcao:" }, oDlgRun, , , , , , .T., , , 50, 10, , , , , , .T.)
+    TGet():New(228, 050, bSETGET(cMascFun), oDlgRun, 160, 10, , , , , , , , .T., , , , , , , , , )
+    TGet():New(228, 212, bSETGET(nCount), oDlgRun, 25, 10, , , , , , , , .T., , , {|| .F. }, , , , , , )
+    TButton():New(227, 250, "&Buscar", oDlgRun, {|| nCount := LeFuncRPO(cMascFun) }, 45, 15, , , , .T., , , , , , )
+    oList := TWBrowse():New(245, 002, 293, 100, , {"Funcao", "Tipo", "Arquivo", "Linha", "Data", "Hora"}, , oDlgRun, , , , , , , , , , , , .F., , .T., , .F., , , )
+    oList:SetArray(aListBox)
+    oList:bLine := {|| aEval(aListBox[oList:nAt], {|z, w| aListBox[oList:nAt, w] }) }
+    oList:bLDblClick := {|| cResult := BuscaPar(aListBox[oList:nAT, 1], aListBox[oList:nAT, 2] == "ADVPL"), oResult:Refresh() }
+
+    DBSELECTAREA("FWI")
+    oDlgRun:Activate(, , , .T., , , )
+
+Return
+
+/*/{Protheus.doc} AuxRunApl
+Monta o ambiente (RpcSetEnv) para a Empresa/Filial informadas na tela, com
+validacao opcional de usuario/senha via PswSeek/PswName.
+
+@param cEmpRun Empresa
+@param cFilRun Filial
+@param cUsrRun Usuario (opcional)
+@param cPasRun Senha (opcional)
+@param cModRun Modulo (nao usado — mantido por compat de assinatura)
+@param cFunRun Funcao (nao usado — mantido por compat de assinatura)
+@param cTabRun Tabelas (nao usado — mantido por compat de assinatura)
+@param lComAmb Passado por referencia: .T. se o ambiente ficou montado
+@author  DataAgile Agent Kit
+@since   2026-07-10
+@version 2.0
+/*/
+Static Function AuxRunApl(cEmpRun, cFilRun, cUsrRun, cPasRun, cModRun, cFunRun, cTabRun, lComAmb)
+    Local oBkpObj As Object
+
+    Default cEmpRun := "T1"
+    Default cFilRun := "01"
+
+    If Empty(cUsrRun)
+        cUsrRun := Nil
+    Else
+        cUsrRun := AllTrim(cUsrRun)
+    EndIf
+
+    If Empty(cPasRun)
+        cPasRun := Nil
+    Else
+        cPasRun := AllTrim(cPasRun)
+    EndIf
+
+    lComAmb := .T.
+
+    oBkpObj  := oMainWnd
+    oMainWnd := Nil
+
+    RpcSetType(2)
+    MsgRun("Aguarde...", "Montando Ambiente. Empresa [" + cEmpRun + "] Filial [" + cFilRun + "].", {|| RpcSetEnv(cEmpRun, cFilRun, cUsrRun, cPasRun, "FAT", , ) })
+
+    If (!Empty(cUsrRun) .Or. !Empty(cPasRun))
+        PswOrder(2)
+        If (!PswSeek(cUsrRun) .Or. !PswName(cPasRun))
+            MsgStop("Usuario ou senha invalidos.[" + cUsrRun + "]", "RunAplica")
+            RpcClearEnv()
+            lComAmb := .F.
+        EndIf
+    EndIf
+
+    __cInternet := Nil
+    oMainWnd    := oBkpObj
+    oBkpObj     := Nil
+
+Return
+
+/*/{Protheus.doc} TrataExec
+Executa o codeblock da funcao digitada, opcionalmente sob protecao de erro
+(ErrorBlock proprio que captura a excecao e devolve a descricao em xRet).
+
+@param bBloco    CodeBlock da funcao a executar
+@param lProtErro .T. ativa protecao de erro
+@author  DataAgile Agent Kit
+@since   2026-07-10
+@version 2.0
+/*/
+Static Function TrataExec(bBloco, lProtErro)
+    Local bErrBlock As CodeBlock
+
+    Default lProtErro := .F.
+
+    If lProtErro
+        bErrBlock := ErrorBlock({|e| ExecErro(e) })
+    EndIf
+
+    // Begin Sequence deliberado: unico caminho para capturar o Break do
+    // ErrorBlock ao macro-executar uma funcao arbitraria digitada pelo usuario.
+    Begin Sequence
+        Eval(bBloco)
+    End Sequence
+
+    If lProtErro
+        ErrorBlock(bErrBlock)
+    EndIf
+
+Return
+
+/*/{Protheus.doc} ExecErro
+Handler do ErrorBlock: exibe a descricao do erro, grava em xRet e da Break
+para retornar ao Begin Sequence de TrataExec.
+
+@param oErro Objeto de erro
+@author  DataAgile Agent Kit
+@since   2026-07-10
+@version 2.0
+/*/
+Static Function ExecErro(oErro)
+    MsgStop(HTMO + "Existe um erro na funcao:" + HTMC + "<BR><BR>Verifique a ocorrencia :<BR><BR>" + oErro:description, "ERRO!")
+    xRet := CRLF + oErro:description + CRLF
+    Break
+Return
+
+/*/{Protheus.doc} LeFuncRPO
+Localiza funcoes no RPO por mascara (GetFuncArray) e as funcoes internas ADVPL
+(__FunArr) que casam a mascara, populando o TWBrowse da tela.
+
+@param cMascFun Mascara de busca (aceita * como coringa)
+@return Numeric. Quantidade de funcoes encontradas.
+@author  DataAgile Agent Kit
+@since   2026-07-10
+@version 2.0
+/*/
+Static Function LeFuncRPO(cMascFun)
+    Local aType                                         As Array
+    Local aFile                                         As Array
+    Local aLine                                         As Array
+    Local aDate                                         As Array
+    Local aTime                                         As Array
+    Local aFuns    := {}                                As Array
+    Local nCount   := 0                                 As Numeric
+    Local lComMask := .F.                               As Logical
+    Local nFAdvpl  := 0                                 As Numeric
+
+    cMascFun := AllTrim(cMascFun)
+    If !Empty(cMascFun)
+        // Busca informacoes de todas as funcoes contidas no APO
+        MsgRun("Buscando funcoes protheus.", "Aguarde", {|| aFuns := GetFuncArray(cMascFun, aType, aFile, aLine, aDate, aTime) })
+
+        aListBox := {}
+
+        For nCount := 1 To Len(aFuns)
+            AAdd(aListBox, {aFuns[nCount], aType[nCount], aFile[nCount], aLine[nCount], aDate[nCount], aTime[nCount]})
+        Next
+
+        lComMask := (At("*", cMascFun) > 0)
+
+        cMascFun := StrTran(cMascFun, "*", "")
+        cMascFun := Upper(AllTrim(cMascFun))
+
+        If lComMask
+            AEval(aRet__Func, {|x| If(Empty(cMascFun) .Or. cMascFun $ Upper(x[1]), (AAdd(aListBox, {x[1], "ADVPL", "", "", "", ""}), nFAdvpl++), )})
+        ElseIf (nCount := AScan(aRet__Func, {|x| cMascFun $ Upper(x[1]) })) > 0
+            AAdd(aListBox, {aRet__Func[nCount][1], "ADVPL", "", "", "", ""})
+            nFAdvpl++
+        EndIf
+
+    EndIf
+
+    If Len(aListBox) == 0
+        aListBox := AClone(aVetVazio)
+    EndIf
+    oList:SetArray(aListBox)
+    oList:bLine := {|| aEval(aListBox[oList:nAt], {|z, w| aListBox[oList:nAt, w] }) }
+    oList:Refresh()
+
+Return Len(aFuns) + nFAdvpl
+
+/*/{Protheus.doc} BuscaPar
+Busca e formata os parametros de uma funcao (ADVPL interna via aRet__Func ou
+Protheus via GetFuncPrm) para exibir na area de Resultado.
+
+@param cNomeFunc Nome da funcao
+@param lAdvpl    .T. se e funcao interna ADVPL; .F. se e funcao Protheus/RPO
+@return Character. Assinatura + descricao dos parametros.
+@author  DataAgile Agent Kit
+@since   2026-07-10
+@version 2.0
+/*/
+Static Function BuscaPar(cNomeFunc, lAdvpl)
+    Local cRet      := ""                               As Character
+    Local cRetPar   := ""                               As Character
+    Local cPar      := ""                               As Character
+    Local nCount    := 0                                As Numeric
+    Local nCount2   := 0                                As Numeric
+    Local aRet2     := {}                               As Array
+    Local cChamaFun := cNomeFunc + "("                  As Character
+
+    If lAdvpl
+        nCount := AScan(aRet__Func, {|x| cNomeFunc $ x[1] })
+        If nCount > 0
+            For nCount2 := 1 To Len(aRet__Func[nCount][2]) Step 2
+                cPar := SubStr(aRet__Func[nCount][2], nCount2, 2)
+                Do Case
+                Case Left(cPar, 1) == '*'
+                    cRet := 'xExp' + StrZero((nCount2 + 1) / 2, 2) + ' - variavel'
+                Case Left(cPar, 1) == 'C'
+                    cRet := 'cExp' + StrZero((nCount2 + 1) / 2, 2) + ' - caracter'
+                Case Left(cPar, 1) == 'N'
+                    cRet := 'nExp' + StrZero((nCount2 + 1) / 2, 2) + ' - numerico'
+                Case Left(cPar, 1) == 'A'
+                    cRet := 'aExp' + StrZero((nCount2 + 1) / 2, 2) + ' - array'
+                Case Left(cPar, 1) == 'L'
+                    cRet := 'lExp' + StrZero((nCount2 + 1) / 2, 2) + ' - logico'
+                Case Left(cPar, 1) == 'B'
+                    cRet := 'bExp' + StrZero((nCount2 + 1) / 2, 2) + ' - bloco de codigo'
+                Case Left(cPar, 1) == 'O'
+                    cRet := 'oExp' + StrZero((nCount2 + 1) / 2, 2) + ' - objeto'
+                EndCase
+                If Right(cPar, 1) == 'R'
+                    cRet += ' [obrigatorio]'
+                ElseIf Right(cPar, 1) == 'O'
+                    cRet += ' [opcional]'
+                EndIf
+                cRetPar   += "    Parametro " + cValToChar((nCount2 + 1) / 2) + "= " + cRet + CRLF
+                cChamaFun += Left(cRet, 6) + ","
+            Next nCount2
+        EndIf
+    Else
+        aRet2 := GetFuncPrm(cNomeFunc)
+
+        For nCount2 := 1 To Len(aRet2)
+            cPar := aRet2[nCount2]
+            Do Case
+            Case Left(cPar, 1) == 'X'
+                cRet := ' - variavel'
+            Case Left(cPar, 1) == 'C'
+                cRet := ' - caracter'
+            Case Left(cPar, 1) == 'N'
+                cRet := ' - numerico'
+            Case Left(cPar, 1) == 'A'
+                cRet := ' - array'
+            Case Left(cPar, 1) == 'L'
+                cRet := ' - logico'
+            Case Left(cPar, 1) == 'B'
+                cRet := ' - bloco de codigo'
+            Case Left(cPar, 1) == 'O'
+                cRet := ' - objeto'
+            OtherWise
+                cRet := ' - Unknown'
+            EndCase
+            cRetPar   += "    Parametro " + cValToChar(nCount2) + "= " + aRet2[nCount2] + cRet + CRLF
+            cChamaFun += aRet2[nCount2] + ","
+        Next nCount2
+    EndIf
+    cRetPar := SubStr(cChamaFun, 1, Len(cChamaFun) - 1) + ")" + CRLF + cRetPar
+Return cRetPar

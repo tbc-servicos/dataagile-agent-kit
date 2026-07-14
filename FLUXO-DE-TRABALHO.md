@@ -53,7 +53,7 @@ flowchart TD
     B --> C["⚙️ /protheus:implement — Agent Team<br/>implementa nas camadas<br/>regra pura testável por unidade"]
     C -->|"grava gates.json"| D["🔍 Reviews<br/>spec-reviewer: task T tem teste T?<br/>reviewer: convenções + <b>critérios estruturais</b><br/>(mistura de camadas = CRÍTICO)"]
     D -->|"máx. 3 ciclos de correção"| E["🚀 /protheus:deploy<br/>HARD GATE lê gates.json<br/>lint + compila + patch .ptm"]
-    E --> F["🧪 /protheus:qa → test-web<br/>E2E <b>Playwright</b> (engine oficial —<br/>TIR só como regressão CI opcional)<br/>TC com critério VERIFICÁVEL<br/>ALTO = lista fechada"]
+    E --> F["🧪 /protheus:qa → test-web<br/>E2E <b>Playwright</b> (engine oficial —<br/>TIR só como regressão CI opcional)<br/>rotina aberta via runner <b>dev.tools.U_Run_Aplica</b><br/>(fsttst.tlpp compilado no ambiente)<br/>TC com critério VERIFICÁVEL<br/>ALTO = lista fechada"]
     F --> G["✅ /protheus:verify<br/>checklist TOTVS + produção"]
 
     H["⚡ Atalho ad-hoc<br/>writer · specialist · compile"] -.->|"SÓ para: 1 fonte, <50 linhas,<br/>sem regra de negócio nova"| E

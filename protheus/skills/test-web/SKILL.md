@@ -15,6 +15,10 @@ Substitui o TIR (TOTVS Interface Robot) por uma abordagem interativa com visão 
 - Credenciais de acesso (usuário/senha)
 - Ambiente, módulo e filial do teste
 - Roteiro de teste (arquivo markdown, documento ou instruções do usuário)
+- Fonte `assets/fsttst.tlpp` compilado no RPO do ambiente de teste — runner
+  universal `dev.tools.U_Run_Aplica`, usado para abrir a rotina direto pelo
+  campo "Programa Inicial" (sem navegar o menu). Se não estiver compilado,
+  compilar via `/protheus:compile` antes de iniciar (fallback: navegação por menu)
 
 ## Ciclo Completo: Roteiro → Aprovação → Execução → Evidências → Documentação
 
@@ -93,31 +97,45 @@ evidencias/
 Cada passo DEVE ser acompanhado de screenshot via `browser_take_screenshot`.
 Nomear sequencialmente com descrição clara.
 
-#### Fase 1 — Login
+#### Fases 1-3 — Acesso à rotina via Run_Aplica (PADRÃO)
+
+Usar o runner `dev.tools.U_Run_Aplica` (fonte `assets/fsttst.tlpp`) como
+Programa Inicial — abre a rotina direto, sem login pelo menu:
+
 1. `browser_navigate` → URL do webapp
 2. `browser_wait_for` (5-10s) — repetir se timeout
-3. `browser_snapshot` → identificar campos
-4. `browser_select_option` → selecionar ambiente
-5. Clicar "Ok"
+3. `browser_snapshot` → identificar campos dos Parâmetros Iniciais
+4. No campo **"Programa Inicial"**, informar `dev.tools.u_run_aplica`
+5. `browser_select_option` → selecionar ambiente, clicar "Ok"
 6. **Screenshot:** `01_parametros_iniciais.png`
-7. Preencher usuário/senha via `browser_type`
-8. Clicar "Entrar"
-9. Aguardar (8-12s)
-10. **Screenshot:** `02_login.png`
+7. Aguardar a tela **"Executa funcao"** (8-12s)
+8. Preencher Empresa, Filial, Usuário e Senha do teste e clicar **"Ambiente"**
+   (monta o ambiente via RpcSetEnv — aguardar o MsgRun terminar)
+9. **Screenshot:** `02_ambiente_montado.png`
+10. No campo **"Funcao:"**, digitar a função da rotina (ex.: `MATA103`) e
+    clicar **"Executar"**
+11. Aguardar a rotina abrir (10s), tratar dialogs (Moedas → Confirmar,
+    Filiais → duplo clique + Ok)
+12. **Screenshot:** `04_browse_rotina.png`
 
-#### Fase 2 — Seleção de Ambiente
-1. Alterar Ambiente se necessário (botão pesquisa → tabela → Confirmar)
-2. Clicar "Entrar"
-3. Fechar popup "base de Desenvolvimento" se aparecer
-4. Aguardar menu (15s)
-5. **Screenshot:** `03_menu_principal.png`
+> A tela também localiza funções no RPO por máscara ("Mascara Funcao" +
+> "Buscar", aceita `*`) — útil para confirmar que o fonte em teste está
+> compilado antes de executar. Erros na execução aparecem na área
+> "Resultado" quando "Protecao de erro" está marcada.
 
-#### Fase 3 — Navegação
-1. Clicar no grupo de menu desejado
-2. Clicar na rotina
-3. Aguardar (10s)
-4. Tratar dialogs (Moedas → Confirmar, Filiais → duplo clique + Ok)
-5. **Screenshot:** `04_browse_rotina.png`
+#### Fases 1-3 (fallback) — Login e navegação por menu
+
+Somente se o `fsttst.tlpp` não puder ser compilado no ambiente:
+
+1. `browser_navigate` → URL, aguardar, selecionar ambiente, "Ok"
+   — **Screenshot:** `01_parametros_iniciais.png`
+2. Preencher usuário/senha, "Entrar", aguardar (8-12s)
+   — **Screenshot:** `02_login.png`
+3. Alterar Ambiente se necessário (botão pesquisa → tabela → Confirmar),
+   fechar popup "base de Desenvolvimento" se aparecer, aguardar menu (15s)
+   — **Screenshot:** `03_menu_principal.png`
+4. Clicar no grupo de menu → rotina, aguardar (10s), tratar dialogs
+   — **Screenshot:** `04_browse_rotina.png`
 
 #### Fase 4 — Ação do Teste
 1. Executar a ação (Incluir, Classificar, etc.)
