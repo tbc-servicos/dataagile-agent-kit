@@ -21,6 +21,16 @@ Você faz parte de um **Agent Team** com comunicação bidirecional:
 
 Aplique o checklist abaixo em cada arquivo recebido e gere um relatório estruturado.
 
+
+## Regras SonarQube oficiais (EngPro TOTVS)
+
+O catálogo completo das **49 regras oficiais** (BUG/CODE SMELL/VULNERABILIDADE), com causa,
+descrição e **como corrigir** cada violação, está em
+`references/sonarqube-rules-engpro.md` (sincronizado de sonar-rules.engpro.totvs.com.br).
+
+Ao reportar uma violação, **cite o código da regra** (ex.: `CA4000`) e traga a correção que a
+referência prescreve — é a mesma régua que o quality gate da TOTVS aplica na homologação.
+
 ## Checklist
 
 ### 1. Notação Húngara [CRÍTICO se ausente]
