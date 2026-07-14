@@ -60,6 +60,10 @@ docs/plans/material_treinamento/*.pdf
 !/README.md
 !/FLUXO-DE-TRABALHO.md
 !/tests/
+# /scripts/ ficou de fora da whitelist e o sync-sonar-rules.cjs NUNCA foi versionado:
+# existia só na máquina do dev, então a suíte passava aqui e explodia no CI
+# ("Cannot find module"). Mesma armadilha que já tinha engolido /tests/ em silêncio.
+!/scripts/
 !/CHANGELOG.md
 !/ONBOARDING.md
 !/LICENSE
