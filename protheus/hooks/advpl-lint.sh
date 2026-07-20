@@ -55,7 +55,9 @@ while [[ "$_dir" != "/" ]]; do
       IFS=';,' read -ra _paths <<< "$_inc"
       for _p in "${_paths[@]}"; do
         _p=$(echo "$_p" | xargs)  # trim
-        [[ -n "$_p" ]] && INCLUDE_FLAGS+=(-I "$_p")
+        # absolutizar: o appre roda com cwd num dir temporário (ver bloco de execução),
+        # então include relativo ao projeto precisa virar caminho absoluto aqui
+        [[ -n "$_p" ]] && INCLUDE_FLAGS+=(-I "$(realpath -m "$_p" 2>/dev/null || echo "$_p")")
       done
     fi
     break
@@ -66,13 +68,20 @@ done
 # timeout interno: sem includes o appre pode TRAVAR (validado com binário real);
 # stderr capturado à parte — erro de pré-processamento não pode virar "ok" silencioso
 _ERR=$(mktemp)
+# appre grava arquivos de trabalho a cada execução (.ppo e .errprw ao lado da fonte,
+# console_error.log no cwd). Rodamos num dir descartável: -O reposiciona .ppo/.errprw e o
+# cwd no tmpdir faz o console_error.log cair lá também — nada suja o repo do projeto.
+# O hook só consome stdout/stderr; nunca lê esses arquivos, então descartá-los é seguro.
+_WORK=$(mktemp -d)
+_ABS_FILE=$(realpath "$FILE")
 if command -v timeout >/dev/null 2>&1; then
-  RAW=$(timeout 45 "$ADVPLS" appre "$FILE" "${INCLUDE_FLAGS[@]}" 2>"$_ERR")
+  RAW=$(cd "$_WORK" && timeout 45 "$ADVPLS" appre "$_ABS_FILE" -O "$_WORK" "${INCLUDE_FLAGS[@]}" 2>"$_ERR")
   _APPRE_RC=$?
 else
-  RAW=$("$ADVPLS" appre "$FILE" "${INCLUDE_FLAGS[@]}" 2>"$_ERR")
+  RAW=$(cd "$_WORK" && "$ADVPLS" appre "$_ABS_FILE" -O "$_WORK" "${INCLUDE_FLAGS[@]}" 2>"$_ERR")
   _APPRE_RC=$?
 fi
+rm -rf "$_WORK"
 if [[ $_APPRE_RC -eq 124 ]]; then
   echo "⚠️  ADVPL LINT: advpls appre excedeu 45s (provável falta de includes) — configure PROTHEUS_INCLUDES=<path> no CLAUDE.md do projeto"
   rm -f "$_ERR"; exit 0
