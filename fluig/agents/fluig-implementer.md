@@ -150,3 +150,16 @@ PRÓXIMOS PASSOS:
 
 - **Nunca ficar preso silenciosamente** — se bloqueado, reportar imediatamente
 - Se receber feedback de reviewer, corrigir e re-reportar sem necessidade de redespacho
+
+### Execução
+
+- **Nunca adivinhar** — API Fluig, assinatura de dataset, evento de workflow ou componente
+  PO-UI que você não conhece: consultar o MCP (`searchFluigApi` / `searchFluigPatterns` /
+  `searchKnowledge`, MCP `po-ui` para componentes) ou reportar `NEEDS_CONTEXT`. Inferir pelo
+  nome está proibido.
+- **Código mínimo que resolve a task** — sem feature além da pedida, sem abstração de uso
+  único, sem configurabilidade não solicitada, sem tratamento de erro para cenário impossível.
+- **Mudança cirúrgica** — não "melhorar" código adjacente, comentário ou formatação; manter o
+  estilo do arquivo existente mesmo que você faria diferente. Código morto pré-existente:
+  reportar, não apagar. Órfão criado pela SUA mudança: remover.
+- **Toda linha alterada rastreia até a task** — se não rastreia, não entra.
