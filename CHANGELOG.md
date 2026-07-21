@@ -4,6 +4,31 @@ Histórico das versões públicas do `dataagile-agent-kit`.
 
 ---
 
+## [2.6.1] — 2026-07-21
+
+### O implementer parou de adivinhar e de "melhorar" código alheio (protheus 2.14.1 · fluig 2.1.1)
+
+Os agentes `protheus-implementer` e `fluig-implementer` rodam em **contexto isolado** dentro do
+Agent Team: não herdam o `CLAUDE.md` do dev nem skill nenhuma. Era exatamente ali que nasciam o
+over-engineering e o chute de campo/API — o agente inferia o comportamento pelo nome e seguia.
+
+- **Quatro regras de execução agora fazem parte do prompt dos dois agentes:** *nunca adivinhar*
+  (chave, campo, função ou comportamento desconhecido → consultar o MCP ou reportar
+  `NEEDS_CONTEXT`; inferir pelo nome está proibido), *código mínimo que resolve a task* (sem
+  feature além da pedida, sem abstração de uso único, sem configurabilidade não solicitada),
+  *mudança cirúrgica* (não reformatar nem "melhorar" código adjacente; código morto pré-existente
+  se reporta, não se apaga) e *toda linha alterada rastreia até a task*.
+- **Nova entrada no marketplace: `andrej-karpathy-skills`.** Guidelines comportamentais para
+  reduzir erros comuns de LLM em código, apontando para o upstream
+  `multica-ai/andrej-karpathy-skills` (MIT, forrestchang) com **sha pinado** — sem fork e sem
+  cópia de texto, então não há drift e a licença fica com o autor. Instalação:
+  `/plugin install andrej-karpathy-skills@claude-skills-dataagile`.
+- **Correção de release:** `protheus/.claude-plugin/plugin.json` estava em `2.14.0` enquanto o
+  `marketplace.json` ainda dizia `2.13.0` — o release da 2.14.0 bumpou só um dos dois arquivos.
+  Os dois voltaram a bater, como o `RELEASING.md` exige.
+
+---
+
 ## [2.6.0] — 2026-07-14
 
 ### Regras do SonarQube EngPro agora são gate na hora da gravação (protheus 2.14.0)

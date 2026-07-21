@@ -13,7 +13,7 @@
       "name": "fluig",
       "source": "./fluig",
       "description": "Plugin para desenvolvimento TOTVS Fluig — ciclo completo: design (brainstorm), scaffolding (widget/dataset/form/workflow), revisão estática + testes (review) e deploy (verify).",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "author": {
         "name": "DataAgile"
       },
@@ -30,7 +30,7 @@
       "name": "protheus",
       "source": "./protheus",
       "description": "Plugin para desenvolvimento TOTVS Protheus — ciclo completo: brainstorm → plan → implement (Agent Teams) → deploy TDS-CLI → qa E2E → verify, geradores MVC/REST/query, dicionário de dados, SmartView/TReports e Knowledge Base remota (155k+ registros).",
-      "version": "2.13.0",
+      "version": "2.14.1",
       "author": {
         "name": "DataAgile"
       },
@@ -75,6 +75,26 @@
         "testing",
         "test-agents",
         "automation"
+      ]
+    },
+    {
+      "name": "andrej-karpathy-skills",
+      "source": {
+        "source": "github",
+        "repo": "multica-ai/andrej-karpathy-skills",
+        "sha": "2c606141936f1eeef17fa3043a72095b4765b9c2"
+      },
+      "description": "Guidelines comportamentais para reduzir erros comuns de LLM em código: pensar antes de codar, simplicidade primeiro, mudanças cirúrgicas, execução orientada a critério verificável. Upstream de terceiro (MIT, forrestchang) — listado aqui só para distribuição, sem fork; sha pinado.",
+      "version": "1.0.0",
+      "author": {
+        "name": "forrestchang"
+      },
+      "category": "workflow",
+      "tags": [
+        "guidelines",
+        "best-practices",
+        "code-quality",
+        "karpathy"
       ]
     }
   ]

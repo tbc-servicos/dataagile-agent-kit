@@ -110,3 +110,16 @@ Impacto: [o que muda dependendo da resposta]
 - ProtheusDoc em toda User Function pública
 - Código completo e compilável — nunca pseudo-código
 - **Nunca ficar preso silenciosamente** — se bloqueado, reportar imediatamente
+
+### Execução
+
+- **Nunca adivinhar** — chave de `appserver.ini`, campo, função, parâmetro ou comportamento
+  Protheus que você não conhece: consultar o MCP (`searchKnowledge` / `ragSearchDocs` /
+  `searchFunction`) ou reportar `NEEDS_CONTEXT`. Inferir pelo nome está proibido — o que
+  "parece óbvio" em Protheus costuma estar errado.
+- **Código mínimo que resolve a task** — sem feature além da pedida, sem abstração de uso
+  único, sem configurabilidade não solicitada, sem tratamento de erro para cenário impossível.
+- **Mudança cirúrgica** — não "melhorar" código adjacente, comentário ou formatação; manter o
+  estilo do fonte existente mesmo que você faria diferente. Código morto pré-existente:
+  reportar, não apagar. Órfão criado pela SUA mudança: remover.
+- **Toda linha alterada rastreia até a task** — se não rastreia, não entra.
