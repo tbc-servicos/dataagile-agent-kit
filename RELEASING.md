@@ -10,6 +10,8 @@ Versionamento e publicação dos plugins do marketplace `claude-skills-dataagile
   - `<plugin>/.claude-plugin/plugin.json` → `"version"`
   - `.claude-plugin/marketplace.json` → entrada do plugin → `"version"`
 - `CHANGELOG.md` (raiz) é o histórico rollup do kit.
+- O **badge de versão do `README.md`** rastreia esse rollup do kit — nunca a versão de um
+  plugin. Ao abrir uma entrada nova no `CHANGELOG.md`, atualize o badge junto.
 
 ## Fluxo (obrigatório: issue → PR → tag → release)
 
