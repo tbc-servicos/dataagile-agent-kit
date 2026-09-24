@@ -1,25 +1,28 @@
 <div align="center">
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/brand/wordmark-on-dark.svg">
+  <img src="assets/brand/wordmark-on-light.svg" alt="DataAgile" width="380">
+</picture>
+
+<br/><br/>
+
+**AGENT KIT**
+
+[![Versão](https://img.shields.io/badge/versão-2.7.0-007A52?style=flat-square&labelColor=1B222C)](https://github.com/tbc-servicos/dataagile-agent-kit/releases)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-plugins-007A52?style=flat-square&labelColor=1B222C)](https://claude.ai/code)
+[![Codex · Gemini](https://img.shields.io/badge/Codex_·_Gemini-MCP-007A52?style=flat-square&labelColor=1B222C)](./INSTALL.md)
+[![Protheus](https://img.shields.io/badge/Protheus-ADVPL%2FTLPP-007A52?style=flat-square&labelColor=1B222C)](https://dataagile-agent-kit.dataagile.com.br)
+[![Fluig](https://img.shields.io/badge/Fluig-Angular_%2B_PO--UI-007A52?style=flat-square&labelColor=1B222C)](https://dataagile-agent-kit.dataagile.com.br)
+[![Licença](https://img.shields.io/badge/licença-MIT-4A5563?style=flat-square&labelColor=1B222C)](./LICENSE)
+
+### Protheus e Fluig dentro do Claude Code, Codex CLI e Gemini CLI.
+
+*Base técnica curada · ciclo de desenvolvimento com Agent Team · compilação no AppServer · E2E com Playwright*
 
 <br/>
 
-# DA DataAgile Agent Kit
-
-[![Versão](https://img.shields.io/badge/versão-2.7.0-1a4d5c?style=flat-square&logoColor=white)](https://github.com/tbc-servicos/dataagile-agent-kit/releases)
-[![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-CC785C?style=flat-square&logoColor=white)](https://claude.ai/code)
-[![Protheus](https://img.shields.io/badge/Protheus-ADVPL%2FTLPP-1a4d5c?style=flat-square&logoColor=white)](https://dataagile-agent-kit.dataagile.com.br)
-[![PO--UI MCP](https://img.shields.io/badge/PO--UI-MCP-22C55E?style=flat-square&logoColor=white)](https://po-ui.io)
-[![Licença](https://img.shields.io/badge/licença-MIT-475569?style=flat-square)](./LICENSE)
-
-<br/>
-
-### Protheus e ADVPL dentro do Claude Code — sem sair do terminal.
-
-*DataAgile · Base de conhecimento curada · Agent Teams · Compilação TDS-CLI · Testes TIR*
-
-<br/>
-
-[**Assinar →**](https://dataagile-agent-kit.dataagile.com.br) &nbsp;&nbsp;·&nbsp;&nbsp; [Instalação](./INSTALL.md) &nbsp;&nbsp;·&nbsp;&nbsp; [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
+[**Começar 7 dias grátis →**](https://dataagile-agent-kit.dataagile.com.br) &nbsp;&nbsp;·&nbsp;&nbsp; [Instalação](./INSTALL.md) &nbsp;&nbsp;·&nbsp;&nbsp; [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
 
 </div>
 
@@ -33,9 +36,9 @@ flowchart LR
     D -->|"gates.json"| E["🚀 deploy"]
     E --> F["🧪 qa<br/>E2E Playwright<br/>critério verificável"]
     F --> G["✅ verify"]
-    style A fill:#e8f0fe,stroke:#4285f4,color:#000
-    style C fill:#fef7e0,stroke:#f9ab00,color:#000
-    style F fill:#e6f4ea,stroke:#34a853,color:#000
+    style A fill:#EEFCF6,stroke:#007A52,color:#1B222C
+    style C fill:#1B222C,stroke:#01D48D,color:#EEF1F5
+    style F fill:#01D48D,stroke:#1B222C,color:#1B222C
 ```
 
 - **`/ddd`** entra no *brainstorm*: linguagem ubíqua com o cliente, bounded contexts, agregados, ACL nas integrações — decide **o que** construir.
@@ -50,15 +53,15 @@ flowchart LR
 
 ## O problema
 
-Você abre o Claude e pergunta sobre Protheus. Ele responde com segurança. Você cola no ambiente:
+Você abre o assistente de IA e pergunta sobre Protheus. Ele responde com segurança. Você cola no ambiente:
 
 ```
 Function 'ExecBlock' not found at line 47.
 ```
 
-Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada do seu módulo, nem os parâmetros da sua versão do Protheus.
+Acontece porque o modelo não conhece as assinaturas reais, os pontos de entrada do seu módulo nem os parâmetros da sua versão do Protheus.
 
-**O dataagile-agent-kit resolve isso.** O Claude passa a consultar uma base técnica curada com 155k+ registros Protheus — e cita a referência certa, com a assinatura correta.
+**O Agent Kit resolve isso.** O assistente passa a consultar a base técnica curada da DataAgile (funções ADVPL/TLPP, pontos de entrada, endpoints REST, SmartView e a documentação TDN) e cita a referência certa, com a assinatura correta. A cada edição, os hooks convertem o encoding para CP1252 e rodam o lint ADVPL e as regras de Code Analysis.
 
 ---
 
@@ -66,9 +69,12 @@ Acontece porque o modelo não conhece as assinaturas reais, os Pontos de Entrada
 
 | Perfil | O que ganha |
 |--------|-------------|
-| **Dev ADVPL/TLPP** | Brainstorm → plano → implementação via Agent Team → compilação → testes TIR, tudo no terminal |
-| **Suporte técnico** | Diagnóstico de erro ERP por categoria, causa raiz identificada, resolução estruturada |
-| **Dev front Protheus** | MCP PO-UI nativo — componentes Angular com assinaturas corretas, sem consultar docs manualmente |
+| **Dev ADVPL/TLPP** | Desenho → plano → implementação com Agent Team → compilação no AppServer → E2E com Playwright → checklist TOTVS, tudo no terminal |
+| **Dev Fluig** | Widgets Angular 19 + PO-UI 19.36, datasets, formulários e eventos de workflow no padrão da plataforma, com o mesmo ciclo |
+| **Suporte técnico** | Diagnóstico de compilação, runtime, performance e lock de banco, com causa raiz, e consulta ao dicionário de dados |
+| **Front com PO-UI** | MCP oficial do PO-UI: componentes Angular com inputs, outputs e exemplos corretos, sem abrir a documentação |
+
+> No **Claude Code** você recebe os comandos, os hooks e o Agent Team. No **Codex CLI** e no **Gemini CLI**, a base de conhecimento e as skills sob demanda via MCP (`get_skill`). Detalhes no [INSTALL.md](./INSTALL.md).
 
 ---
 
@@ -110,35 +116,53 @@ mkdir -p ~/.config/dataagile && echo '{"api_key":"SUA_CHAVE"}' > ~/.config/dataa
 
 ## Comandos
 
-### Ciclo de desenvolvimento
+### Protheus: ciclo de desenvolvimento
 
 ```
-/protheus:brainstorm  → intake técnico, design aprovado antes do código
-/protheus:plan        → decompõe design em tasks ADVPL tipadas
-/protheus:implement   → Agent Team: implementer → spec-reviewer → reviewer
-/protheus:deploy      → compila no AppServer via TDS-CLI, gera patch .ptm
-/protheus:qa          → testes TIR E2E no ambiente compilado
-/protheus:verify      → checklist Protheus antes de produção
+/protheus:brainstorm  → perguntas, abordagens e desenho aprovado antes do código (Opus)
+/protheus:plan        → tarefas tipadas e lista fechada de fontes
+/protheus:implement   → Agent Team: implementer → spec-reviewer → reviewer (Sonnet)
+/protheus:deploy      → compila no AppServer via TDS-CLI e gera o patch .ptm (Haiku)
+/protheus:qa          → E2E com Playwright no ambiente compilado, com evidências
+/protheus:verify      → checklist de conformidade TOTVS antes da produção
 ```
 
-### Utilitários
+### Protheus: utilitários
 
 ```
-/protheus:writer      → gera código ADVPL/TLPP com notação húngara e MVC
-/protheus:specialist  → consulta base técnica: funções, PEs, parâmetros
-/protheus:reviewer    → revisão CRÍTICO / AVISO / SUGESTÃO
-/protheus:diagnose    → erros de compilação, runtime e performance
-/protheus:sql         → SQL embarcado (BeginSQL/EndSQL, macros)
-/protheus:migrate     → ADVPL procedural → TLPP orientado a objetos
+/protheus:specialist            → consulta a base técnica: funções, PEs, endpoints, SmartView
+/protheus:writer                → gera ADVPL/TLPP com notação húngara, MVC e ProtheusDoc
+/protheus:reviewer              → revisão CRÍTICO / AVISO / SUGESTÃO
+/protheus:code-review           → revisão com regras de Code Analysis e segurança
+/protheus:diagnose              → compilação, runtime, performance e lock de banco
+/protheus:data-dictionary-lookup → SX2, SX3, SIX, SX6, SX7 e demais tabelas do dicionário
+/protheus:sql                   → SQL embarcado (BeginSQL/EndSQL, macros)
+/protheus:mvc-generator         → ModelDef, ViewDef, MenuDef e BrowseDef
+/protheus:tlpp-rest-endpoint-generator → endpoints REST em TLPP
+/protheus:smartview-relatorio   → relatório TOTVS SmartView de ponta a ponta
+/protheus:tir-test-generator    → scripts de teste TIR
+/protheus:migrate               → ADVPL procedural → TLPP orientado a objetos
 ```
 
-### Suporte técnico
+### Fluig
 
 ```
-/protheus:suporte     → diagnóstico de erro ERP com causa raiz e resolução
-/protheus:diagnose    → diagnóstico técnico detalhado
-/protheus:specialist  → identifica função, PE ou parâmetro exato
+/fluig:brainstorm  → desenho aprovado, com integrações mapeadas, antes do scaffold
+/fluig:plan        → arquivos mapeados e tarefas com testes
+/fluig:widget      → widget Angular 19 + PO-UI 19.36 com testes Jasmine + Karma
+/fluig:dataset     → dataset JavaScript com defineStructure/createDataset
+/fluig:form        → formulário HTML com events/ e Util/
+/fluig:workflow    → eventos BPM com tratamento de erro e log
+/fluig:implement   → Agent Team: fluig-implementer → fluig-spec-reviewer → fluig-reviewer
+/fluig:test        → unitários Jasmine + Karma e E2E com Playwright
+/fluig:deploy      → deploy no servidor de teste com verificação de logs
+/fluig:qa          → integração e E2E com Playwright após o deploy
+/fluig:verify      → checklist final adaptado ao ambiente (HML ou servidor único)
+/fluig:debug       → debugging em 4 fases
+/fluig:api-ref     → DatasetFactory, CardAPI, WCMAPI, fluigc e demais APIs
 ```
+
+> Compilação, deploy e QA precisam de um AppServer acessível e do TDS-CLI configurado (Protheus) ou de um servidor Fluig de teste com acesso configurado no seu projeto.
 
 ---
 
@@ -146,16 +170,15 @@ mkdir -p ~/.config/dataagile && echo '{"api_key":"SUA_CHAVE"}' > ~/.config/dataa
 
 | Server | Função |
 |--------|--------|
-| `tbc-knowledge` | Base ADVPL remota — `searchFunction`, `findEndpoint`, `findSmartView`, `findExecAuto`, `findMvcPattern` e mais 4 tools |
-| `local-knowledge-external` | Base offline de conhecimento técnico ADVPL/TLPP curado e docs Protheus |
-| `po-ui` | MCP oficial PO-UI — componentes Angular para fronts Protheus, inputs, outputs e exemplos |
+| `tbc-knowledge` | Base técnica remota: `searchFunction`, `searchKnowledge`, `findEndpoint`, `findSmartView`, `findMvcPattern`, `findExecAuto`, `searchByTable`, `listModules`, `searchDocuments`, `ragSearchDocs` e `ragSearchKnowledge` |
+| `po-ui` | MCP oficial do PO-UI: componentes Angular, inputs, outputs e exemplos |
 
 ---
 
 ## Fluxo recomendado
 
 ```
-/protheus:brainstorm
+/protheus:brainstorm      ←── Opus
         ↓
 /protheus:plan
         ↓
@@ -163,19 +186,27 @@ mkdir -p ~/.config/dataagile && echo '{"api_key":"SUA_CHAVE"}' > ~/.config/dataa
         ↓                  implementer (sonnet)
 /protheus:deploy           spec-reviewer (sonnet)
         ↓                  reviewer (sonnet)
-/protheus:qa
+/protheus:qa          ←── deploy e compilação em haiku
         ↓
 /protheus:verify
 ```
 
 ---
 
+## Planos e privacidade
+
+Plano Pro com 7 dias grátis e todos os plugins: [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br). O que registramos de cada consulta e por quanto tempo está na [Política de Privacidade](https://dataagile-agent-kit.dataagile.com.br/privacy).
+
+---
+
 <div align="center">
+
+<img src="assets/brand/avatar-512.png" alt="" width="56">
 
 **DataAgile**
 
-[![Assinar um plano](https://img.shields.io/badge/Assinar_um_plano-003CA6?style=for-the-badge&logoColor=white)](https://dataagile-agent-kit.dataagile.com.br)
-[![Documentação](https://img.shields.io/badge/Documentação-475569?style=for-the-badge&logoColor=white)](./INSTALL.md)
-[![Contato](https://img.shields.io/badge/dev@dataagile.com.br-1E293B?style=for-the-badge&logoColor=white)](mailto:dev@dataagile.com.br)
+[![Começar 7 dias grátis](https://img.shields.io/badge/Começar_7_dias_grátis-01D48D?style=for-the-badge&labelColor=1B222C&logoColor=1B222C)](https://dataagile-agent-kit.dataagile.com.br)
+[![Documentação](https://img.shields.io/badge/Documentação-1B222C?style=for-the-badge)](./INSTALL.md)
+[![Contato](https://img.shields.io/badge/dev@dataagile.com.br-1B222C?style=for-the-badge)](mailto:dev@dataagile.com.br)
 
 </div>
