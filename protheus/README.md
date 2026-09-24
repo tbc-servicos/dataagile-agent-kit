@@ -13,7 +13,7 @@ Conecta automaticamente ao **MCP Server remoto** com a Knowledge Base ADVPL/TLPP
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) **v2.1.32+** instalado
 - Node.js 18+
 - **Uma** das credenciais abaixo (basta uma):
-  - **API key do portal** (`tbc_live_*`) — usuários externos pagos. Gere em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br) após assinar um plano (`starter` ou `pro`).
+  - **API key do portal** (`dataagile_*`) — usuários externos pagos. Gere em [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br) após assinar um plano (`starter` ou `pro`).
   - **Email cadastrado** — usuários internos TBC, com email registrado no auth-server.
 
 ### Passo 1 — Registrar o marketplace e instalar
@@ -51,7 +51,7 @@ export TBC_API_KEY=tbc_live_SUA_CHAVE_AQUI       # macOS/Linux — adicione ao ~
 [Environment]::SetEnvironmentVariable("TBC_API_KEY", "tbc_live_SUA_CHAVE_AQUI", "User")
 ```
 
-> Gere ou rotacione a key em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br). Nunca compartilhe a chave.
+> Gere ou rotacione a key em [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br). Nunca compartilhe a chave.
 
 #### B) Email cadastrado (uso interno TBC — legado)
 
@@ -285,7 +285,7 @@ Esteira do código ao artefato renderizando dados num SmartView (TReports) self-
 
 O MCP remoto bifurca por **tier** do usuário, resolvido server-side a partir da credencial:
 
-- **API key do portal** (`tbc_live_*`): tier vem do plano da assinatura (`starter` → `trial`, `pro` → `standard`).
+- **API key do portal** (`dataagile_*`): tier vem do plano da assinatura (`starter` → `trial`, `pro` → `standard`).
 - **Email cadastrado** (`TBC_USER_EMAIL`): tier vem do registro no auth-server (`internal` para contas TBC, `trial`/`standard` para externos pré-cadastrados).
 
 ### Tier `trial` / `standard` (external — 6 tools)
@@ -342,7 +342,7 @@ saveLocal=/patches/
 | Problema | Solução |
 |----------|---------|
 | "Nenhuma credencial configurada" | Configure **uma** das opções: `TBC_API_KEY` (externos) **ou** `TBC_USER_EMAIL` (internos). Veja [Passo 2](#passo-2--configurar-a-credencial). |
-| "Acesso negado" / 401 (externo) | API key inválida ou inativa — gere/rotacione em [tbc-agent-kit.totvstbc.com.br](https://tbc-agent-kit.totvstbc.com.br) |
+| "Acesso negado" / 401 (externo) | API key inválida ou inativa — gere/rotacione em [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br) |
 | "Acesso negado" / 401 (interno) | Email não cadastrado no auth-server — solicite ao administrador |
 | Trial expirado / 402 | Renove a assinatura em [mcp.totvstbc.com.br/payment](https://mcp.totvstbc.com.br/payment) |
 | MCP nao conecta | Verifique Node.js 18+ e conexao com internet |
