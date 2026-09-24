@@ -182,4 +182,4 @@ dev@dataagile.com.br
 
 [knowledge.dataagile.com.br](https://knowledge.dataagile.com.br)
 
-[Issues no GitHub](https://github.com/tbc-servicos/dataagile-agent-kit/issues)
+[Issues no GitHub](https://github.com/dataagile/dataagile-agent-kit/issues)

@@ -9,7 +9,7 @@
 
 **AGENT KIT**
 
-[![Versão](https://img.shields.io/badge/versão-2.7.0-007A52?style=flat-square&labelColor=1B222C)](https://github.com/tbc-servicos/dataagile-agent-kit/releases)
+[![Versão](https://img.shields.io/badge/versão-2.7.0-007A52?style=flat-square&labelColor=1B222C)](https://github.com/dataagile/dataagile-agent-kit/releases)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-plugins-007A52?style=flat-square&labelColor=1B222C)](https://claude.ai/code)
 [![Codex · Gemini](https://img.shields.io/badge/Codex_·_Gemini-MCP-007A52?style=flat-square&labelColor=1B222C)](./INSTALL.md)
 [![Protheus](https://img.shields.io/badge/Protheus-ADVPL%2FTLPP-007A52?style=flat-square&labelColor=1B222C)](https://dataagile-agent-kit.dataagile.com.br)
@@ -83,7 +83,7 @@ Acontece porque o modelo não conhece as assinaturas reais, os pontos de entrada
 **Pré-requisito:** API key em [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br)
 
 ```bash
-npx github:tbc-servicos/dataagile-agent-kit
+npx github:dataagile/dataagile-agent-kit
 ```
 
 Funciona em **Claude Code**, **Codex CLI** e **Gemini CLI**. O instalador detecta o CLI instalado, pede a API key e configura tudo automaticamente — instala todos os plugins disponíveis (protheus, fluig, playwright, po-ui). Se algum passo falhar, exibe os comandos exatos para executar manualmente.
@@ -95,7 +95,7 @@ Cole este prompt no **Claude Code**:
 ```
 Execute os comandos abaixo para instalar o marketplace DataAgile e todos os plugins disponíveis globalmente:
 
-claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin marketplace add https://github.com/dataagile/dataagile-agent-kit.git
 claude plugin install protheus@claude-skills-dataagile
 claude plugin install fluig@claude-skills-dataagile
 claude plugin install po-ui@claude-skills-dataagile

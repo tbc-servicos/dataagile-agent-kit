@@ -15,7 +15,7 @@ mkdir -p ~/.config/dataagile
 echo '{ "api_key": "dataagile_SUA_CHAVE_AQUI" }' > ~/.config/dataagile/dev-config.json
 
 # 3. Adicionar marketplace
-claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin marketplace add https://github.com/dataagile/dataagile-agent-kit.git
 
 # 4. Instalar plugin
 claude plugin install protheus@claude-skills-dataagile
