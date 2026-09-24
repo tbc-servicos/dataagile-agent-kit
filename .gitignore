@@ -58,6 +58,8 @@ docs/plans/material_treinamento/*.pdf
 # Repo metadata
 !/.claude-plugin/
 !/README.md
+# Logomarca e imagens da marca usadas no README (sem isto, /* engole a pasta em silêncio)
+!/assets/
 !/FLUXO-DE-TRABALHO.md
 !/tests/
 # /scripts/ ficou de fora da whitelist e o sync-sonar-rules.cjs NUNCA foi versionado:
