@@ -11,10 +11,10 @@
 
 ```bash
 # Todos os CLIs — instalador automático
-npx github:tbc-servicos/dataagile-agent-kit
+npx github:dataagile/dataagile-agent-kit
 
 # Claude Code — plugin direto
-claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin marketplace add https://github.com/dataagile/dataagile-agent-kit.git
 claude plugin install protheus@claude-skills-dataagile
 ```
 

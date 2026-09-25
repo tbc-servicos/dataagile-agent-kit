@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tbc-servicos/dataagile-agent-kit.git"
+    "url": "https://github.com/dataagile/dataagile-agent-kit.git"
   },
   "homepage": "https://dataagile-agent-kit.dataagile.com.br",
   "engines": {

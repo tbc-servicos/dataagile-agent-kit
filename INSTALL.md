@@ -23,7 +23,7 @@ Install the DataAgile MCP server and skills in **Claude Code**, **Codex CLI**, o
 ```
 Execute os comandos abaixo para instalar o marketplace DataAgile e todos os plugins disponíveis globalmente:
 
-claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin marketplace add https://github.com/dataagile/dataagile-agent-kit.git
 claude plugin install protheus@claude-skills-dataagile
 claude plugin install fluig@claude-skills-dataagile
 claude plugin install po-ui@claude-skills-dataagile
@@ -53,8 +53,8 @@ Liste os plugins instalados e confirme que o dataagile está ativo.
 Run this command to detect all installed CLIs and register the MCP server automatically:
 
 ```bash
-npx github:tbc-servicos/dataagile-agent-kit --dry-run   # preview what would change
-npx github:tbc-servicos/dataagile-agent-kit              # apply
+npx github:dataagile/dataagile-agent-kit --dry-run   # preview what would change
+npx github:dataagile/dataagile-agent-kit              # apply
 ```
 
 The installer will:
@@ -73,7 +73,7 @@ Claude Code uses a native plugin system — no manual JSON config needed.
 
 **Install all plugins (automated — same as running the npx installer):**
 ```bash
-claude plugin marketplace add https://github.com/tbc-servicos/dataagile-agent-kit.git
+claude plugin marketplace add https://github.com/dataagile/dataagile-agent-kit.git
 claude plugin install protheus@claude-skills-dataagile
 claude plugin install fluig@claude-skills-dataagile
 claude plugin install playwright@claude-skills-dataagile
@@ -213,7 +213,7 @@ get_skill({ name: "protheus:specialist" })
 - Check file permissions: `ls -la ~/.gemini/` or `ls -la ~/.codex/`
 - Run the installer with `sudo` as a last resort, or edit the config manually
 
-**`npx github:tbc-servicos/dataagile-agent-kit` fails**
+**`npx github:dataagile/dataagile-agent-kit` fails**
 - Ensure you have Node.js 18+: `node --version`
 - If behind a proxy, set `npm_config_https_proxy`
 - Fallback: clone locally and run `node installer/index.js`
@@ -243,5 +243,5 @@ Remove the `dataagile:` block from `~/.codex/config.yaml`.
 ## Support
 
 - Email: [dev@dataagile.com.br](mailto:dev@dataagile.com.br)
-- GitHub Issues: [tbc-servicos/dataagile-agent-kit/issues](https://github.com/tbc-servicos/dataagile-agent-kit/issues)
+- GitHub Issues: [dataagile/dataagile-agent-kit/issues](https://github.com/dataagile/dataagile-agent-kit/issues)
 - Plans and pricing: [dataagile-agent-kit.dataagile.com.br](https://dataagile-agent-kit.dataagile.com.br)
